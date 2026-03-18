@@ -4,6 +4,11 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SourcingPro</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="SourcingPro">
+<meta name="theme-color" content="#5b7fa6">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><rect width=%27100%27 height=%27100%27 rx=%2720%27 fill=%27%235b7fa6%27/><text y=%27.9em%27 font-size=%2270%27 x=%2715%27>S</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -159,6 +164,75 @@ body {
   height: 100vh;
 }
 .app { display: flex; height: 100vh; }
+
+/* ── SIDEBAR TOGGLE BUTTON ── */
+.sidebar-toggle {
+  display: none;
+  width: 38px; height: 38px;
+  border-radius: var(--radius-lg);
+  background: var(--surface);
+  border: 1.5px solid var(--border);
+  align-items: center; justify-content: center;
+  cursor: pointer; font-size: 18px;
+  transition: all 0.15s; flex-shrink: 0;
+  color: var(--text-secondary);
+}
+.sidebar-toggle:hover { background: var(--primary-light); color: var(--primary); }
+
+/* ── SIDEBAR OVERLAY (mobile) ── */
+.sidebar-overlay {
+  display: none;
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(20,35,55,0.45);
+  backdrop-filter: blur(2px);
+}
+.sidebar-overlay.open { display: block; }
+
+/* ── MOBILE RESPONSIVE ── */
+@media (max-width: 768px) {
+  .sidebar-toggle { display: flex; }
+
+  .sidebar {
+    position: fixed; left: 0; top: 0; bottom: 0; z-index: 100;
+    transform: translateX(-100%);
+    transition: transform 0.25s cubic-bezier(0.4,0,0.2,1);
+    width: 260px; min-width: 260px;
+    box-shadow: var(--shadow-lg);
+  }
+  .sidebar.open { transform: translateX(0); }
+
+  .topbar { padding: 0 14px; gap: 8px; }
+  .topbar-brand { font-size: 13px; }
+  .search-wrap { flex: 1; min-width: 0; margin: 0 6px !important; }
+  .search-wrap:focus-within { width: auto; }
+
+  .dashboard-view { padding: 14px 14px; }
+  .dash-grid { grid-template-columns: 1fr; gap: 12px; }
+  .stats-view { padding: 14px; }
+  .kpi-row { grid-template-columns: repeat(2,1fr) !important; }
+  .objectives-view { padding: 14px; }
+  .news-view { padding: 14px; }
+  .news-grid { grid-template-columns: 1fr; }
+  .scraping-toolbar, .scrap-url-row, .scrap-preset-row, .scrap-options-row { padding: 10px 14px; }
+  .scrap-results { padding: 10px 14px; }
+  .ai-header, .ai-suggestions, .ai-input-area { padding: 10px 14px; }
+  .ai-chat { padding: 14px; }
+
+  .todo-view { grid-template-columns: 1fr; }
+  .todo-left { width: 100%; min-width: 0; border-right: none; border-bottom: 1px solid var(--border); max-height: 50vh; }
+
+  .detail-panel { width: 100% !important; min-width: 0 !important; }
+
+  .kanban-view { padding: 12px; gap: 10px; }
+  .kanban-col { min-width: 200px; max-width: 220px; }
+
+  /* Hide some columns on mobile */
+  td:nth-child(7), th:nth-child(7),
+  td:nth-child(8), th:nth-child(8),
+  td:nth-child(9), th:nth-child(9) { display: none; }
+
+  .dark-toggle { bottom: 14px; left: 14px; }
+}
 
 /* ════════════════════════════════════════
    SIDEBAR
@@ -1532,6 +1606,8 @@ tr.kb-focus td { background: var(--primary-light) !important; }
 <div id="pdf-print-area"></div>
 
 <!-- APP -->
+<div class="sidebar-overlay" id="sidebar-overlay" onclick="closeSidebar()"></div>
+
 <div class="app">
   <aside class="sidebar">
     <div class="sidebar-top">
@@ -1596,13 +1672,15 @@ tr.kb-focus td { background: var(--primary-light) !important; }
       </div>
     </div>
     <div class="sidebar-footer">
-      <div class="autosave-dot"></div> Sauvegarde auto
+      <div class="autosave-dot"></div>
+      <span class="sync-label">Connexion…</span>
       <span style="margin-left:auto;cursor:pointer;font-size:11px;color:var(--text-tertiary)" onclick="openShortcuts()" title="Raccourcis clavier">⌨️</span>
     </div>
   </aside>
 
   <div class="main">
     <div class="topbar">
+      <button class="sidebar-toggle" onclick="toggleSidebar()" title="Menu">☰</button>
       <div class="breadcrumb">
         <span class="topbar-brand">SourcingPro</span>
         <span class="breadcrumb-sep">›</span>
@@ -2284,11 +2362,100 @@ tr.kb-focus td { background: var(--primary-light) !important; }
   </div>
 </div>
 
+
 <script>
 // ════════════════════════════════════════
-// STORAGE — localStorage synchrone pur
-// Fonctionne sur Safari, Chrome, Firefox
-// en fichier local (file://) et serveur
+// SUPABASE CONFIG
+// ════════════════════════════════════════
+const SUPA_URL = 'https://vqyivkmauwzhokvatugi.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InZxeWl2a21hdXd6aG9rdmF0dWdpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4MzE3MDgsImV4cCI6MjA4OTQwNzcwOH0.GO81TLIWcgI-nSyiAaQ0ph-Bd3GzKNNDqpUBVOyD8_w';
+
+// ════════════════════════════════════════
+// SUPABASE REST HELPERS
+// ════════════════════════════════════════
+async function sbFetch(path, options = {}) {
+  const res = await fetch(`${SUPA_URL}/rest/v1/${path}`, {
+    ...options,
+    headers: {
+      'apikey': SUPA_KEY,
+      'Authorization': `Bearer ${SUPA_KEY}`,
+      'Content-Type': 'application/json',
+      'Prefer': 'return=minimal',
+      ...(options.headers || {})
+    }
+  });
+  if (!res.ok && res.status !== 404) {
+    const err = await res.text().catch(() => '');
+    console.error('Supabase error', res.status, err);
+  }
+  return res;
+}
+
+async function sbGet(table, id) {
+  try {
+    const res = await sbFetch(`${table}?id=eq.${encodeURIComponent(id)}&limit=1`, {
+      headers: { 'Accept': 'application/json' }
+    });
+    if (!res.ok) return null;
+    const rows = await res.json();
+    return rows[0]?.data ?? null;
+  } catch(e) { return null; }
+}
+
+async function sbGetAll(table) {
+  try {
+    const res = await sbFetch(`${table}?order=updated_at.desc`, {
+      headers: { 'Accept': 'application/json' }
+    });
+    if (!res.ok) return [];
+    return await res.json();
+  } catch(e) { return []; }
+}
+
+async function sbUpsert(table, id, data, extra = {}) {
+  try {
+    await sbFetch(table, {
+      method: 'POST',
+      headers: { 'Prefer': 'resolution=merge-duplicates,return=minimal' },
+      body: JSON.stringify({ id, data, updated_at: new Date().toISOString(), ...extra })
+    });
+  } catch(e) { console.error('sbUpsert error', e); }
+}
+
+async function sbDelete(table, id) {
+  try {
+    await sbFetch(`${table}?id=eq.${encodeURIComponent(id)}`, { method: 'DELETE' });
+  } catch(e) {}
+}
+
+// ════════════════════════════════════════
+// ONLINE STATUS
+// ════════════════════════════════════════
+let isOnline = navigator.onLine;
+window.addEventListener('online',  () => { isOnline = true;  showSyncStatus('online'); });
+window.addEventListener('offline', () => { isOnline = false; showSyncStatus('offline'); });
+
+function showSyncStatus(status) {
+  const dot = document.querySelector('.autosave-dot');
+  const txt = document.querySelector('.sidebar-footer');
+  if (!dot || !txt) return;
+  if (status === 'syncing') {
+    dot.style.background = 'var(--amber)';
+  } else if (status === 'online') {
+    dot.style.background = 'var(--sage)';
+    const span = txt.querySelector('.sync-label');
+    if (span) span.textContent = 'Synchronisé ✓';
+  } else if (status === 'offline') {
+    dot.style.background = 'var(--coral)';
+    const span = txt.querySelector('.sync-label');
+    if (span) span.textContent = 'Hors ligne (local)';
+  } else if (status === 'error') {
+    dot.style.background = 'var(--coral)';
+  }
+}
+
+// ════════════════════════════════════════
+// STORAGE — Supabase primary, localStorage fallback
 // ════════════════════════════════════════
 function spSet(key, val) {
   try { localStorage.setItem(key, JSON.stringify(val)); } catch(e) {}
@@ -2299,6 +2466,251 @@ function spGet(key) {
 function spDel(key) {
   try { localStorage.removeItem(key); } catch(e) {}
 }
+
+// ════════════════════════════════════════
+// PERSIST — writes to Supabase + localStorage
+// ════════════════════════════════════════
+async function persist() {
+  // Always write to localStorage immediately (offline safety)
+  spSet('sourcingpro_data_v2', data);
+  spSet('sourcingpro_settings_v1', settings);
+
+  if (!isOnline) return;
+  showSyncStatus('syncing');
+  try {
+    // Upsert each prospect individually
+    const ops = data.map(d => sbUpsert('prospects', d.id, d));
+    await sbUpsert('settings', 'main', settings);
+    await Promise.all(ops);
+    showSyncStatus('online');
+  } catch(e) { showSyncStatus('error'); }
+}
+
+async function saveStats() {
+  spSet('sourcingpro_stats_v1', statsData);
+  spSet('sourcingpro_sales_v1', salesData);
+  if (!isOnline) return;
+  try {
+    // Stats: one row per day
+    const dayOps = Object.entries(statsData).map(([date, logs]) =>
+      sbUpsert('stats', date, logs, { date })
+    );
+    const saleOps = salesData.map(s => sbUpsert('sales', s.id, s));
+    await Promise.all([...dayOps, ...saleOps]);
+  } catch(e) {}
+}
+
+async function saveTodos() {
+  spSet('sourcingpro_todos_v1', todos);
+  if (!isOnline) return;
+  try {
+    await Promise.all(todos.map(t => sbUpsert('todos', t.id, t)));
+  } catch(e) {}
+}
+
+async function saveObjectives() {
+  spSet('sp_objectives_v1', objectives);
+  if (!isOnline) return;
+  try { await sbUpsert('objectives', 'main', objectives); } catch(e) {}
+}
+
+async function saveAttachments() {
+  spSet('sp_attachments_v1', attachments);
+  if (!isOnline) return;
+  try { await sbUpsert('attachments', 'main', attachments); } catch(e) {}
+}
+
+async function saveCallGoals() {
+  spSet('sp_call_goals_v1', callGoals);
+  if (!isOnline) return;
+  try { await sbUpsert('call_goals', 'main', callGoals); } catch(e) {}
+}
+
+// ════════════════════════════════════════
+// LOAD — Supabase first, localStorage fallback
+// ════════════════════════════════════════
+async function loadAll() {
+  // Try Supabase first — ALWAYS trust Supabase over localStorage
+  if (isOnline) {
+    try {
+      showSyncStatus('syncing');
+      const [prospectsRows, settingsRow] = await Promise.all([
+        sbGetAll('prospects'),
+        sbGet('settings', 'main')
+      ]);
+      // ALWAYS use Supabase data if online (even if empty)
+      data = prospectsRows.map(r => r.data);
+      spSet('sourcingpro_data_v2', data);
+
+      if (settingsRow) {
+        settings = settingsRow;
+        spSet('sourcingpro_settings_v1', settings);
+      } else {
+        // No settings in Supabase yet — push local if exists
+        const localS = spGet('sourcingpro_settings_v1');
+        if (localS?.statuses?.length) {
+          settings = localS;
+          await sbUpsert('settings', 'main', settings);
+        }
+      }
+      showSyncStatus('online');
+      return;
+    } catch(e) { showSyncStatus('offline'); }
+  }
+  // Fallback to localStorage
+  const d = spGet('sourcingpro_data_v2');
+  if (d && Array.isArray(d)) data = d;
+  const s = spGet('sourcingpro_settings_v1');
+  if (s?.statuses?.length) { settings.statuses = s.statuses; if(s.types?.length) settings.types = s.types; }
+}
+
+async function loadStats() {
+  if (isOnline) {
+    try {
+      const [statsRows, salesRows] = await Promise.all([
+        sbGetAll('stats'),
+        sbGetAll('sales')
+      ]);
+      if (statsRows.length > 0) {
+        statsData = {};
+        statsRows.forEach(r => { statsData[r.date] = r.data; });
+        spSet('sourcingpro_stats_v1', statsData);
+      } else {
+        statsData = spGet('sourcingpro_stats_v1') || {};
+        if (Object.keys(statsData).length > 0) {
+          await Promise.all(Object.entries(statsData).map(([date, logs]) =>
+            sbUpsert('stats', date, logs, { date })
+          ));
+        }
+      }
+      if (salesRows.length > 0) {
+        salesData = salesRows.map(r => r.data);
+        spSet('sourcingpro_sales_v1', salesData);
+      } else {
+        salesData = spGet('sourcingpro_sales_v1') || [];
+        if (salesData.length > 0) {
+          await Promise.all(salesData.map(s => sbUpsert('sales', s.id, s)));
+        }
+      }
+      return;
+    } catch(e) {}
+  }
+  statsData = spGet('sourcingpro_stats_v1') || {};
+  salesData = spGet('sourcingpro_sales_v1') || [];
+}
+
+async function loadTodos() {
+  if (isOnline) {
+    try {
+      const rows = await sbGetAll('todos');
+      if (rows.length > 0) {
+        todos = rows.map(r => r.data);
+        spSet('sourcingpro_todos_v1', todos);
+      } else {
+        todos = spGet('sourcingpro_todos_v1') || [];
+        if (todos.length > 0) {
+          await Promise.all(todos.map(t => sbUpsert('todos', t.id, t)));
+        }
+      }
+      return;
+    } catch(e) {}
+  }
+  todos = spGet('sourcingpro_todos_v1') || [];
+}
+
+async function loadObjectives() {
+  if (isOnline) {
+    try {
+      const d = await sbGet('objectives', 'main');
+      if (d) { objectives = d; spSet('sp_objectives_v1', objectives); return; }
+      else {
+        objectives = spGet('sp_objectives_v1') || {};
+        if (Object.keys(objectives).length > 0) await sbUpsert('objectives', 'main', objectives);
+        return;
+      }
+    } catch(e) {}
+  }
+  objectives = spGet('sp_objectives_v1') || {};
+}
+
+async function loadAttachments() {
+  if (isOnline) {
+    try {
+      const d = await sbGet('attachments', 'main');
+      if (d) { attachments = d; spSet('sp_attachments_v1', attachments); return; }
+      else {
+        attachments = spGet('sp_attachments_v1') || {};
+        if (Object.keys(attachments).length > 0) await sbUpsert('attachments', 'main', attachments);
+        return;
+      }
+    } catch(e) {}
+  }
+  attachments = spGet('sp_attachments_v1') || {};
+}
+
+async function loadCallGoals() {
+  if (isOnline) {
+    try {
+      const d = await sbGet('call_goals', 'main');
+      if (d) { callGoals = d; spSet('sp_call_goals_v1', callGoals); return; }
+      else {
+        const local = spGet('sp_call_goals_v1');
+        if (local) { callGoals = local; await sbUpsert('call_goals', 'main', callGoals); }
+        return;
+      }
+    } catch(e) {}
+  }
+  const r = spGet('sp_call_goals_v1'); if (r) callGoals = r;
+}
+
+// ════════════════════════════════════════
+// DELETE SYNC — when prospect deleted, remove from Supabase too
+// ════════════════════════════════════════
+async function deleteEntry(id) {
+  if (!confirm('Supprimer cette entreprise ?')) return;
+  data = data.filter(e => e.id !== id);
+  spSet('sourcingpro_data_v2', data);
+  if (isOnline) await sbDelete('prospects', id);
+  renderAll();
+  showToast('Entreprise supprimée');
+}
+
+async function deleteTodo(id) {
+  todos = todos.filter(t => t.id !== id);
+  saveTodos();
+  if (isOnline) await sbDelete('todos', id);
+  renderTodoList();
+  if (selectedTaskId === id) showTodoEmpty();
+  showToast('Tâche supprimée');
+}
+
+// ════════════════════════════════════════
+// REALTIME SYNC — auto-refresh when another device makes changes
+// ════════════════════════════════════════
+let realtimeChannel = null;
+function startRealtime() {
+  if (!isOnline) return;
+  // Poll every 30s for changes (simple, no WebSocket needed)
+  setInterval(async () => {
+    if (!isOnline || document.hidden) return;
+    try {
+      const rows = await sbGetAll('prospects');
+      if (rows.length > 0) {
+        const newData = rows.map(r => r.data);
+        // Only update if data actually changed
+        if (JSON.stringify(newData) !== JSON.stringify(data)) {
+          data = newData;
+          spSet('sourcingpro_data_v2', data);
+          renderAll();
+          showToast('🔄 Données synchronisées');
+        }
+      }
+    } catch(e) {}
+  }, 30000);
+}
+
+
+// Storage layer replaced by Supabase — see above
 
 // ════════════════════════════════════════
 // ALL STATE VARIABLES — declared here to avoid Safari TDZ issues
@@ -2376,17 +2788,9 @@ let scrapResults = [], importedIds = new Set();
 // ════════════════════════════════════════
 // PERSISTENCE
 // ════════════════════════════════════════
-function persist() {
-  spSet(DATA_KEY, data);
-  spSet(SETTINGS_KEY, settings);
-}
+// persist() defined in Supabase layer above
 
-function loadAll() {
-  const d = spGet(DATA_KEY);
-  if(d && Array.isArray(d)) data = d;
-  const s = spGet(SETTINGS_KEY);
-  if(s && s.statuses?.length) { settings.statuses = s.statuses; if(s.types?.length) settings.types = s.types; }
-}
+// loadAll() defined in Supabase layer above
 
 // ════════════════════════════════════════
 // HELPERS
@@ -2890,7 +3294,7 @@ function saveSettings(){
 // ACTIONS
 // ════════════════════════════════════════
 function toggleStar(id){const d=data.find(e=>e.id===id);if(d){d.priority=!d.priority;persist();renderAll();}}
-function deleteEntry(id){if(!confirm('Supprimer cette entreprise ?'))return;data=data.filter(e=>e.id!==id);persist();renderAll();showToast('Entreprise supprimée');}
+// deleteEntry() defined in Supabase layer above
 function addHistory(e,t){if(!e.history)e.history=[];e.history.push({date:new Date().toISOString(),text:t});}
 
 // ════════════════════════════════════════
@@ -3107,7 +3511,7 @@ document.addEventListener('keydown', e=>{
   if(e.key==='Escape'){closeModal('entry-overlay');closeModal('settings-overlay');closeDetail();closeCtx();closePD();}
   if((e.metaKey||e.ctrlKey)&&e.key==='n'){e.preventDefault();openEntry();}
 });
-setInterval(()=>{if(data.length>0)localStorage.setItem(DATA_KEY,JSON.stringify(data));},30000);
+// autosave handled by Supabase layer
 
 // ════════════════════════════════════════
 // INIT — full init runs at end of script after all functions defined
@@ -3121,14 +3525,8 @@ setInterval(()=>{if(data.length>0)localStorage.setItem(DATA_KEY,JSON.stringify(d
 
 // statsData, salesData declared above
 
-function loadStats() {
-  statsData = spGet(STATS_KEY) || {};
-  salesData = spGet(SALES_KEY) || [];
-}
-function saveStats() {
-  spSet(STATS_KEY, statsData);
-  spSet(SALES_KEY, salesData);
-}
+// loadStats() defined in Supabase layer above
+// saveStats() defined in Supabase layer above
 
 function getStatsDate() {
   return document.getElementById('stats-date')?.value || todayStr();
@@ -3590,12 +3988,8 @@ function renderNews() {
 // todoSortAsc declared above
 // selectedTaskId declared above
 
-function loadTodos() {
-  todos = spGet(TODO_KEY) || [];
-}
-function saveTodos() {
-  spSet(TODO_KEY, todos);
-}
+// loadTodos() defined in Supabase layer above
+// saveTodos() defined in Supabase layer above
 
 // Due date helpers
 function dueDateStatus(due) {
@@ -3843,12 +4237,7 @@ function saveCurrentTask() {
   showToast('Tâche enregistrée ✓');
 }
 
-function deleteTodo(id) {
-  todos = todos.filter(t=>t.id!==id);
-  saveTodos(); renderTodoList();
-  if(selectedTaskId===id) showTodoEmpty();
-  showToast('Tâche supprimée');
-}
+// deleteTodo() defined in Supabase layer above
 
 function deleteCurrentTask() {
   if(!selectedTaskId) return;
@@ -4339,7 +4728,21 @@ function copyPendingCode() {
 // ════════════════════════════════════════
 // TAB SWITCH — unified (no top tab bar)
 // ════════════════════════════════════════
+function toggleSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  sidebar.classList.toggle('open');
+  overlay.classList.toggle('open');
+}
+function closeSidebar() {
+  document.querySelector('.sidebar')?.classList.remove('open');
+  document.getElementById('sidebar-overlay')?.classList.remove('open');
+}
+
+// Close sidebar when a nav item is clicked on mobile
 function switchTab(tab) {
+  // Auto-close sidebar on mobile
+  if (window.innerWidth <= 768) closeSidebar();
   // Show correct content
   document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
   document.getElementById('content-'+tab)?.classList.add('active');
@@ -4708,12 +5111,8 @@ function getWeekNum(date) {
 // objectives declared above — { 'month_2025-03': 5000, 'quarter_2025-Q1': 15000 }
 // objPeriod declared above
 
-function loadObjectives() {
-  objectives = spGet(OBJ_KEY) || {};
-}
-function saveObjectives() {
-  spSet(OBJ_KEY, objectives);
-}
+// loadObjectives() defined in Supabase layer above
+// saveObjectives() defined in Supabase layer above
 function getObjective(type, key) { return parseFloat(objectives[`${type}_${key}`])||0; }
 function setObjective(type, key, val) {
   objectives[`${type}_${key}`] = parseFloat(val)||0;
@@ -4906,12 +5305,8 @@ function openEntryWithStatus(statusId) {
 // ATTACH_KEY declared above
 // attachments declared above — { prospectId: [{ id, name, type, size, data, addedAt }] }
 
-function loadAttachments() {
-  attachments = spGet(ATTACH_KEY) || {};
-}
-function saveAttachments() {
-  spSet(ATTACH_KEY, attachments);
-}
+// loadAttachments() defined in Supabase layer above
+// saveAttachments() defined in Supabase layer above
 
 function renderAttachments(prospectId) {
   const list = attachments[prospectId] || [];
@@ -5205,10 +5600,8 @@ function renderFunnel() {
 // CALL_GOALS_KEY declared above
 // callGoals declared above
 
-function loadCallGoals() {
-  const r = spGet(CALL_GOALS_KEY); if(r) callGoals = r;
-}
-function saveCallGoals() { spSet(CALL_GOALS_KEY, callGoals); }
+// loadCallGoals() defined in Supabase layer above
+// saveCallGoals() defined in Supabase layer above
 
 function editCallGoals() {
   const d = parseInt(prompt('Objectif d\'appels par jour :', callGoals.daily));
@@ -5439,14 +5832,10 @@ function showWeeklySummary(text) {
 // ════════════════════════════════════════
 // MAIN INIT — runs after ALL functions defined
 // ════════════════════════════════════════
-(function init() {
-  // 1. Load all persisted data
-  loadAll();
-  loadStats();
-  loadTodos();
-  loadAttachments();
-  loadObjectives();
-  loadCallGoals();
+(async function init() {
+  // 1. Load all persisted data (async - Supabase first, localStorage fallback)
+  await loadAll();
+  await Promise.all([loadStats(), loadTodos(), loadAttachments(), loadObjectives(), loadCallGoals()]);
   recentIds = spGet(RECENT_KEY) || [];
 
   // 2. Load API key for AI tab
