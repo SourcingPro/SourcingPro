@@ -1331,6 +1331,13 @@ body.dark-mode .dash-alert.success { background: var(--sage-light); }
   .import-section-body { padding:14px; }
 }
 
+/* Hide mobile-only elements on desktop */
+.todo-detail-mobile-overlay { display: none !important; }
+body.force-mobile .todo-detail-mobile-overlay.open { display: flex !important; }
+@media (max-width: 768px) {
+  body:not(.force-desktop) .todo-detail-mobile-overlay.open { display: flex !important; }
+}
+
 /* ════════════════════════════════════════
    OVERLAYS
 ════════════════════════════════════════ */
@@ -1641,13 +1648,14 @@ body.force-desktop .tab-content.active { padding-bottom: 0 !important; }
     inset: 0;
     z-index: 300;
     background: var(--bg);
-    display: flex;
+    display: none;
     flex-direction: column;
     overflow-y: auto;
     transform: translateX(100%);
     transition: transform 0.25s cubic-bezier(0.4,0,0.2,1);
   }
   .todo-detail-mobile-overlay.open {
+    display: flex;
     transform: translateX(0);
   }
   .todo-detail-mobile-header {
@@ -2010,13 +2018,13 @@ body.force-desktop .tab-content.active { padding-bottom: 0 !important; }
     <div id="layout-picker" style="display:none;flex-direction:column;gap:5px;padding:10px 14px;border-top:1px solid var(--border);background:var(--bg)">
       <div style="font-size:10px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Mise en page</div>
       <button class="layout-btn" data-mode="auto" onclick="setLayoutMode('auto')" style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--radius-lg);border:1.5px solid var(--border);background:var(--bg);font-family:var(--font);font-size:12.5px;cursor:pointer;color:var(--text-secondary);transition:all .12s">
-        🔄 Automatique
+        🔄 Auto
       </button>
       <button class="layout-btn" data-mode="desktop" onclick="setLayoutMode('desktop')" style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--radius-lg);border:1.5px solid var(--border);background:var(--bg);font-family:var(--font);font-size:12.5px;cursor:pointer;color:var(--text-secondary);transition:all .12s">
-        🖥 Bureau (PC)
+        🖥 PC
       </button>
       <button class="layout-btn" data-mode="mobile" onclick="setLayoutMode('mobile')" style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--radius-lg);border:1.5px solid var(--border);background:var(--bg);font-family:var(--font);font-size:12.5px;cursor:pointer;color:var(--text-secondary);transition:all .12s">
-        📱 Mobile (iPhone)
+        📱 Portable
       </button>
     </div>
   </aside>
@@ -4740,6 +4748,114 @@ function openNewTaskForProspect(prospectId) {
 }
 
 // AI removed — replaced by CSV import
+
+// ════════════════════════════════════════
+// TAB SWITCHING
+// ════════════════════════════════════════
+function switchTab(tab) {
+  if (window.innerWidth <= 768) closeSidebar();
+  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
+  document.getElementById('content-'+tab)?.classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
+
+  const hide = () => document.getElementById('topbar-actions').style.display='none';
+  const show = () => document.getElementById('topbar-actions').style.display='';
+
+  if(tab==='dashboard') {
+    document.getElementById('nav-dashboard')?.classList.add('active');
+    document.getElementById('view-label').textContent='Accueil';
+    hide(); renderDashboard();
+  } else if(tab==='prospects') {
+    document.getElementById('nav-prospects')?.classList.add('active');
+    show();
+    const labels={all:'Tous',priority:'Prioritaires'};
+    let lbl=labels[view]||'';
+    if(!lbl&&view.startsWith('s:')) lbl=getStatus(view.slice(2))?.label||view;
+    if(!lbl&&view.startsWith('t:')) lbl=getType(view.slice(2))?.label||view;
+    document.getElementById('view-label').textContent=lbl||'Tous';
+    renderTable();
+  } else if(tab==='kanban') {
+    document.getElementById('nav-kanban')?.classList.add('active');
+    document.getElementById('view-label').textContent='Kanban';
+    hide(); renderKanban();
+  } else if(tab==='stats') {
+    document.getElementById('nav-stats')?.classList.add('active');
+    document.getElementById('view-label').textContent='Statistiques';
+    hide(); renderStats();
+  } else if(tab==='objectives') {
+    document.getElementById('nav-objectives')?.classList.add('active');
+    document.getElementById('view-label').textContent='Objectifs & Résultats';
+    hide(); renderObjectives();
+  } else if(tab==='todo') {
+    document.getElementById('nav-todo')?.classList.add('active');
+    document.getElementById('view-label').textContent='To-Do';
+    hide(); renderTodoList();
+  } else if(tab==='news') {
+    document.getElementById('nav-news')?.classList.add('active');
+    document.getElementById('view-label').textContent='Actualités';
+    hide(); if(!allNewsArticles.length) loadNews(); else renderNews();
+  } else if(tab==='scraping') {
+    document.getElementById('nav-scraping')?.classList.add('active');
+    document.getElementById('view-label').textContent='Scraping';
+    hide();
+  } else if(tab==='ai') {
+    document.getElementById('nav-ai')?.classList.add('active');
+    document.getElementById('view-label').textContent='Import CSV';
+    hide();
+  }
+}
+
+// ════════════════════════════════════════
+// SIDEBAR TOGGLE (mobile)
+// ════════════════════════════════════════
+function toggleSidebar() {
+  const sidebar = document.querySelector('.sidebar');
+  const overlay = document.getElementById('sidebar-overlay');
+  sidebar?.classList.toggle('open');
+  overlay?.classList.toggle('open');
+}
+function closeSidebar() {
+  document.querySelector('.sidebar')?.classList.remove('open');
+  document.getElementById('sidebar-overlay')?.classList.remove('open');
+}
+
+// ════════════════════════════════════════
+// DARK MODE
+// ════════════════════════════════════════
+function toggleDarkMode() {
+  const isDark = document.body.classList.toggle('dark-mode');
+  localStorage.setItem('sp_dark', isDark ? '1' : '0');
+  document.getElementById('dark-toggle').textContent = isDark ? '☀️' : '🌙';
+}
+if (localStorage.getItem('sp_dark') === '1') {
+  document.body.classList.add('dark-mode');
+  document.getElementById('dark-toggle').textContent = '☀️';
+}
+
+// ════════════════════════════════════════
+// KEYBOARD SHORTCUTS
+// ════════════════════════════════════════
+function openShortcuts() {
+  document.getElementById('shortcuts-overlay')?.classList.add('open');
+}
+function closeShortcuts() {
+  document.getElementById('shortcuts-overlay')?.classList.remove('open');
+}
+document.addEventListener('keydown', e => {
+  if(e.key==='Escape'){ closeModal('entry-overlay'); closeModal('settings-overlay'); closeDetail(); closeCtx(); closePD(); closeShortcuts(); }
+  if((e.metaKey||e.ctrlKey)&&e.key==='n'){ e.preventDefault(); openEntry(); }
+  if((e.metaKey||e.ctrlKey)&&e.key==='.'){ e.preventDefault(); toggleDarkMode(); }
+  if(e.key==='/'){ e.preventDefault(); openShortcuts(); }
+  if(e.target.tagName==='INPUT'||e.target.tagName==='TEXTAREA'||e.target.isContentEditable) return;
+  if(e.key==='f'||e.key==='F'){ e.preventDefault(); document.getElementById('search-input-top')?.focus(); switchTab('prospects'); }
+  if(e.key==='d'||e.key==='D'){ e.preventDefault(); switchTab('dashboard'); }
+  if(e.key==='k'||e.key==='K'){ e.preventDefault(); switchTab('kanban'); }
+  if(e.key==='1'){ e.preventDefault(); switchTab('prospects'); }
+  if(e.key==='2'){ e.preventDefault(); switchTab('stats'); }
+  if(e.key==='3'){ e.preventDefault(); switchTab('todo'); }
+});
+
+
 
 // ════════════════════════════════════════
 // CSV IMPORT
