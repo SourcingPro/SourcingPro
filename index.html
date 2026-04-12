@@ -11,6 +11,12 @@
 <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><rect width=%27100%27 height=%27100%27 rx=%2720%27 fill=%27%235b7fa6%27/><text y=%27.9em%27 font-size=%2270%27 x=%2715%27>S</text></svg>">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="SourcingPro">
+<meta name="theme-color" content="#5b7fa6">
+<link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 100 100%27><rect width=%27100%27 height=%27100%27 rx=%2720%27 fill=%27%235b7fa6%27/><text y=%27.9em%27 font-size=%2270%27 x=%2715%27>S</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 
 :root {
@@ -1294,57 +1300,36 @@ body.dark-mode .dash-alert.success { background: var(--sage-light); }
 .scrap-empty-sub { font-size: 13px; line-height: 1.65; max-width: 400px; margin: 0 auto; }
 
 /* ════════════════════════════════════════
-   AI TAB
+   IMPORT CSV
 ════════════════════════════════════════ */
-.ai-view { flex: 1; display: flex; flex-direction: column; overflow: hidden; background: var(--bg); }
-.ai-header { padding: 14px 22px 12px; background: linear-gradient(135deg, var(--lavender-light), var(--surface)); border-bottom: 1px solid var(--border); flex-shrink: 0; display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
-.ai-header-left { flex: 1; }
-.ai-header-title { font-size: 14px; font-weight: 700; color: var(--text); display: flex; align-items: center; gap: 8px; }
-.ai-header-sub { font-size: 12px; color: var(--text-tertiary); margin-top: 2px; }
-.ai-key-row { display: flex; align-items: center; gap: 8px; }
-.ai-key-input { padding: 6px 11px; border: 1.5px solid var(--border); border-radius: var(--radius-lg); font-family: var(--font); font-size: 12.5px; color: var(--text); background: var(--bg); outline: none; width: 265px; transition: border-color 0.15s; }
-.ai-key-input:focus { border-color: var(--lavender); box-shadow: 0 0 0 3px rgba(155,135,196,0.12); }
-.ai-key-status { font-size: 11px; padding: 2px 9px; border-radius: 10px; font-weight: 600; }
-.ai-key-status.ok   { background: var(--sage-light); color: var(--sage-dark); }
-.ai-key-status.err  { background: var(--coral-light); color: var(--coral-dark); }
-.ai-key-status.none { background: var(--lavender-light); color: var(--lavender-dark); }
-.ai-suggestions { display: flex; gap: 6px; padding: 10px 22px; background: var(--surface); border-bottom: 1px solid var(--border); flex-shrink: 0; flex-wrap: wrap; align-items: center; }
-.ai-sug-label { font-size: 11px; font-weight: 700; color: var(--text-tertiary); text-transform: uppercase; letter-spacing: 0.05em; margin-right: 2px; white-space: nowrap; }
-.ai-sug-btn { padding: 5px 12px; border-radius: 20px; border: 1.5px solid var(--lavender-mid); background: var(--lavender-light); font-size: 12px; color: var(--lavender-dark); cursor: pointer; transition: all 0.12s; font-family: var(--font); white-space: nowrap; font-weight: 500; }
-.ai-sug-btn:hover { background: var(--lavender); color: #fff; border-color: var(--lavender); }
-.ai-chat { flex: 1; overflow-y: auto; padding: 22px; display: flex; flex-direction: column; gap: 16px; }
-.ai-msg { display: flex; gap: 10px; max-width: 85%; animation: msgIn 0.2s ease; }
-.ai-msg.user { align-self: flex-end; flex-direction: row-reverse; }
-.ai-msg.assistant { align-self: flex-start; }
-@keyframes msgIn { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
-.ai-avatar { width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
-.ai-avatar.user { background: linear-gradient(135deg, var(--coral), var(--coral-dark)); color: #fff; }
-.ai-avatar.assistant { background: linear-gradient(135deg, var(--lavender), var(--lavender-dark)); color: #fff; font-size: 12px; }
-.ai-bubble { padding: 11px 15px; border-radius: var(--radius-xl); font-size: 13.5px; line-height: 1.65; max-width: 100%; }
-.ai-msg.user .ai-bubble { background: linear-gradient(135deg, var(--primary), var(--primary-dark)); color: #fff; border-bottom-right-radius: 4px; }
-.ai-msg.assistant .ai-bubble { background: var(--surface); border: 1.5px solid var(--border); color: var(--text); border-bottom-left-radius: 4px; box-shadow: var(--shadow-sm); }
-.ai-bubble pre { background: #1e2d35; color: #e8eef1; padding: 10px 12px; border-radius: var(--radius-lg); font-size: 12px; overflow-x: auto; margin: 8px 0; font-family: 'Menlo', monospace; line-height: 1.5; }
-.ai-bubble code { font-family: 'Menlo', monospace; font-size: 12px; background: rgba(155,135,196,0.1); padding: 1px 5px; border-radius: 3px; }
-.ai-bubble pre code { background: none; padding: 0; }
-.ai-action-row { display: flex; gap: 7px; margin-top: 10px; flex-wrap: wrap; }
-.ai-action-btn { padding: 5px 13px; border-radius: var(--radius-lg); border: 1.5px solid var(--border); background: var(--bg); font-size: 12px; font-weight: 500; cursor: pointer; font-family: var(--font); transition: all 0.12s; color: var(--text-secondary); }
-.ai-action-btn:hover { border-color: var(--primary); color: var(--primary); background: var(--primary-light); }
-.ai-action-btn.apply { background: linear-gradient(135deg, var(--sage), var(--sage-dark)); color: #fff; border-color: transparent; }
-.ai-action-btn.apply:hover { transform: translateY(-1px); }
-.ai-typing { display: flex; gap: 5px; align-items: center; padding: 12px 15px; }
-.ai-typing span { width: 7px; height: 7px; border-radius: 50%; background: var(--lavender-mid); animation: typingDot 1.2s infinite; }
-.ai-typing span:nth-child(2) { animation-delay: 0.2s; }
-.ai-typing span:nth-child(3) { animation-delay: 0.4s; }
-@keyframes typingDot { 0%,60%,100%{opacity:0.3;transform:scale(0.8)} 30%{opacity:1;transform:scale(1)} }
-.ai-input-area { padding: 14px 22px; background: var(--surface); border-top: 1px solid var(--border); flex-shrink: 0; }
-.ai-input-row { display: flex; gap: 8px; align-items: flex-end; }
-.ai-textarea { flex: 1; padding: 10px 14px; border: 1.5px solid var(--border); border-radius: var(--radius-xl); font-family: var(--font); font-size: 13.5px; color: var(--text); background: var(--bg); outline: none; resize: none; max-height: 140px; min-height: 42px; line-height: 1.5; transition: all 0.15s; }
-.ai-textarea:focus { border-color: var(--lavender); box-shadow: 0 0 0 3px rgba(155,135,196,0.12); background: var(--surface); }
-.ai-textarea::placeholder { color: var(--text-placeholder); }
-.ai-send-btn { width: 40px; height: 40px; border-radius: var(--radius-xl); background: linear-gradient(135deg, var(--lavender), var(--lavender-dark)); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 16px; transition: all 0.15s; flex-shrink: 0; box-shadow: 0 3px 10px rgba(155,135,196,0.35); }
-.ai-send-btn:hover { transform: translateY(-2px); box-shadow: 0 5px 16px rgba(155,135,196,0.45); }
-.ai-send-btn:disabled { background: var(--border); cursor: default; box-shadow: none; transform: none; }
-.ai-hint { font-size: 11px; color: var(--text-tertiary); margin-top: 6px; text-align: center; }
+.import-view { flex:1; overflow-y:auto; background:var(--bg); padding:24px 28px; }
+.import-header { margin-bottom:24px; }
+.import-title { font-size:22px; font-weight:800; color:var(--text); letter-spacing:-0.03em; margin-bottom:6px; }
+.import-subtitle { font-size:13.5px; color:var(--text-tertiary); }
+.import-section { background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-2xl); overflow:hidden; margin-bottom:20px; box-shadow:var(--shadow-card); }
+.import-section-title { padding:14px 20px; border-bottom:1px solid var(--border); font-size:14px; font-weight:700; color:var(--text); background:linear-gradient(135deg,var(--primary-soft),var(--surface)); }
+.import-section-body { padding:20px; }
+.import-dropzone { border:2px dashed var(--border); border-radius:var(--radius-xl); padding:40px 20px; text-align:center; cursor:pointer; transition:all 0.2s; background:var(--bg); }
+.import-dropzone:hover, .import-dropzone.drag-over { border-color:var(--sage); background:var(--sage-light); }
+.import-dropzone.drag-over { transform:scale(1.01); }
+.import-dropzone-icon { font-size:42px; margin-bottom:12px; opacity:0.6; }
+.import-dropzone-text { font-size:15px; font-weight:600; color:var(--text); margin-bottom:6px; line-height:1.5; }
+.import-dropzone-sub { font-size:12px; color:var(--text-tertiary); }
+.import-stat-chip { display:inline-flex; flex-direction:column; align-items:center; padding:12px 18px; border-radius:var(--radius-xl); border:1.5px solid var(--border); background:var(--bg); min-width:90px; }
+.import-stat-chip .val { font-size:22px; font-weight:800; color:var(--primary); }
+.import-stat-chip .lbl { font-size:11px; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.05em; font-weight:600; margin-top:2px; }
+.import-stat-chip.green .val { color:var(--sage-dark); }
+.import-stat-chip.amber .val { color:var(--amber-dark); }
+.import-stat-chip.red   .val { color:var(--coral-dark); }
+.import-preview-table { width:100%; border-collapse:collapse; font-size:12.5px; }
+.import-preview-table th { padding:8px 12px; text-align:left; font-size:11px; font-weight:700; color:var(--text-tertiary); text-transform:uppercase; letter-spacing:0.05em; border-bottom:1.5px solid var(--border); background:var(--bg); white-space:nowrap; }
+.import-preview-table td { padding:8px 12px; border-bottom:1px solid var(--border); max-width:160px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+.import-preview-table tr:last-child td { border-bottom:none; }
+.import-preview-table tr:hover td { background:var(--primary-soft); }
+@media (max-width:768px) {
+  .import-view { padding:14px 14px 0; }
+  .import-section-body { padding:14px; }
+}
 
 /* ════════════════════════════════════════
    OVERLAYS
@@ -1406,8 +1391,350 @@ body.dark-mode .dash-alert.success { background: var(--sage-light); }
 a { color: var(--primary); text-decoration: none; }
 a:hover { text-decoration: underline; color: var(--primary-dark); }
 tr.kb-focus td { background: var(--primary-light) !important; }
+
+/* ════════════════════════════════════════
+   MOBILE — iPhone vertical (≤ 430px)
+   Navigation en bas, vues adaptées
+════════════════════════════════════════ */
+
+/* Detect mobile */
+:root {
+  --mobile-nav-h: 60px;
+  --mobile-topbar-h: 52px;
+}
+
+/* Force layout modes regardless of screen size */
+body.force-mobile .sidebar { display: none !important; }
+body.force-mobile .sidebar-overlay { display: none !important; }
+body.force-mobile .sidebar-toggle { display: none !important; }
+body.force-mobile .app { flex-direction: column; }
+body.force-mobile .main { width: 100%; }
+body.force-mobile .topbar { height: var(--mobile-topbar-h); padding: 0 14px; gap: 8px; }
+body.force-mobile .breadcrumb-sep,
+body.force-mobile #view-label { display: none; }
+body.force-mobile .tab-content.active { padding-bottom: var(--mobile-nav-h); }
+body.force-mobile #mobile-nav { display: flex !important; }
+body.force-mobile .content table, body.force-mobile .content thead { display: block; }
+body.force-mobile .content thead { display: none; }
+body.force-mobile .content tr { display: block; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-xl); margin: 8px 12px; padding: 12px 14px; box-shadow: var(--shadow-card); position: relative; }
+body.force-mobile .content td { display: flex; align-items: center; padding: 3px 0; border: none; height: auto; font-size: 13px; background: transparent !important; }
+body.force-mobile .content td:nth-child(1) { position: absolute; top: 12px; right: 12px; padding: 0; }
+body.force-mobile .content td:nth-child(2) { font-size: 15px; font-weight: 700; padding-bottom: 6px; padding-right: 30px; }
+body.force-mobile .content td:nth-child(7),
+body.force-mobile .content td:nth-child(8),
+body.force-mobile .content td:nth-child(9) { font-size: 11.5px; color: var(--text-tertiary); }
+body.force-mobile .content .row-actions { display: flex !important; opacity: 1 !important; }
+body.force-mobile .dash-grid { grid-template-columns: 1fr; gap: 10px; }
+body.force-mobile .kpi-row { grid-template-columns: repeat(2,1fr) !important; gap: 8px; }
+body.force-mobile .dashboard-view { padding: 14px 14px 0; }
+body.force-mobile .stats-view { padding: 12px 12px 0; }
+body.force-mobile .news-grid { grid-template-columns: 1fr; }
+body.force-mobile .todo-right { display: none !important; }
+body.force-mobile .todo-left { width: 100%; min-width: 0; border-right: none; }
+body.force-mobile .modal { width: 100vw !important; max-width: 100vw !important; border-radius: var(--radius-xl) var(--radius-xl) 0 0 !important; position: fixed !important; bottom: 0 !important; left: 0 !important; right: 0 !important; }
+body.force-mobile .overlay { align-items: flex-end !important; }
+body.force-mobile .form-row { grid-template-columns: 1fr !important; }
+body.force-mobile .detail-panel { width: 100% !important; min-width: 0 !important; }
+
+body.force-desktop .mobile-nav { display: none !important; }
+body.force-desktop .sidebar { display: flex !important; }
+body.force-desktop .tab-content.active { padding-bottom: 0 !important; }
+
+@media (max-width: 768px) {
+
+  /* ── Hide desktop sidebar completely ── */
+  .sidebar { display: none !important; }
+  .sidebar-overlay { display: none !important; }
+  .sidebar-toggle { display: none !important; }
+
+  /* ── App layout: full width, no sidebar ── */
+  .app { flex-direction: column; }
+  .main { width: 100%; height: 100vh; display: flex; flex-direction: column; }
+
+  /* ── Mobile topbar ── */
+  .topbar {
+    height: var(--mobile-topbar-h);
+    padding: 0 14px;
+    gap: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .topbar-brand { font-size: 16px; }
+  .breadcrumb-sep, #view-label { display: none; }
+  .search-wrap {
+    flex: 1;
+    margin: 0 0 0 8px !important;
+    min-width: 0;
+    width: auto !important;
+  }
+  .search-wrap:focus-within { width: auto !important; }
+  .topbar-actions .btn-primary { padding: 7px 12px; font-size: 12px; }
+
+  /* ── Content area leaves room for bottom nav ── */
+  .tab-content.active {
+    flex: 1;
+    overflow: hidden;
+    padding-bottom: var(--mobile-nav-h);
+  }
+
+  /* ── Mobile bottom navigation bar ── */
+  .mobile-nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    height: var(--mobile-nav-h);
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: stretch;
+    z-index: 200;
+    box-shadow: 0 -4px 20px rgba(80,120,160,0.08);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+  .mobile-nav-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    cursor: pointer;
+    transition: all 0.15s;
+    padding: 8px 4px;
+    border-radius: 0;
+    color: var(--text-tertiary);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    position: relative;
+  }
+  .mobile-nav-item:hover { color: var(--primary); }
+  .mobile-nav-item.active {
+    color: var(--primary);
+  }
+  .mobile-nav-item.active::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 20%; right: 20%;
+    height: 3px;
+    background: var(--primary);
+    border-radius: 0 0 3px 3px;
+  }
+  .mobile-nav-icon { font-size: 20px; line-height: 1; }
+  .mobile-nav-badge {
+    position: absolute;
+    top: 6px; right: calc(50% - 16px);
+    background: var(--coral);
+    color: #fff;
+    font-size: 9px;
+    font-weight: 800;
+    padding: 1px 5px;
+    border-radius: 10px;
+    min-width: 16px;
+    text-align: center;
+  }
+
+  /* ── DASHBOARD mobile ── */
+  .dashboard-view {
+    padding: 14px 14px 0;
+    overflow-y: auto;
+    flex: 1;
+  }
+  .dash-greeting { font-size: 18px; margin-bottom: 2px; }
+  .dash-subline { font-size: 12px; margin-bottom: 14px; }
+  .dash-alert { padding: 10px 12px; }
+  .dash-alert-title { font-size: 13px; }
+  .dash-grid { grid-template-columns: 1fr; gap: 10px; margin-bottom: 14px; }
+  .dash-section-header { padding: 10px 12px; }
+  .dash-section-body { padding: 10px 12px; }
+
+  /* ── PROSPECTS mobile — card view instead of table ── */
+  .content { overflow-y: auto; flex: 1; }
+  table, thead, tbody, tr, th, td { display: block; }
+  thead { display: none; }
+  tr {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-xl);
+    margin: 8px 12px;
+    padding: 12px 14px;
+    box-shadow: var(--shadow-card);
+  }
+  tr:hover { background: var(--surface); }
+  tr.add-row { display: flex; justify-content: center; background: none; border: 1.5px dashed var(--border); margin: 8px 12px; }
+  tr.add-row:hover { background: var(--sage-light) !important; }
+  td {
+    display: flex;
+    align-items: center;
+    padding: 3px 0;
+    border: none;
+    height: auto;
+    font-size: 13px;
+    background: transparent !important;
+  }
+  td:empty { display: none; }
+
+  /* Show only key columns as cards */
+  td:nth-child(1) { /* star */
+    position: absolute; top: 12px; right: 12px;
+    padding: 0;
+  }
+  td:nth-child(2) { /* name */
+    font-size: 15px; font-weight: 700;
+    padding-bottom: 6px; padding-right: 30px;
+  }
+  td:nth-child(3) { /* type */ font-size: 12px; }
+  td:nth-child(4) { /* status */ padding-top: 4px; }
+  td:nth-child(5) { /* contact */ font-size: 12px; color: var(--text-secondary); }
+  td:nth-child(6) { /* tags */ flex-wrap: wrap; }
+  td:nth-child(7), /* tasks */
+  td:nth-child(8), /* last contact */
+  td:nth-child(9)  /* notes */
+  { font-size: 11.5px; color: var(--text-tertiary); }
+  td:nth-child(10) { /* actions */
+    justify-content: flex-end;
+    padding-top: 8px;
+    margin-top: 4px;
+    border-top: 1px solid var(--border);
+  }
+  .row-actions { display: flex !important; opacity: 1 !important; }
+  tr { position: relative; }
+
+  /* Toolbar mobile */
+  .toolbar { padding: 8px 12px; gap: 6px; min-height: 46px; }
+  .search-wrap { width: auto !important; flex: 1; }
+  .search-wrap:focus-within { width: auto !important; }
+
+  /* ── STATS mobile ── */
+  .stats-view { padding: 12px 12px 0; overflow-y: auto; flex: 1; }
+  .stats-date-bar { gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .kpi-row { grid-template-columns: repeat(2,1fr) !important; gap: 8px; margin-bottom: 10px; }
+  .kpi-card { padding: 12px 14px; }
+  .kpi-value { font-size: 26px; }
+  .stats-section { margin-bottom: 12px; }
+  .stats-section-body { padding: 12px; }
+  .progress-row { grid-template-columns: 1fr; gap: 10px; }
+  .call-outcome-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .outcome-btn { padding: 8px 6px; font-size: 12px; justify-content: center; }
+  .add-sale-form { flex-direction: column; }
+  .add-sale-input { min-width: 0; width: 100%; }
+
+  /* ── TODO mobile ── */
+  .todo-view { display: flex; flex-direction: column; overflow: hidden; }
+  .todo-left {
+    width: 100%; min-width: 0;
+    height: 100%; flex: 1;
+    border-right: none;
+    overflow: hidden;
+    display: flex; flex-direction: column;
+  }
+  .todo-right { display: none !important; }
+  .todo-header { padding: 10px 14px; }
+  .todo-filters { padding: 6px 10px; gap: 4px; }
+  .todo-filter-btn { padding: 4px 10px; font-size: 11.5px; }
+  .todo-sort-bar { padding: 5px 10px; }
+  .todo-list { padding: 8px; gap: 6px; }
+  .task-item { padding: 10px 12px; }
+  .todo-add-bar { padding: 10px 12px; }
+
+  /* When a task is selected on mobile, show detail as full screen overlay */
+  .todo-detail-mobile-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 300;
+    background: var(--bg);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    transform: translateX(100%);
+    transition: transform 0.25s cubic-bezier(0.4,0,0.2,1);
+  }
+  .todo-detail-mobile-overlay.open {
+    transform: translateX(0);
+  }
+  .todo-detail-mobile-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+    flex-shrink: 0;
+  }
+  .todo-detail-mobile-back {
+    background: none; border: none; cursor: pointer;
+    font-size: 20px; color: var(--primary);
+    font-family: var(--font); padding: 0 6px 0 0;
+  }
+
+  /* ── KANBAN mobile ── */
+  .kanban-view { padding: 10px; gap: 10px; }
+  .kanban-col { min-width: 230px; }
+
+  /* ── NEWS mobile ── */
+  .news-view { padding: 12px 12px 0; overflow-y: auto; flex: 1; }
+  .news-grid { grid-template-columns: 1fr; gap: 12px; }
+  .news-toolbar { margin-bottom: 12px; }
+  .news-categories { gap: 5px; margin-bottom: 14px; }
+
+  /* ── AI mobile ── */
+  .ai-header { padding: 10px 14px; flex-direction: column; align-items: flex-start; gap: 8px; }
+  .ai-key-row { width: 100%; }
+  .ai-key-input { width: 100%; flex: 1; }
+  .ai-key-status { display: none; }
+  .ai-suggestions { padding: 8px 12px; gap: 5px; }
+  .ai-sug-btn { font-size: 11px; padding: 4px 10px; }
+  .ai-chat { padding: 12px; gap: 12px; }
+  .ai-msg { max-width: 92%; }
+  .ai-input-area { padding: 10px 12px; }
+
+  /* ── OBJECTIVES mobile ── */
+  .objectives-view { padding: 12px 12px 0; overflow-y: auto; flex: 1; }
+
+  /* ── SCRAPING mobile ── */
+  .scraping-toolbar { padding: 10px 12px; }
+  .scrap-url-row { padding: 10px 12px; flex-direction: column; }
+  .scrap-url-input { min-width: 0; width: 100%; }
+  .scrap-preset-row { padding: 8px 12px; }
+  .scrap-options-row { padding: 8px 12px; flex-wrap: wrap; gap: 10px; }
+  .scrap-results { padding: 10px 12px; }
+  .result-grid { grid-template-columns: 1fr; }
+
+  /* ── DETAIL PANEL mobile — full screen ── */
+  .detail-panel {
+    width: 100% !important;
+    min-width: 0 !important;
+    top: var(--mobile-topbar-h) !important;
+    bottom: var(--mobile-nav-h) !important;
+  }
+
+  /* ── Modals mobile ── */
+  .modal {
+    width: 100vw !important;
+    max-width: 100vw !important;
+    max-height: 95vh !important;
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0 !important;
+    position: fixed !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    margin: 0 !important;
+  }
+  .overlay {
+    align-items: flex-end !important;
+  }
+  .modal-header {
+    border-radius: var(--radius-xl) var(--radius-xl) 0 0 !important;
+  }
+  .form-row { grid-template-columns: 1fr !important; gap: 10px; }
+
+  /* ── Dark toggle mobile ── */
+  .dark-toggle { bottom: calc(var(--mobile-nav-h) + 12px); left: 14px; }
+
+  /* ── CA Chart ── */
+  .ca-chart-wrap { height: 80px !important; }
+}
+
+
 </style>
-</head>
 <body>
 
 <div class="ctx-menu" id="ctx-menu"></div>
@@ -1655,7 +1982,7 @@ tr.kb-focus td { background: var(--primary-light) !important; }
         <div class="nav-item" id="nav-todo" onclick="switchTab('todo')" style="color:#7c5cbf"><span class="nav-icon">✅</span> To-Do <span class="nav-count" id="cnt-todo-tasks">0</span></div>
         <div class="nav-item scraping-nav" id="nav-scraping" onclick="switchTab('scraping')"><span class="nav-icon">🕷️</span> Scraping</div>
         <div class="nav-item" id="nav-news" onclick="switchTab('news')" style="color:#c07a3a"><span class="nav-icon">📰</span> Actualités</div>
-        <div class="nav-item ai-nav" id="nav-ai" onclick="switchTab('ai')"><span class="nav-icon">🤖</span> Assistant IA</div>
+        <div class="nav-item" id="nav-ai" onclick="switchTab('ai')" style="color:var(--sage-dark)"><span class="nav-icon">📥</span> Import CSV</div>
         <div style="height:1px;background:var(--border);margin:6px 4px"></div>
         <div class="nav-item" onclick="openSettings()" style="color:var(--text-secondary)"><span class="nav-icon">⚙️</span> Personnaliser</div>
         <div class="nav-item" onclick="exportCSV()" style="color:var(--text-secondary)"><span class="nav-icon">↑</span> Export CSV</div>
@@ -1674,7 +2001,23 @@ tr.kb-focus td { background: var(--primary-light) !important; }
     <div class="sidebar-footer">
       <div class="autosave-dot"></div>
       <span class="sync-label">Connexion…</span>
-      <span style="margin-left:auto;cursor:pointer;font-size:11px;color:var(--text-tertiary)" onclick="openShortcuts()" title="Raccourcis clavier">⌨️</span>
+      <span style="margin-left:auto;display:flex;align-items:center;gap:6px">
+        <span onclick="toggleLayoutPicker()" title="Changer la mise en page" style="cursor:pointer;font-size:15px">🖥</span>
+        <span onclick="openShortcuts()" title="Raccourcis clavier" style="cursor:pointer;font-size:11px;color:var(--text-tertiary)">⌨️</span>
+      </span>
+    </div>
+    <!-- Layout picker -->
+    <div id="layout-picker" style="display:none;flex-direction:column;gap:5px;padding:10px 14px;border-top:1px solid var(--border);background:var(--bg)">
+      <div style="font-size:10px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">Mise en page</div>
+      <button class="layout-btn" data-mode="auto" onclick="setLayoutMode('auto')" style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--radius-lg);border:1.5px solid var(--border);background:var(--bg);font-family:var(--font);font-size:12.5px;cursor:pointer;color:var(--text-secondary);transition:all .12s">
+        🔄 Automatique
+      </button>
+      <button class="layout-btn" data-mode="desktop" onclick="setLayoutMode('desktop')" style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--radius-lg);border:1.5px solid var(--border);background:var(--bg);font-family:var(--font);font-size:12.5px;cursor:pointer;color:var(--text-secondary);transition:all .12s">
+        🖥 Bureau (PC)
+      </button>
+      <button class="layout-btn" data-mode="mobile" onclick="setLayoutMode('mobile')" style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--radius-lg);border:1.5px solid var(--border);background:var(--bg);font-family:var(--font);font-size:12.5px;cursor:pointer;color:var(--text-secondary);transition:all .12s">
+        📱 Mobile (iPhone)
+      </button>
     </div>
   </aside>
 
@@ -1693,6 +2036,7 @@ tr.kb-focus td { background: var(--primary-light) !important; }
           onfocus="switchTab('prospects')">
       </div>
       <div class="topbar-actions" id="topbar-actions">
+        <button class="btn-icon" onclick="toggleLayoutPicker()" title="Mise en page" style="font-size:16px">🖥</button>
         <button class="btn btn-primary" onclick="openEntry()">+ Nouveau</button>
       </div>
     </div>
@@ -2297,72 +2641,145 @@ tr.kb-focus td { background: var(--primary-light) !important; }
       </div>
     </div>
 
-    <!-- AI TAB -->
+    <!-- IMPORT TAB -->
     <div class="tab-content" id="content-ai">
-      <div class="ai-view">
+      <div class="import-view">
 
-        <!-- Header + API key -->
-        <div class="ai-header">
-          <div class="ai-header-left">
-            <div class="ai-header-title">🤖 Assistant IA — propulsé par Gemini <span style="font-size:11px;background:#e8f0fe;color:#1a73e8;padding:2px 8px;border-radius:10px;font-weight:600;margin-left:6px">GRATUIT</span></div>
-            <div class="ai-header-sub">Google Gemini 2.0 Flash · Modifie l'app, analyse tes prospects, prépare tes calls</div>
-          </div>
-          <div class="ai-key-row">
-            <input class="ai-key-input" id="ai-api-key" type="password"
-              placeholder="Clé API Gemini (AIza…)"
-              oninput="saveApiKey(this.value)"
-              autocomplete="off">
-            <button class="btn btn-ghost" style="font-size:12px;padding:4px 10px" onclick="testGeminiKey()" title="Tester la connexion">🔌 Tester</button>
-            <span class="ai-key-status none" id="ai-key-status">Clé non configurée</span>
-          </div>
+        <div class="import-header">
+          <div class="import-title">📥 Import CSV</div>
+          <div class="import-subtitle">Importe tes prospects depuis un fichier Excel ou CSV en quelques secondes</div>
         </div>
 
-        <!-- Quick suggestions -->
-        <div class="ai-suggestions">
-          <span class="ai-sug-label">Suggestions :</span>
-          <button class="ai-sug-btn" onclick="aiSuggest('Combien de prospects ai-je par statut en ce moment ?')">📊 Stats prospects</button>
-          <button class="ai-sug-btn" onclick="aiSuggest('Quels prospects sont à relancer en priorité cette semaine ?')">🔔 Relances prioritaires</button>
-          <button class="ai-sug-btn" onclick="aiSuggest('Prépare-moi un script d\'appel pour un grossiste alimentaire que je contacte pour la première fois')">📞 Script appel à froid</button>
-          <button class="ai-sug-btn" onclick="aiSuggest('Quelle stratégie adopter pour convertir un prospect \"Intéressé\" en client ?')">💡 Stratégie conversion</button>
-          <button class="ai-sug-btn" onclick="aiSuggest('Change la couleur principale de l\'app en bleu marine #1a3a5c')">🎨 Modifier couleurs</button>
-          <button class="ai-sug-btn" onclick="aiSuggest('Ajoute une colonne \"Priorité\" avec des niveaux Haute / Moyenne / Basse dans le tableau')">➕ Nouvelle fonctionnalité</button>
-        </div>
-
-        <!-- Chat messages -->
-        <div class="ai-chat" id="ai-chat">
-          <div class="ai-msg assistant">
-            <div class="ai-avatar assistant">IA</div>
-            <div class="ai-bubble">
-              👋 Bonjour ! Je suis ton assistant IA intégré à SourcingPro, propulsé par <strong>Gemini (Google) — 100% gratuit</strong>.<br><br>
-              Je peux t'aider à :<br>
-              • <strong>Modifier l'app</strong> — design, couleurs, nouvelles fonctionnalités<br>
-              • <strong>Analyser tes prospects</strong> — stats, tendances, relances prioritaires<br>
-              • <strong>Préparer tes calls</strong> — scripts d'appel, argumentaires, objections<br>
-              • <strong>Définir des stratégies</strong> — selon le profil et le statut de tes clients<br><br>
-              Configure ta clé <strong>Gemini gratuite</strong> en haut à droite (aistudio.google.com → Get API key), puis commence !
+        <!-- Download template -->
+        <div class="import-section">
+          <div class="import-section-title">1. Télécharge le modèle</div>
+          <div class="import-section-body">
+            <p style="font-size:13px;color:var(--text-secondary);margin-bottom:12px">
+              Pour garantir un import parfait, utilise notre modèle CSV avec les bonnes colonnes.
+            </p>
+            <button class="btn btn-primary" onclick="downloadCsvTemplate()" style="gap:8px">
+              ⬇️ Télécharger le modèle CSV
+            </button>
+            <div style="margin-top:12px;padding:12px;background:var(--primary-soft);border-radius:var(--radius-lg);font-size:12px;color:var(--text-secondary);line-height:1.7">
+              <strong>Colonnes disponibles :</strong><br>
+              <span style="font-family:monospace;font-size:11.5px">nom</span> (obligatoire) · 
+              <span style="font-family:monospace;font-size:11.5px">statut</span> · 
+              <span style="font-family:monospace;font-size:11.5px">type</span> · 
+              <span style="font-family:monospace;font-size:11.5px">ville</span> · 
+              <span style="font-family:monospace;font-size:11.5px">region</span> · 
+              <span style="font-family:monospace;font-size:11.5px">contact</span> · 
+              <span style="font-family:monospace;font-size:11.5px">role</span> · 
+              <span style="font-family:monospace;font-size:11.5px">telephone</span> · 
+              <span style="font-family:monospace;font-size:11.5px">email</span> · 
+              <span style="font-family:monospace;font-size:11.5px">site</span> · 
+              <span style="font-family:monospace;font-size:11.5px">produits</span> · 
+              <span style="font-family:monospace;font-size:11.5px">notes</span> · 
+              <span style="font-family:monospace;font-size:11.5px">prioritaire</span> · 
+              <span style="font-family:monospace;font-size:11.5px">dernier_contact</span>
             </div>
           </div>
         </div>
 
-        <!-- Input -->
-        <div class="ai-input-area">
-          <div class="ai-input-row">
-            <textarea class="ai-textarea" id="ai-input" rows="1"
-              placeholder="Pose une question, demande une modification, prépare un call…"
-              onkeydown="aiHandleKey(event)"
-              oninput="this.style.height='auto';this.style.height=Math.min(this.scrollHeight,140)+'px'"></textarea>
-            <button class="ai-send-btn" id="ai-send-btn" onclick="aiSend()" title="Envoyer (Entrée)">➤</button>
+        <!-- Upload zone -->
+        <div class="import-section">
+          <div class="import-section-title">2. Importe ton fichier</div>
+          <div class="import-section-body">
+            <div class="import-dropzone" id="import-dropzone"
+              ondrop="handleCsvDrop(event)" ondragover="event.preventDefault();this.classList.add('drag-over')" ondragleave="this.classList.remove('drag-over')"
+              onclick="document.getElementById('csv-file-input').click()">
+              <div class="import-dropzone-icon">📂</div>
+              <div class="import-dropzone-text">Glisse ton fichier CSV ici<br>ou <span style="color:var(--primary);font-weight:600;cursor:pointer">clique pour choisir</span></div>
+              <div class="import-dropzone-sub">Fichiers .csv · .txt · séparateur virgule ou point-virgule</div>
+            </div>
+            <input type="file" id="csv-file-input" accept=".csv,.txt" style="display:none" onchange="handleCsvFile(this.files[0])">
           </div>
-          <div class="ai-hint">Entrée pour envoyer · Maj+Entrée pour saut de ligne</div>
+        </div>
+
+        <!-- Preview -->
+        <div class="import-section" id="import-preview-section" style="display:none">
+          <div class="import-section-title">3. Vérifie et importe</div>
+          <div class="import-section-body">
+            <div id="import-stats" style="display:flex;gap:12px;flex-wrap:wrap;margin-bottom:16px"></div>
+            <div id="import-mapping" style="margin-bottom:16px"></div>
+            <div id="import-preview-table" style="overflow-x:auto;margin-bottom:16px"></div>
+            <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+              <button class="btn btn-primary" id="import-confirm-btn" onclick="confirmCsvImport()" style="gap:6px">
+                ✅ Importer les prospects
+              </button>
+              <button class="btn btn-ghost" onclick="resetCsvImport()">Annuler</button>
+              <span id="import-result" style="font-size:13px;font-weight:600"></span>
+            </div>
+          </div>
         </div>
 
       </div>
     </div>
+  
+<!-- MOBILE BOTTOM NAV -->
+<nav class="mobile-nav" id="mobile-nav">
+  <div class="mobile-nav-item active" id="mnav-dashboard" onclick="mobileNav('dashboard')">
+    <span class="mobile-nav-icon">🏠</span>
+    <span>Accueil</span>
+  </div>
+  <div class="mobile-nav-item" id="mnav-prospects" onclick="mobileNav('prospects')">
+    <span class="mobile-nav-icon">📋</span>
+    <span>Prospects</span>
+    <span class="mobile-nav-badge" id="mnav-badge-prospects" style="display:none"></span>
+  </div>
+  <div class="mobile-nav-item" id="mnav-stats" onclick="mobileNav('stats')">
+    <span class="mobile-nav-icon">📊</span>
+    <span>Stats</span>
+  </div>
+  <div class="mobile-nav-item" id="mnav-todo" onclick="mobileNav('todo')">
+    <span class="mobile-nav-icon">✅</span>
+    <span>To-Do</span>
+    <span class="mobile-nav-badge" id="mnav-badge-todo" style="display:none"></span>
+  </div>
+  <div class="mobile-nav-item" id="mnav-more" onclick="toggleMobileMore()">
+    <span class="mobile-nav-icon">⋯</span>
+    <span>Plus</span>
+  </div>
+</nav>
 
+<!-- MOBILE MORE MENU -->
+<div class="mobile-more-menu" id="mobile-more-menu" style="display:none;position:fixed;bottom:60px;left:0;right:0;z-index:199;background:var(--surface);border-top:1px solid var(--border);box-shadow:0 -8px 24px rgba(80,120,160,0.12);padding:12px 16px;display:none;flex-direction:column;gap:4px;">
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+    <div onclick="mobileNav('kanban')" style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg);border-radius:var(--radius-xl);cursor:pointer;font-size:13px;font-weight:500;">
+      <span style="font-size:20px">🗂</span> Kanban
+    </div>
+    <div onclick="mobileNav('objectives')" style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg);border-radius:var(--radius-xl);cursor:pointer;font-size:13px;font-weight:500;">
+      <span style="font-size:20px">🎯</span> Objectifs
+    </div>
+    <div onclick="mobileNav('news')" style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg);border-radius:var(--radius-xl);cursor:pointer;font-size:13px;font-weight:500;">
+      <span style="font-size:20px">📰</span> Actualités
+    </div>
+    <div onclick="mobileNav('ai')" style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg);border-radius:var(--radius-xl);cursor:pointer;font-size:13px;font-weight:500;">
+      <span style="font-size:20px">📥</span> Import CSV
+    </div>
+    <div onclick="mobileNav('scraping')" style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg);border-radius:var(--radius-xl);cursor:pointer;font-size:13px;font-weight:500;">
+      <span style="font-size:20px">🕷️</span> Scraping
+    </div>
+    <div onclick="openEntry()" style="display:flex;align-items:center;gap:10px;padding:12px;background:var(--primary-light);border-radius:var(--radius-xl);cursor:pointer;font-size:13px;font-weight:600;color:var(--primary);">
+      <span style="font-size:20px">➕</span> Nouveau
+    </div>
+  </div>
+</div>
+<div id="mobile-more-overlay" onclick="closeMobileMore()" style="display:none;position:fixed;inset:0;z-index:198;background:rgba(20,35,55,0.3);backdrop-filter:blur(2px);"></div>
+
+<!-- MOBILE TODO DETAIL OVERLAY -->
+<div class="todo-detail-mobile-overlay" id="todo-detail-mobile">
+  <div class="todo-detail-mobile-header">
+    <button class="todo-detail-mobile-back" onclick="closeMobileTodoDetail()">‹ Retour</button>
+    <span style="font-size:14px;font-weight:700;color:var(--text)">Détail tâche</span>
+  </div>
+  <div style="flex:1;overflow-y:auto;padding:16px;">
+    <!-- content injected by JS -->
+    <div id="todo-detail-mobile-body"></div>
   </div>
 </div>
 
-
+</div>
+</div>
 <script>
 // ════════════════════════════════════════
 // SUPABASE CONFIG
@@ -2412,12 +2829,12 @@ async function sbGetAll(table) {
   } catch(e) { return []; }
 }
 
-async function sbUpsert(table, id, data, extra = {}) {
+async function sbUpsert(table, id, payload, extra = {}) {
   try {
     await sbFetch(table, {
       method: 'POST',
       headers: { 'Prefer': 'resolution=merge-duplicates,return=minimal' },
-      body: JSON.stringify({ id, data, updated_at: new Date().toISOString(), ...extra })
+      body: JSON.stringify({ id, data: payload, updated_at: new Date().toISOString(), ...extra })
     });
   } catch(e) { console.error('sbUpsert error', e); }
 }
@@ -2474,11 +2891,15 @@ async function persist() {
   // Always write to localStorage immediately (offline safety)
   spSet('sourcingpro_data_v2', data);
   spSet('sourcingpro_settings_v1', settings);
+  // Update prospect badge immediately
+  const cntAll = document.getElementById('cnt-all');
+  if (cntAll) cntAll.textContent = data.length;
+  const mpb = document.getElementById('mnav-badge-prospects');
+  if (mpb) { mpb.textContent = data.length > 0 ? data.length : ''; mpb.style.display = data.length > 0 ? 'block' : 'none'; }
 
   if (!isOnline) return;
   showSyncStatus('syncing');
   try {
-    // Upsert each prospect individually
     const ops = data.map(d => sbUpsert('prospects', d.id, d));
     await sbUpsert('settings', 'main', settings);
     await Promise.all(ops);
@@ -2502,6 +2923,12 @@ async function saveStats() {
 
 async function saveTodos() {
   spSet('sourcingpro_todos_v1', todos);
+  // Update badge immediately after every save
+  const notDone = todos.filter(t => !t.done && t.status !== 'done').length;
+  const cntEl = document.getElementById('cnt-todo-tasks');
+  if (cntEl) cntEl.textContent = notDone;
+  const mtb = document.getElementById('mnav-badge-todo');
+  if (mtb) { mtb.textContent = notDone > 0 ? notDone : ''; mtb.style.display = notDone > 0 ? 'block' : 'none'; }
   if (!isOnline) return;
   try {
     await Promise.all(todos.map(t => sbUpsert('todos', t.id, t)));
@@ -2530,7 +2957,6 @@ async function saveCallGoals() {
 // LOAD — Supabase first, localStorage fallback
 // ════════════════════════════════════════
 async function loadAll() {
-  // Try Supabase first — ALWAYS trust Supabase over localStorage
   if (isOnline) {
     try {
       showSyncStatus('syncing');
@@ -2538,15 +2964,27 @@ async function loadAll() {
         sbGetAll('prospects'),
         sbGet('settings', 'main')
       ]);
-      // ALWAYS use Supabase data if online (even if empty)
-      data = prospectsRows.map(r => r.data);
-      spSet('sourcingpro_data_v2', data);
+
+      if (prospectsRows.length > 0) {
+        // Supabase has data — always use it (source of truth)
+        data = prospectsRows.map(r => r.data);
+        spSet('sourcingpro_data_v2', data);
+      } else {
+        // Supabase is empty — check localStorage for data to migrate
+        const local = spGet('sourcingpro_data_v2');
+        if (local && Array.isArray(local) && local.length > 0) {
+          data = local;
+          // Migrate to Supabase (one time)
+          await Promise.all(data.map(d => sbUpsert('prospects', d.id, d)));
+          showToast('✅ Données migrées vers le cloud');
+        }
+        // else: genuinely empty, data stays []
+      }
 
       if (settingsRow) {
         settings = settingsRow;
         spSet('sourcingpro_settings_v1', settings);
       } else {
-        // No settings in Supabase yet — push local if exists
         const localS = spGet('sourcingpro_settings_v1');
         if (localS?.statuses?.length) {
           settings = localS;
@@ -2555,9 +2993,12 @@ async function loadAll() {
       }
       showSyncStatus('online');
       return;
-    } catch(e) { showSyncStatus('offline'); }
+    } catch(e) {
+      console.error('Supabase loadAll error:', e);
+      showSyncStatus('offline');
+    }
   }
-  // Fallback to localStorage
+  // Offline fallback
   const d = spGet('sourcingpro_data_v2');
   if (d && Array.isArray(d)) data = d;
   const s = spGet('sourcingpro_settings_v1');
@@ -2604,10 +3045,12 @@ async function loadTodos() {
     try {
       const rows = await sbGetAll('todos');
       if (rows.length > 0) {
-        todos = rows.map(r => r.data);
+        todos = rows.map(r => r.data).filter(Boolean);
         spSet('sourcingpro_todos_v1', todos);
       } else {
-        todos = spGet('sourcingpro_todos_v1') || [];
+        // Supabase empty — migrate from localStorage once
+        const local = spGet('sourcingpro_todos_v1') || [];
+        todos = local;
         if (todos.length > 0) {
           await Promise.all(todos.map(t => sbUpsert('todos', t.id, t)));
         }
@@ -2670,15 +3113,21 @@ async function deleteEntry(id) {
   if (!confirm('Supprimer cette entreprise ?')) return;
   data = data.filter(e => e.id !== id);
   spSet('sourcingpro_data_v2', data);
-  if (isOnline) await sbDelete('prospects', id);
+  if (isOnline) {
+    await sbDelete('prospects', id);
+    // Re-upsert remaining to keep Supabase clean
+    try { await Promise.all(data.map(d => sbUpsert('prospects', d.id, d))); } catch(e){}
+  }
   renderAll();
   showToast('Entreprise supprimée');
 }
 
 async function deleteTodo(id) {
   todos = todos.filter(t => t.id !== id);
-  saveTodos();
-  if (isOnline) await sbDelete('todos', id);
+  spSet('sourcingpro_todos_v1', todos); // save locally first
+  if (isOnline) await sbDelete('todos', id); // delete from Supabase
+  // Now upsert remaining todos to keep Supabase clean
+  if (isOnline) { try { await Promise.all(todos.map(t => sbUpsert('todos', t.id, t))); } catch(e){} }
   renderTodoList();
   if (selectedTaskId === id) showTodoEmpty();
   showToast('Tâche supprimée');
@@ -2708,8 +3157,10 @@ function startRealtime() {
     } catch(e) {}
   }, 30000);
 }
-
-
+// Storage layer replaced by Supabase — see above
+// ════════════════════════════════════════
+// SUPABASE CONFIG
+// ════════════════════════════════════════
 // Storage layer replaced by Supabase — see above
 
 // ════════════════════════════════════════
@@ -2941,6 +3392,15 @@ function renderSidebar(){
       document.getElementById('nav-'+view)?.classList.add('active');
     }
   }
+  // Update todo badge
+  const todoCnt = (typeof todos!=='undefined') ? todos.filter(t=>!t.done&&t.status!=='done').length : 0;
+  const cntTodoEl = document.getElementById('cnt-todo-tasks');
+  if(cntTodoEl) cntTodoEl.textContent = todoCnt;
+  // Update mobile nav badges
+  const mpb = document.getElementById('mnav-badge-prospects');
+  if(mpb){ mpb.textContent=data.length>0?data.length:''; mpb.style.display=data.length>0?'block':'none'; }
+  const mtb = document.getElementById('mnav-badge-todo');
+  if(mtb){ mtb.textContent=todoCnt>0?todoCnt:''; mtb.style.display=todoCnt>0?'block':'none'; }
 }
 function renderTable(){
   const rows=sorted(getFiltered());
@@ -4279,1591 +4739,350 @@ function openNewTaskForProspect(prospectId) {
   selectTask(task.id);
 }
 
-// ════════════════════════════════════════
-// AI TAB — SETUP & STATE
-// ════════════════════════════════════════
-// AI_KEY_STORAGE declared above
-// aiMessages declared above
-// aiIsTyping declared above
-// pendingCode declared above
-
-function saveApiKey(val) {
-  if(val.trim()) {
-    localStorage.setItem(AI_KEY_STORAGE, val.trim());
-    updateKeyStatus(val.trim());
-  }
-}
-
-function loadApiKey() {
-  const k = localStorage.getItem(AI_KEY_STORAGE);
-  if(k) {
-    document.getElementById('ai-api-key').value = k;
-    updateKeyStatus(k);
-  }
-}
-
-function updateKeyStatus(key) {
-  const el = document.getElementById('ai-key-status');
-  if(!key || key.length < 20) {
-    el.className = 'ai-key-status none'; el.textContent = 'Clé non configurée';
-  } else if(key.startsWith('AIza')) {
-    el.className = 'ai-key-status ok'; el.textContent = '✓ Clé Gemini configurée';
-  } else {
-    el.className = 'ai-key-status err'; el.textContent = '⚠ Format invalide (doit commencer par AIza)';
-  }
-}
-
-function getApiKey() { return localStorage.getItem(AI_KEY_STORAGE) || ''; }
+// AI removed — replaced by CSV import
 
 // ════════════════════════════════════════
-// TEST GEMINI CONNECTION
+// CSV IMPORT
 // ════════════════════════════════════════
-async function testGeminiKey() {
-  const key = getApiKey();
-  if(!key || !key.startsWith('AIza')) {
-    addAiMessage('assistant', '⚠️ Colle d\'abord ta clé Gemini dans le champ ci-dessus.', true);
-    switchTab('ai');
-    return;
-  }
-  const el = document.getElementById('ai-key-status');
-  el.className = 'ai-key-status none'; el.textContent = '⏳ Test en cours…';
+let csvParsedRows = [];
 
-  // First, list available models to find a working one
-  try {
-    const listRes = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${encodeURIComponent(key)}`);
-    if(listRes.ok) {
-      const listData = await listRes.json();
-      const available = (listData.models || [])
-        .filter(m => m.supportedGenerationMethods?.includes('generateContent'))
-        .map(m => m.name.replace('models/', ''));
-
-      if(available.length === 0) {
-        el.className = 'ai-key-status err'; el.textContent = '✗ Aucun modèle disponible';
-        addAiMessage('assistant', '❌ La clé est valide mais aucun modèle generateContent n\'est disponible sur ton compte.', true);
-        return;
-      }
-
-      // Use first available model for the test
-      const testModel = available[0];
-      const testRes = await fetch(
-        `https://generativelanguage.googleapis.com/v1beta/models/${testModel}:generateContent?key=${encodeURIComponent(key)}`,
-        {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ contents:[{role:'user',parts:[{text:'Réponds juste OK'}]}], generationConfig:{maxOutputTokens:5} })
-        }
-      );
-
-      if(testRes.ok) {
-        // Save the working model for actual use
-        localStorage.setItem('sourcingpro_gemini_model', testModel);
-        el.className = 'ai-key-status ok'; el.textContent = `✓ OK · ${testModel}`;
-        addAiMessage('assistant',
-          `✅ <strong>Connexion Gemini réussie !</strong><br>
-          Modèle actif : <code>${testModel}</code><br>
-          Modèles disponibles : ${available.slice(0,5).map(m=>`<code>${m}</code>`).join(', ')}${available.length>5?` +${available.length-5} autres`:''}<br><br>
-          Tu peux maintenant utiliser l'assistant librement. 🚀`, true);
-      } else {
-        const err = await testRes.json().catch(()=>({}));
-        el.className='ai-key-status err'; el.textContent=`✗ Erreur ${testRes.status}`;
-        addAiMessage('assistant', `❌ Modèle trouvé (${testModel}) mais erreur lors du test : ${err?.error?.message||testRes.status}`, true);
-      }
-    } else if(listRes.status === 403 || listRes.status === 401) {
-      el.className = 'ai-key-status err'; el.textContent = `✗ Clé refusée (${listRes.status})`;
-      addAiMessage('assistant',
-        `❌ <strong>Clé API refusée par Google (${listRes.status})</strong><br><br>
-        Causes possibles :<br>
-        • La clé est incorrecte ou incomplète — vérifie qu'elle commence par <code>AIza</code><br>
-        • L'API Generative Language n'est pas activée dans ton projet Google<br><br>
-        <strong>Solution :</strong><br>
-        1. Va sur <strong>aistudio.google.com</strong><br>
-        2. Clique <strong>Get API key</strong> → sélectionne un projet → <strong>Create API key</strong><br>
-        3. Copie la toute nouvelle clé et colle-la ici`, true);
-    } else {
-      el.className='ai-key-status err'; el.textContent=`✗ Erreur ${listRes.status}`;
-    }
-  } catch(e) {
-    el.className = 'ai-key-status err'; el.textContent = '✗ Erreur réseau';
-    addAiMessage('assistant',
-      `❌ <strong>Erreur réseau / CORS</strong><br><br>
-      Le navigateur bloque les appels depuis un fichier local.<br><br>
-      <strong>Safari (le plus simple) :</strong><br>
-      Réglages → Avancé → cocher "Afficher le menu Développement"<br>
-      Puis : menu Développement → "Désactiver les restrictions des ressources inter-origines"<br><br>
-      <strong>Chrome (Terminal) :</strong><br>
-      <code>open -na "Google Chrome" --args --disable-web-security --user-data-dir="/tmp/sp-dev"</code>`, true);
-  }
-}
-
-// ════════════════════════════════════════
-// AI QUICK SUGGESTIONS
-// ════════════════════════════════════════
-function aiSuggest(text) {
-  const input = document.getElementById('ai-input');
-  input.value = text;
-  input.style.height = 'auto';
-  input.style.height = Math.min(input.scrollHeight, 140) + 'px';
-  input.focus();
-}
-
-function aiHandleKey(e) {
-  if(e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); aiSend(); }
-}
-
-// ════════════════════════════════════════
-// AI SEND MESSAGE — Gemini
-// ════════════════════════════════════════
-async function aiSend() {
-  if(aiIsTyping) return;
-  const input = document.getElementById('ai-input');
-  const text = input.value.trim();
-  if(!text) return;
-
-  const key = getApiKey();
-  if(!key || !key.startsWith('AIza')) {
-    addAiMessage('assistant', '⚠️ Configure d\'abord ta clé API Gemini en haut à droite.<br>Obtiens-la gratuitement sur <strong>aistudio.google.com</strong> → Get API key → Create API key.<br>Elle commence par <code>AIza...</code>', true);
-    return;
-  }
-
-  // Add user message to UI
-  addAiMessage('user', text);
-  // Build Gemini history (role: user/model)
-  aiMessages.push({ role: 'user', parts: [{ text: buildUserContent(text) }] });
-  input.value = ''; input.style.height = 'auto';
-
-  // Show typing indicator
-  aiIsTyping = true;
-  document.getElementById('ai-send-btn').disabled = true;
-  const typingId = addTypingIndicator();
-
-  try {
-    // Build contents array: system instruction as first user turn
-    const systemMsg = { role: 'user', parts: [{ text: buildSystemPrompt() }] };
-    const systemAck = { role: 'model', parts: [{ text: 'Compris. Je suis prêt à t\'aider en tant qu\'assistant commercial SourcingPro.' }] };
-    const contents = [systemMsg, systemAck, ...aiMessages];
-
-    // Use saved working model, or try list in order
-    const savedModel = localStorage.getItem('sourcingpro_gemini_model');
-    const modelsToTry = savedModel
-      ? [savedModel, 'gemini-2.0-flash-lite', 'gemini-2.0-flash', 'gemini-1.5-flash-001', 'gemini-pro']
-      : ['gemini-2.0-flash-lite', 'gemini-2.0-flash', 'gemini-1.5-flash-001', 'gemini-pro'];
-
-    let response = null;
-    let lastErr = '';
-    for(const model of modelsToTry) {
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`;
-      try {
-        response = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents,
-            generationConfig: { temperature: 0.7, maxOutputTokens: 4096 },
-          })
-        });
-        if(response.status !== 404) break; // 404 = model not found, try next
-      } catch(fetchErr) {
-        lastErr = fetchErr.message;
-        response = null;
-      }
-    }
-
-    if(!response) throw new Error(lastErr || 'Aucun modèle disponible');
-
-    removeTypingIndicator(typingId);
-
-    if(!response.ok) {
-      const err = await response.json().catch(()=>({}));
-      const msg = err?.error?.message || `Erreur HTTP ${response.status}`;
-      if(response.status === 400) addAiMessage('assistant', `❌ Requête invalide : ${msg}`, true);
-      else if(response.status === 403 || response.status === 401) addAiMessage('assistant',
-        `❌ <strong>Clé API refusée (erreur ${response.status})</strong><br><br>
-        Vérifie que :<br>
-        • La clé commence bien par <code>AIza</code><br>
-        • Tu l'as copiée en entier depuis <strong>aistudio.google.com</strong><br>
-        • L'API "Generative Language API" est bien activée dans ton projet Google<br><br>
-        <em>Astuce : sur aistudio.google.com, clique sur "Get API key" → sélectionne ou crée un projet → copie la nouvelle clé.</em>`, true);
-      else if(response.status === 429) addAiMessage('assistant', '⏳ Limite de requêtes atteinte (15 req/min en gratuit). Attends une minute et réessaie.', true);
-      else addAiMessage('assistant', `❌ Erreur API Gemini (${response.status}) : ${msg}`, true);
-      aiMessages.pop();
-      return;
-    }
-
-    const result = await response.json();
-    const assistantText = result?.candidates?.[0]?.content?.parts?.[0]?.text || '';
-
-    if(!assistantText) {
-      const reason = result?.candidates?.[0]?.finishReason || 'inconnu';
-      addAiMessage('assistant', `⚠️ Gemini n'a pas retourné de réponse (raison : ${reason}). Reformule ta demande.`, true);
-      aiMessages.pop();
-      return;
-    }
-
-    // Store in history as model role
-    aiMessages.push({ role: 'model', parts: [{ text: assistantText }] });
-    renderAiResponse(assistantText);
-
-  } catch(err) {
-    removeTypingIndicator(typingId);
-    let msg = err.message || 'Erreur inconnue';
-    // Diagnose common errors
-    if(msg.includes('Failed to fetch') || msg.includes('NetworkError') || msg.includes('CORS')) {
-      addAiMessage('assistant',
-        `❌ <strong>Erreur de connexion (CORS/réseau)</strong><br><br>
-        Le navigateur bloque l'appel API depuis un fichier local. <strong>Voici la solution :</strong><br><br>
-        <strong>Option 1 — Chrome (recommandé) :</strong><br>
-        Ferme Chrome → dans le Terminal, lance :<br>
-        <code>open -na "Google Chrome" --args --disable-web-security --user-data-dir="/tmp/chrome-dev"</code><br>
-        Puis rouvre ton fichier SourcingPro.html dans cette fenêtre.<br><br>
-        <strong>Option 2 — Safari :</strong><br>
-        Safari → Préférences → Avancé → cocher "Afficher le menu Développement" → menu Développement → "Désactiver les restrictions des ressources inter-origines"<br><br>
-        <strong>Option 3 :</strong> Ouvre le fichier via un serveur local :<br>
-        <code>cd ~/Desktop && python3 -m http.server 8080</code><br>
-        Puis va sur <code>http://localhost:8080/SourcingPro.html</code>`, true);
-    } else {
-      addAiMessage('assistant', `❌ Erreur : ${msg}`, true);
-    }
-    aiMessages.pop();
-  } finally {
-    aiIsTyping = false;
-    document.getElementById('ai-send-btn').disabled = false;
-  }
-}
-
-// ════════════════════════════════════════
-// SYSTEM PROMPT — context riche
-// ════════════════════════════════════════
-function buildSystemPrompt() {
-  const prospectCount = data.length;
-  const statsCounts = {};
-  settings.statuses.forEach(s => { statsCounts[s.label] = data.filter(d=>d.status===s.id).length; });
-  const statsStr = Object.entries(statsCounts).map(([k,v])=>`${k}: ${v}`).join(', ');
-  const recentProspects = data.slice(-5).map(d=>`${d.name} (${getStatus(d.status)?.label}, ${d.city||'?'})`).join(', ');
-
-  return `Tu es un assistant commercial expert intégré dans SourcingPro, un CRM de sourcing B2B pour un commercial d'un grossiste alimentaire allemand qui prospecte le marché français (grossistes, déstockeurs, distributeurs, Cash & Carry, centrales d'achat).
-
-CONTEXTE ACTUEL DE L'APPLICATION :
-- Nombre de prospects : ${prospectCount}
-- Répartition par statut : ${statsStr}
-- Derniers prospects ajoutés : ${recentProspects || 'aucun'}
-- Types d'acteurs suivis : ${settings.types.map(t=>t.label).join(', ')}
-
-TES CAPACITÉS :
-
-1. ANALYSE & CONSEIL COMMERCIAL
-   - Analyser les données de prospection, identifier des priorités
-   - Proposer des stratégies de relance adaptées au statut de chaque prospect
-   - Aider à préparer des appels commerciaux avec scripts, argumentaires, réponses aux objections
-   - Conseil sur la vente de produits alimentaires allemands en France (réglementations, différences culturelles, angles d'attaque)
-
-2. MODIFICATION DE L'APPLICATION (design et fonctionnalités)
-   Quand l'utilisateur demande une modification de l'app, tu dois :
-   - Comprendre précisément la demande
-   - Générer du code JavaScript pur et fonctionnel (PAS de HTML, PAS de balises <style>, PAS de balises <script>)
-   - Pour modifier des couleurs CSS : utilise UNIQUEMENT document.documentElement.style.setProperty('--nom-variable', 'valeur')
-   - Pour ajouter du CSS complexe : utilise const s=document.createElement('style');s.textContent='...css...';document.head.appendChild(s);
-   - Pour des fonctionnalités JS : ajoute/modifie des fonctions globales window.maFonction = function(){...}
-   - Terminer ta réponse par la balise spéciale exactement ainsi : <!--APPLY_CODE_START-->code javascript pur ici<!--APPLY_CODE_END-->
-   - JAMAIS de balises HTML (<style>, <script>, etc.) à l'intérieur des balises APPLY_CODE
-   - IMPORTANT : ne jamais écraser la variable globale "data", toujours préserver localStorage
-   
-   EXEMPLE pour changer une couleur :
-   <!--APPLY_CODE_START-->
-   document.documentElement.style.setProperty('--pink', '#a8d5a2');
-   document.documentElement.style.setProperty('--pink-dark', '#6db86a');
-   document.documentElement.style.setProperty('--pink-light', '#e8f5e6');
-   document.documentElement.style.setProperty('--pink-mid', '#c4e0c2');
-   <!--APPLY_CODE_END-->
-
-3. FORMAT DE RÉPONSE
-   - Réponds toujours en français
-   - Sois concis et actionnable
-   - Pour les scripts d'appel : utilise un format structuré (Introduction / Accroche / Valeur / Gestion objections / Closing)
-   - Pour les modifications de code : explique brièvement ce que tu vas faire, puis fournis le code
-   - Tu peux utiliser des emojis pour la lisibilité
-
-PRODUITS DE L'ENTREPRISE ALLEMANDE (contexte de vente) :
-Produits alimentaires allemands : épicerie sèche, biscuits, confiserie, produits de boulangerie, conserves, boissons, charcuterie, produits laitiers. L'entreprise cherche à référencer ses produits auprès d'acteurs de la distribution alimentaire française.`;
-}
-
-function buildUserContent(text) {
-  // Include current data summary for context-aware answers
-  const summary = `[Contexte : ${data.length} prospects en base, ${data.filter(d=>d.priority).length} prioritaires]\n\n${text}`;
-  return summary;
-}
-
-// ════════════════════════════════════════
-// RENDER AI RESPONSE
-// ════════════════════════════════════════
-function renderAiResponse(text) {
-  // Check for apply code marker
-  const applyMatch = text.match(/<!--APPLY_CODE_START-->([\s\S]*?)<!--APPLY_CODE_END-->/);
-  let displayText = text.replace(/<!--APPLY_CODE_START-->[\s\S]*?<!--APPLY_CODE_END-->/g, '').trim();
-
-  // Convert markdown to HTML
-  let html = markdownToHtml(displayText);
-
-  // If there's code to apply, add action buttons
-  if(applyMatch) {
-    pendingCode = applyMatch[1].trim();
-    html += `<div class="ai-action-row">
-      <button class="ai-action-btn apply" onclick="openApplyOverlay()">✨ Appliquer la modification</button>
-      <button class="ai-action-btn" onclick="copyPendingCode()">📋 Copier le code</button>
-    </div>`;
-  }
-
-  addAiMessage('assistant', html, true);
-}
-
-function markdownToHtml(text) {
-  return text
-    .replace(/```(\w*)\n([\s\S]*?)```/g, (_, lang, code) => `<pre><code>${escHtml(code.trim())}</code></pre>`)
-    .replace(/`([^`]+)`/g, '<code>$1</code>')
-    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
-    .replace(/\*([^*]+)\*/g, '<em>$1</em>')
-    .replace(/^### (.+)$/gm, '<strong style="font-size:13.5px;display:block;margin:8px 0 4px">$1</strong>')
-    .replace(/^## (.+)$/gm, '<strong style="font-size:14px;display:block;margin:10px 0 5px">$1</strong>')
-    .replace(/^# (.+)$/gm, '<strong style="font-size:15px;display:block;margin:10px 0 5px">$1</strong>')
-    .replace(/^[\-•]\s+(.+)$/gm, '<div style="padding-left:12px;margin:2px 0">• $1</div>')
-    .replace(/^\d+\.\s+(.+)$/gm, '<div style="padding-left:12px;margin:2px 0">$1</div>')
-    .replace(/\n\n/g, '<br><br>')
-    .replace(/\n/g, '<br>');
-}
-
-function escHtml(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-
-// ════════════════════════════════════════
-// CHAT RENDERING HELPERS
-// ════════════════════════════════════════
-function addAiMessage(role, html, isHtml = false) {
-  const chat = document.getElementById('ai-chat');
-  const div = document.createElement('div');
-  div.className = `ai-msg ${role}`;
-  const avatarLabel = role === 'user' ? '👤' : 'IA';
-  div.innerHTML = `
-    <div class="ai-avatar ${role}">${avatarLabel}</div>
-    <div class="ai-bubble">${isHtml ? html : escHtml(html).replace(/\n/g,'<br>')}</div>`;
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
-}
-
-function addTypingIndicator() {
-  const chat = document.getElementById('ai-chat');
-  const id = 'typing-' + Date.now();
-  const div = document.createElement('div');
-  div.className = 'ai-msg assistant'; div.id = id;
-  div.innerHTML = `<div class="ai-avatar assistant">IA</div><div class="ai-bubble"><div class="ai-typing"><span></span><span></span><span></span></div></div>`;
-  chat.appendChild(div);
-  chat.scrollTop = chat.scrollHeight;
-  return id;
-}
-
-function removeTypingIndicator(id) {
-  document.getElementById(id)?.remove();
-}
-
-// ════════════════════════════════════════
-// APPLY CODE OVERLAY
-// ════════════════════════════════════════
-function openApplyOverlay() {
-  document.getElementById('apply-overlay').classList.add('open');
-}
-function closeApplyOverlay() {
-  document.getElementById('apply-overlay').classList.remove('open');
-}
-
-function confirmApply() {
-  closeApplyOverlay();
-  if(!pendingCode) return;
-  try {
-    const code = pendingCode.trim();
-
-    // Case 1 : bloc <style>...</style>
-    if(/<style[\s>]/i.test(code)) {
-      const styleMatch = code.match(/<style[^>]*>([\s\S]*?)<\/style>/i);
-      const cssContent = styleMatch ? styleMatch[1] : code.replace(/<\/?style[^>]*>/gi,'');
-      const tag = document.createElement('style');
-      tag.textContent = cssContent;
-      document.head.appendChild(tag);
-      addAiMessage('assistant', '✅ Styles CSS appliqués avec succès ! Les couleurs ont été mises à jour.', true);
-      showToast('Style mis à jour ✓');
-
-    // Case 2 : du CSS pur (contient des { } sans être du JS)
-    } else if(/^[\s\S]*\{[\s\S]*\}[\s\S]*$/.test(code) && !code.includes('function') && !code.includes('const ') && !code.includes('let ') && !code.includes('var ') && !code.includes('=>') && !code.includes('document.')) {
-      const tag = document.createElement('style');
-      tag.textContent = code;
-      document.head.appendChild(tag);
-      addAiMessage('assistant', '✅ CSS appliqué avec succès !', true);
-      showToast('Style mis à jour ✓');
-
-    // Case 3 : setProperty calls ou JS pur
-    } else {
-      // Remove any accidental HTML tags wrapping JS
-      const cleanCode = code
-        .replace(/<script[^>]*>/gi,'')
-        .replace(/<\/script>/gi,'')
-        .replace(/<style[^>]*>/gi,'')
-        .replace(/<\/style>/gi,'')
-        .trim();
-      const fn = new Function(cleanCode);
-      fn();
-      addAiMessage('assistant', '✅ Modification appliquée avec succès !', true);
-      showToast('Modification appliquée ✓');
-    }
-    renderAll();
-  } catch(err) {
-    addAiMessage('assistant',
-      `❌ <strong>Erreur lors de l'application</strong> : ${err.message}<br><br>
-      Essaie de reformuler ainsi : <em>"Modifie la variable CSS --pink en #valeur et --pink-dark en #valeur2 et --pink-light en #valeur3"</em> — cela force Gemini à générer des <code>setProperty</code> plus fiables.`, true);
-    showToast('Erreur d\'application');
-  }
-  pendingCode = null;
-}
-
-function copyPendingCode() {
-  if(!pendingCode) return;
-  navigator.clipboard.writeText(pendingCode).then(() => showToast('Code copié ✓'));
-}
-
-// ════════════════════════════════════════
-// TAB SWITCH — unified (no top tab bar)
-// ════════════════════════════════════════
-function toggleSidebar() {
-  const sidebar = document.querySelector('.sidebar');
-  const overlay = document.getElementById('sidebar-overlay');
-  sidebar.classList.toggle('open');
-  overlay.classList.toggle('open');
-}
-function closeSidebar() {
-  document.querySelector('.sidebar')?.classList.remove('open');
-  document.getElementById('sidebar-overlay')?.classList.remove('open');
-}
-
-// Close sidebar when a nav item is clicked on mobile
-function switchTab(tab) {
-  // Auto-close sidebar on mobile
-  if (window.innerWidth <= 768) closeSidebar();
-  // Show correct content
-  document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active'));
-  document.getElementById('content-'+tab)?.classList.add('active');
-  // Clear all nav highlights
-  document.querySelectorAll('.nav-item').forEach(el=>el.classList.remove('active'));
-
-  const hide = () => document.getElementById('topbar-actions').style.display = 'none';
-  const show = () => document.getElementById('topbar-actions').style.display = '';
-
-  if(tab === 'dashboard') {
-    document.getElementById('nav-dashboard')?.classList.add('active');
-    document.getElementById('view-label').textContent = 'Accueil';
-    hide(); renderDashboard();
-
-  } else if(tab === 'prospects') {
-    document.getElementById('nav-prospects')?.classList.add('active');
-    show();
-    view = view || 'all';
-    const labels = {all:'Tous',priority:'Prioritaires'};
-    let lbl = labels[view]||'';
-    if(!lbl&&view.startsWith('s:')) lbl=getStatus(view.slice(2))?.label||view;
-    if(!lbl&&view.startsWith('t:')) lbl=getType(view.slice(2))?.label||view;
-    document.getElementById('view-label').textContent = lbl;
-    // Re-highlight sub-item if filtered
-    if(view!=='all') document.getElementById('nav-'+view)?.classList.add('active');
-    renderTable();
-
-  } else if(tab === 'kanban') {
-    document.getElementById('nav-kanban')?.classList.add('active');
-    document.getElementById('view-label').textContent = 'Kanban';
-    hide(); renderKanban();
-
-  } else if(tab === 'stats') {
-    document.getElementById('nav-stats')?.classList.add('active');
-    document.getElementById('view-label').textContent = 'Statistiques';
-    hide();
-    const dayBtn = document.getElementById('period-day');
-    if(dayBtn && !dayBtn.style.fontWeight) {
-      dayBtn.style.borderColor='var(--primary)';
-      dayBtn.style.color='var(--primary)';
-      dayBtn.style.fontWeight='600';
-    }
-    renderStats();
-
-  } else if(tab === 'objectives') {
-    document.getElementById('nav-objectives')?.classList.add('active');
-    document.getElementById('view-label').textContent = 'Objectifs & Résultats';
-    hide(); renderObjectives();
-
-  } else if(tab === 'todo') {
-    document.getElementById('nav-todo')?.classList.add('active');
-    document.getElementById('view-label').textContent = 'To-Do';
-    hide(); renderTodoList();
-
-  } else if(tab === 'news') {
-    document.getElementById('nav-news')?.classList.add('active');
-    document.getElementById('view-label').textContent = 'Actualités';
-    hide(); if(!allNewsArticles.length) loadNews(); else renderNews();
-
-  } else if(tab === 'scraping') {
-    document.getElementById('nav-scraping')?.classList.add('active');
-    document.getElementById('view-label').textContent = 'Scraping';
-    hide();
-
-  } else if(tab === 'ai') {
-    document.getElementById('nav-ai')?.classList.add('active');
-    document.getElementById('view-label').textContent = 'Assistant IA';
-    hide();
-    setTimeout(()=>document.getElementById('ai-input')?.focus(), 100);
-  }
-}
-
-// Re-wire sidebar nav items
-// nav-ai handled via onclick in HTML
-
-// ════════════════════════════════════════
-// DARK MODE
-// ════════════════════════════════════════
-function toggleDarkMode() {
-  const isDark = document.body.classList.toggle('dark-mode');
-  localStorage.setItem('sp_dark', isDark ? '1' : '0');
-  document.getElementById('dark-toggle').textContent = isDark ? '☀️' : '🌙';
-}
-(function initDarkMode() {
-  if(localStorage.getItem('sp_dark') === '1') {
-    document.body.classList.add('dark-mode');
-    document.getElementById('dark-toggle').textContent = '☀️';
-  }
-})();
-
-// ════════════════════════════════════════
-// KEYBOARD SHORTCUTS
-// ════════════════════════════════════════
-function openShortcuts()  { document.getElementById('shortcuts-overlay').classList.add('open'); }
-function closeShortcuts() { document.getElementById('shortcuts-overlay').classList.remove('open'); }
-
-// Extend global keydown
-document.addEventListener('keydown', e => {
-  const tag = document.activeElement?.tagName;
-  const typing = ['INPUT','TEXTAREA','SELECT'].includes(tag);
-  if(e.key === '?' && !typing) { openShortcuts(); return; }
-  if(e.key === 'Escape') { closeShortcuts(); }
-  if(!(e.metaKey || e.ctrlKey)) return;
-  if(e.key === 'f' || e.key === 'F') { e.preventDefault(); document.getElementById('search-input-top')?.focus(); switchTab('prospects'); }
-  if(e.key === 'd' || e.key === 'D') { e.preventDefault(); switchTab('dashboard'); }
-  if(e.key === 'k' || e.key === 'K') { e.preventDefault(); switchTab('kanban'); }
-  if(e.key === '1') { e.preventDefault(); switchTab('prospects'); }
-  if(e.key === '2') { e.preventDefault(); switchTab('stats'); }
-  if(e.key === '3') { e.preventDefault(); switchTab('todo'); }
-  if(e.key === '.' ) { e.preventDefault(); toggleDarkMode(); }
-  if(e.key === 'e' || e.key === 'E') { e.preventDefault(); exportExcel(); }
-  // Arrow navigation between visible rows
-  if((e.key === 'ArrowDown' || e.key === 'ArrowUp') && !typing) {
-    e.preventDefault();
-    const rows = [...document.querySelectorAll('#table-body tr:not(.add-row)')];
-    if(!rows.length) return;
-    const cur = rows.findIndex(r=>r.classList.contains('kb-focus'));
-    rows.forEach(r=>r.classList.remove('kb-focus'));
-    const next = e.key==='ArrowDown' ? Math.min(cur+1,rows.length-1) : Math.max(cur-1,0);
-    rows[next]?.classList.add('kb-focus');
-    rows[next]?.scrollIntoView({block:'nearest'});
-    // Open detail for focused row
-    const id = rows[next]?.querySelector('[onclick*="openDetail"]')?.getAttribute('onclick')?.match(/'([^']+)'/)?.[1];
-    if(id) openDetail(id);
-  }
-});
-// Highlight style for kb-focus
-const kbStyle = document.createElement('style');
-kbStyle.textContent = 'tr.kb-focus td { background: var(--primary-light) !important; }';
-document.head.appendChild(kbStyle);
-
-// ════════════════════════════════════════
-// RECENTLY VIEWED
-// ════════════════════════════════════════
-// RECENT_KEY declared above
-// recentIds loaded in main init below
-
-function trackRecent(id) {
-  recentIds = [id, ...recentIds.filter(r=>r!==id)].slice(0,5);
-  localStorage.setItem(RECENT_KEY, JSON.stringify(recentIds));
-  renderRecent();
-}
-function renderRecent() {
-  const el = document.getElementById('nav-recents');
-  if(!el) return;
-  const items = recentIds.map(id => {
-    const d = data.find(e=>e.id===id);
-    if(!d) return '';
-    const st = getStatus(d.status);
-    return `<div class="nav-recent-item" onclick="openDetail('${d.id}');switchTab('prospects')">
-      <span class="nav-recent-dot" style="background:${esc(st.color)}"></span>
-      <span class="nav-recent-name">${esc(d.name)}</span>
-    </div>`;
-  }).filter(Boolean).join('');
-  el.innerHTML = items || '<div style="font-size:12px;color:var(--text-tertiary);padding:5px 10px">Aucune fiche récente</div>';
-}
-
-// Patch openDetail to track recents
-const _origOpenDetail = openDetail;
-window.openDetail = function(id) {
-  _origOpenDetail(id);
-  trackRecent(id);
+const CSV_COL_MAP = {
+  'nom':'name','name':'name','entreprise':'name','company':'name','société':'name','societe':'name',
+  'statut':'status','status':'status','état':'status','etat':'status',
+  'type':'type',
+  'ville':'city','city':'city',
+  'region':'region','région':'region','departement':'region','département':'region',
+  'contact':'contactName','contactname':'contactName','nom_contact':'contactName',
+  'role':'contactRole','rôle':'contactRole','poste':'contactRole','fonction':'contactRole',
+  'telephone':'phone','téléphone':'phone','tel':'phone','phone':'phone','mobile':'phone',
+  'email':'email','mail':'email','e-mail':'email',
+  'site':'website','website':'website','url':'website','web':'website',
+  'produits':'tags','products':'tags','tags':'tags','categories':'tags','catégories':'tags',
+  'notes':'notes','commentaires':'notes','remarques':'notes',
+  'prioritaire':'priority','priority':'priority',
+  'dernier_contact':'lastContact','dernier contact':'lastContact','last_contact':'lastContact','date':'lastContact',
+  'linkedin':'linkedin',
 };
 
-// ════════════════════════════════════════
-// PROSPECT SCORE (auto-priority)
-// ════════════════════════════════════════
-function calcScore(d) {
-  let s = 0;
-  // Status weight
-  const statusW = { interested:4, relance:3, contacted:2, catalogue:2, todo:1, client:0, refused:0 };
-  s += (statusW[d.status] || 1) * 10;
-  // Recency of last contact (older = more urgent)
-  if(d.lastContact) {
-    const days = Math.round((new Date() - new Date(d.lastContact+'T12:00:00'))/(86400000));
-    if(days > 30) s += 20;
-    else if(days > 14) s += 12;
-    else if(days > 7)  s += 6;
-  } else { s += 25; } // never contacted
-  // Pending tasks
-  if(typeof todos !== 'undefined') {
-    s += todos.filter(t=>t.prospectId===d.id && !t.done && t.status!=='done').length * 5;
+const STATUS_MAP = {
+  'à contacter':'todo','a contacter':'todo','todo':'todo','nouveau':'todo','new':'todo',
+  'contacté':'contacted','contacte':'contacted','contacted':'contacted',
+  'à relancer':'relance','a relancer':'relance','relance':'relance','relancer':'relance',
+  'catalogue envoyé':'catalogue','catalogue envoye':'catalogue','catalogue':'catalogue',
+  'intéressé':'interested','interesse':'interested','interested':'interested',
+  'client':'client',
+  'refusé':'refused','refuse':'refused','refused':'refused','non':'refused',
+};
+
+const TYPE_MAP = {
+  'grossiste':'grossiste','gross.':'grossiste',
+  'déstockeur':'destockeur','destockeur':'destockeur','déstockage':'destockeur',
+  'distributeur':'distributeur','distribution':'distributeur',
+  'cash & carry':'cashcarry','cash and carry':'cashcarry','cashcarry':'cashcarry','cash carry':'cashcarry',
+  'centrale':'centrale',"centrale d'achat":'centrale',
+  'importateur':'importateur','import':'importateur',
+};
+
+function parseCsvLine(line, sep) {
+  const result = []; let current = ''; let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') { if (inQuotes && line[i+1]==='"') { current+='"'; i++; } else inQuotes=!inQuotes; }
+    else if (ch === sep && !inQuotes) { result.push(current); current = ''; }
+    else current += ch;
   }
-  // Priority star
-  if(d.priority) s += 15;
-  return Math.min(s, 99);
-}
-function scoreClass(s) { return s>=60?'s-high':s>=35?'s-medium':'s-low'; }
-
-// ════════════════════════════════════════
-// DASHBOARD
-// ════════════════════════════════════════
-function renderDashboard() {
-  const now = new Date();
-  const h = now.getHours();
-  document.getElementById('dash-greeting').textContent = h<12?'Bonjour ☀️':h<18?'Bon après-midi 🌤':'Bonsoir 🌙';
-  document.getElementById('dash-subline').textContent = `${now.toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'})} — ${data.length} prospect${data.length!==1?'s':''}`;
-
-  // Alerts
-  const today = todayStr();
-  const overdueTasks = (typeof todos!=='undefined') ? todos.filter(t=>!t.done&&t.status!=='done'&&t.due&&t.due<today) : [];
-  const todayTasks   = (typeof todos!=='undefined') ? todos.filter(t=>!t.done&&t.status!=='done'&&t.due===today) : [];
-  const toRelance    = data.filter(d=>d.status==='relance');
-  const alerts = [];
-  if(overdueTasks.length) alerts.push({ type:'urgent',  icon:'⚠️', title:`${overdueTasks.length} tâche${overdueTasks.length>1?'s':''} en retard`, sub:'Cliquer pour ouvrir le To-Do', action:"switchTab('todo')" });
-  if(todayTasks.length)   alerts.push({ type:'warning', icon:'📅', title:`${todayTasks.length} tâche${todayTasks.length>1?'s':''} prévue${todayTasks.length>1?'s':''} aujourd'hui`, sub:'Cliquer pour ouvrir le To-Do', action:"switchTab('todo')" });
-  if(toRelance.length)    alerts.push({ type:'info',    icon:'🔔', title:`${toRelance.length} prospect${toRelance.length>1?'s':''} à relancer`, sub:'Cliquer pour filtrer les relances', action:"setView('s:relance');switchTab('prospects')" });
-
-  // Dormant prospects alert
-  const dormant = getDormantProspects();
-  if(dormant.length) alerts.push({ type:'warning', icon:'💤', title:`${dormant.length} prospect${dormant.length>1?'s':''} silencieux depuis +15 jours`, sub:`Dont : ${dormant.slice(0,3).map(d=>d.name).join(', ')}`, action:"setView('all');switchTab('prospects')" });
-
-  if(!alerts.length) alerts.push({ type:'success', icon:'✅', title:'Tout est à jour !', sub:'Aucune urgence pour le moment.', action:'' });
-  document.getElementById('dash-alerts').innerHTML = alerts.map(a=>
-    `<div class="dash-alert ${a.type}" onclick="${a.action}">
-      <div class="dash-alert-icon">${a.icon}</div>
-      <div class="dash-alert-text"><div class="dash-alert-title">${a.title}</div><div class="dash-alert-sub">${a.sub}</div></div>
-      ${a.action?'<div class="dash-alert-arrow">›</div>':''}
-    </div>`).join('');
-
-  // Relances
-  const relProspects = data.filter(d=>d.status==='relance').slice(0,5);
-  document.getElementById('dash-relances').innerHTML = relProspects.length
-    ? relProspects.map(d=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);cursor:pointer" onclick="openDetail('${d.id}')">
-        <span style="font-size:12.5px;font-weight:500;color:var(--text);flex:1">${esc(d.name)}</span>
-        <span style="font-size:11px;color:var(--text-tertiary)">${d.lastContact?fmtDate(d.lastContact):'Jamais'}</span>
-      </div>`).join('')
-    : '<div style="font-size:12.5px;color:var(--text-tertiary)">Aucune relance en attente ✓</div>';
-
-  // Urgent tasks
-  const urgentTasks = [...overdueTasks, ...todayTasks].slice(0,5);
-  document.getElementById('dash-tasks').innerHTML = urgentTasks.length
-    ? urgentTasks.map(t=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);cursor:pointer" onclick="switchTab('todo');selectTask('${t.id}')">
-        <span style="font-size:11px;padding:1px 6px;border-radius:3px;background:${t.due<today?'#fdeaea':'#fdf0e0'};color:${t.due<today?'#b03535':'#c47d2a'};flex-shrink:0">${t.due===today?'Aujourd\'hui':fmtDue(t.due)}</span>
-        <span style="font-size:12.5px;font-weight:500;color:var(--text);flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(t.title)}</span>
-      </div>`).join('')
-    : '<div style="font-size:12.5px;color:var(--text-tertiary)">Aucune tâche urgente ✓</div>';
-
-  // Top prospects by score
-  const scored = [...data].map(d=>({...d,_score:calcScore(d)})).sort((a,b)=>b._score-a._score).slice(0,5);
-  document.getElementById('dash-top-prospects').innerHTML = scored.length
-    ? scored.map(d=>`<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);cursor:pointer" onclick="openDetail('${d.id}')">
-        <div class="score-badge ${scoreClass(d._score)}">${d._score}</div>
-        <div style="flex:1;min-width:0"><div style="font-size:12.5px;font-weight:500;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(d.name)}</div>
-        <div style="font-size:11px;color:var(--text-tertiary)">${getStatus(d.status)?.label||''}</div></div>
-      </div>`).join('')
-    : '<div style="font-size:12.5px;color:var(--text-tertiary)">Aucun prospect</div>';
-
-  // Week stats
-  const [wFrom,wTo] = getWeekRange ? getWeekRange(today) : [today,today];
-  const wDates = getDatesInRange ? getDatesInRange(wFrom,wTo) : [today];
-  const wLogs  = wDates.flatMap(d=>getDayLog(d));
-  const wSales = salesData.filter(s=>s.date>=wFrom&&s.date<=wTo);
-  const wAmt   = wSales.reduce((sum,s)=>sum+(parseFloat(s.amount)||0),0);
-  document.getElementById('dash-week-stats').innerHTML = `
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px">
-      <div style="text-align:center;padding:10px;background:var(--stat-light1);border-radius:var(--radius)">
-        <div style="font-size:22px;font-weight:700;color:var(--stat-calls)">${wLogs.length}</div>
-        <div style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.04em">Appels</div>
-      </div>
-      <div style="text-align:center;padding:10px;background:var(--stat-light2);border-radius:var(--radius)">
-        <div style="font-size:22px;font-weight:700;color:var(--stat-answers)">${wLogs.filter(e=>e.outcome==='answered').length}</div>
-        <div style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.04em">Réponses</div>
-      </div>
-      <div style="text-align:center;padding:10px;background:var(--stat-light6);border-radius:var(--radius)">
-        <div style="font-size:22px;font-weight:700;color:var(--stat-sales)">${wSales.length}</div>
-        <div style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.04em">Ventes</div>
-      </div>
-      <div style="text-align:center;padding:10px;background:var(--green-light);border-radius:var(--radius)">
-        <div style="font-size:22px;font-weight:700;color:var(--green-dark)">${wAmt>0?wAmt.toLocaleString('fr-FR')+' €':'—'}</div>
-        <div style="font-size:11px;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.04em">CA</div>
-      </div>
-    </div>`;
-
-  renderCAChart();
+  result.push(current);
+  return result;
 }
 
-// ── Heatmap removed ──
+function parseCsv(text) {
+  const firstLine = text.split(/\r?\n/)[0];
+  const sep = (firstLine.split(';').length > firstLine.split(',').length) ? ';' : ',';
+  const lines = text.split(/\r?\n/).filter(l => l.trim());
+  if (lines.length < 2) return { headers: [], rows: [] };
+  const headers = parseCsvLine(lines[0], sep).map(h => h.trim().replace(/^["']+|["']+$/g,''));
+  const rows = [];
+  for (let i = 1; i < lines.length; i++) {
+    const vals = parseCsvLine(lines[i], sep);
+    if (vals.every(v => !v.trim())) continue;
+    const row = {};
+    headers.forEach((h, idx) => { row[h.toLowerCase()] = (vals[idx]||'').trim().replace(/^["']+|["']+$/g,''); });
+    rows.push(row);
+  }
+  return { headers, rows };
+}
 
-// ── CA Chart (12 months) ──
-// ── CA Chart — period-aware ──
-// caPeriod declared above
-
-function setCAperiod(period, el) {
-  caPeriod = period;
-  document.querySelectorAll('.ca-period-btn').forEach(b => {
-    b.style.borderColor=''; b.style.color=''; b.style.fontWeight='';
+function csvRowToProspect(row) {
+  const p = { id: uid(), status: 'todo', tags: [] };
+  Object.entries(row).forEach(([key, val]) => {
+    const field = CSV_COL_MAP[key.trim().toLowerCase()];
+    if (!field || !val) return;
+    if (field === 'status') {
+      p.status = STATUS_MAP[val.toLowerCase()] || 'todo';
+    } else if (field === 'type') {
+      p.type = TYPE_MAP[val.toLowerCase()];
+    } else if (field === 'tags') {
+      p.tags = val.split(/[,;/]/).map(t => t.trim()).filter(Boolean);
+    } else if (field === 'priority') {
+      p.priority = ['oui','yes','1','true','x'].includes(val.toLowerCase());
+    } else if (field === 'lastContact') {
+      const d = new Date(val); p.lastContact = isNaN(d) ? '' : d.toISOString().slice(0,10);
+    } else {
+      p[field] = val;
+    }
   });
-  if(el) { el.style.borderColor='var(--primary)'; el.style.color='var(--primary)'; el.style.fontWeight='600'; }
-  renderCAChart();
+  return p;
 }
 
-function renderCAChart() {
-  const el = document.getElementById('dash-ca-chart'); if(!el) return;
-  const now = new Date();
-  let bars = [];
-
-  if(caPeriod === 'month') {
-    // Current month first, then next 11 months
-    for(let i=0;i<12;i++) {
-      const d = new Date(now.getFullYear(), now.getMonth()+i, 1);
-      const y = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0');
-      const label = d.toLocaleDateString('fr-FR',{month:'short'})+(i===0?' (actuel)':'');
-      const from  = `${y}-${m}-01`;
-      const to    = new Date(y,d.getMonth()+1,0).toISOString().slice(0,10);
-      const amt   = salesData.filter(s=>s.date>=from&&s.date<=to).reduce((sum,s)=>sum+(parseFloat(s.amount)||0),0);
-      const obj   = getObjective('month', `${y}-${m}`);
-      bars.push({label: d.toLocaleDateString('fr-FR',{month:'short'}), amt, obj, current: i===0});
-    }
-  } else if(caPeriod === 'week') {
-    for(let i=0;i<12;i++) {
-      const base = new Date(now);
-      base.setDate(base.getDate() - base.getDay() + 1 + i*7); // Monday of week
-      const from = base.toISOString().slice(0,10);
-      const to   = new Date(base); to.setDate(base.getDate()+6);
-      const toStr = to.toISOString().slice(0,10);
-      const label = `S${getWeekNum(base)}`;
-      const amt   = salesData.filter(s=>s.date>=from&&s.date<=toStr).reduce((sum,s)=>sum+(parseFloat(s.amount)||0),0);
-      bars.push({label, amt, obj: 0, current: i===0});
-    }
-  } else if(caPeriod === 'quarter') {
-    const curQ = Math.floor(now.getMonth()/3);
-    for(let i=0;i<4;i++) {
-      const qIdx = (curQ+i)%4;
-      const year = now.getFullYear() + Math.floor((curQ+i)/4);
-      const qLabel = `T${qIdx+1} ${year}`;
-      const from = new Date(year, qIdx*3, 1).toISOString().slice(0,10);
-      const to   = new Date(year, qIdx*3+3, 0).toISOString().slice(0,10);
-      const amt  = salesData.filter(s=>s.date>=from&&s.date<=to).reduce((sum,s)=>sum+(parseFloat(s.amount)||0),0);
-      const obj  = getObjective('quarter', `${year}-Q${qIdx+1}`);
-      bars.push({label: qLabel, amt, obj, current: i===0});
-    }
-  }
-
-  const maxVal = Math.max(1,...bars.flatMap(b=>[b.amt,b.obj||0]));
-  const total  = bars.reduce((sum,b)=>sum+b.amt,0);
-  const label  = {month:'12 mois', week:'12 semaines', quarter:'4 trimestres'}[caPeriod];
-  document.getElementById('dash-ca-total').textContent = total>0 ? `${label} : ${total.toLocaleString('fr-FR')} €` : label;
-
-  el.innerHTML = bars.map(b=>{
-    const h    = Math.max(3, Math.round((b.amt/maxVal)*120));
-    const hObj = b.obj>0 ? Math.max(2, Math.round((b.obj/maxVal)*120)) : 0;
-    const color = b.current ? 'var(--primary)' : 'var(--green)';
-    const pct   = b.obj>0 ? Math.round(b.amt/b.obj*100) : null;
-    return `<div class="ca-bar-group" style="position:relative">
-      ${b.obj>0?`<div style="position:absolute;bottom:${hObj}px;left:0;right:0;border-top:2px dashed var(--stat-sales);opacity:0.7" title="Objectif : ${b.obj.toLocaleString('fr-FR')} €"></div>`:''}
-      <div class="ca-bar-val" style="font-size:9px">${b.amt>0?b.amt.toLocaleString('fr-FR'):'—'}</div>
-      <div class="ca-bar" style="height:${h}px;background:${color}${b.current?';box-shadow:0 0 0 2px var(--primary-mid)':''}" title="${b.label}: ${b.amt.toLocaleString('fr-FR')} €${b.obj?` / obj: ${b.obj.toLocaleString('fr-FR')} €`:''}"></div>
-      <div class="ca-bar-label" style="font-size:9px;font-weight:${b.current?700:400}">${b.label}</div>
-      ${pct!==null?`<div style="font-size:9px;color:${pct>=100?'var(--green-dark)':'var(--stat-sales)'};font-weight:600">${pct}%</div>`:''}
-    </div>`;
-  }).join('');
-}
-
-function getWeekNum(date) {
-  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
-  d.setUTCDate(d.getUTCDate() + 4 - (d.getUTCDay()||7));
-  const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
-  return Math.ceil((((d-yearStart)/86400000)+1)/7);
-}
-
-// ════════════════════════════════════════
-// OBJECTIVES
-// ════════════════════════════════════════
-// OBJ_KEY declared above
-// objectives declared above — { 'month_2025-03': 5000, 'quarter_2025-Q1': 15000 }
-// objPeriod declared above
-
-// loadObjectives() defined in Supabase layer above
-// saveObjectives() defined in Supabase layer above
-function getObjective(type, key) { return parseFloat(objectives[`${type}_${key}`])||0; }
-function setObjective(type, key, val) {
-  objectives[`${type}_${key}`] = parseFloat(val)||0;
-  saveObjectives();
-  renderObjectives();
-  renderCAChart(); // update chart overlays
-}
-
-function setObjPeriod(period, el) {
-  objPeriod = period;
-  document.querySelectorAll('[id^="obj-btn-"]').forEach(b => {
-    b.style.borderColor=''; b.style.color=''; b.style.fontWeight='';
-  });
-  if(el) { el.style.borderColor='var(--primary)'; el.style.color='var(--primary)'; el.style.fontWeight='600'; }
-  document.getElementById('obj-view-month').style.display   = period==='month'   ? '' : 'none';
-  document.getElementById('obj-view-quarter').style.display = period==='quarter' ? '' : 'none';
-}
-
-function renderObjectives() {
-  const now = new Date();
-  const fmtAmt = n => n>0 ? n.toLocaleString('fr-FR')+' €' : '—';
-  const pctBadge = (real, obj) => {
-    if(!obj) return '<span style="color:var(--text-tertiary);font-size:12px">—</span>';
-    const p = Math.round(real/obj*100);
-    const color = p>=100?'var(--green-dark)':p>=75?'var(--stat-answers)':p>=50?'var(--stat-sales)':'#b03535';
-    const bg    = p>=100?'var(--green-light)':p>=75?'var(--stat-light2)':p>=50?'var(--stat-light6)':'#fdeaea';
-    return `<span style="font-size:12px;font-weight:700;color:${color};background:${bg};padding:2px 8px;border-radius:10px">${p}%</span>`;
-  };
-  const ecartCell = (real, obj) => {
-    if(!obj) return '<span style="color:var(--text-tertiary);font-size:12px">—</span>';
-    const diff = real - obj;
-    const color = diff>=0?'var(--green-dark)':'#b03535';
-    return `<span style="font-size:12px;font-weight:600;color:${color}">${diff>=0?'+':''}${diff.toLocaleString('fr-FR')} €</span>`;
-  };
-
-  // Monthly table (12 months from current)
-  let monthRows = '', monthBars = [];
-  for(let i=0;i<12;i++) {
-    const d   = new Date(now.getFullYear(), now.getMonth()+i, 1);
-    const y   = d.getFullYear(), m = String(d.getMonth()+1).padStart(2,'0');
-    const key = `${y}-${m}`;
-    const lbl = d.toLocaleDateString('fr-FR',{month:'long',year:'numeric'});
-    const from = `${y}-${m}-01`, to = new Date(y,d.getMonth()+1,0).toISOString().slice(0,10);
-    const real  = salesData.filter(s=>s.date>=from&&s.date<=to).reduce((sum,s)=>sum+(parseFloat(s.amount)||0),0);
-    const obj   = getObjective('month', key);
-    const isCur = i===0;
-    monthRows += `<tr style="${isCur?'background:var(--primary-light)':''}">
-      <td style="padding:9px 16px;border-bottom:1px solid var(--border);font-weight:${isCur?600:400}">${lbl}${isCur?' <span style="font-size:10px;background:var(--primary);color:#fff;padding:1px 6px;border-radius:10px;margin-left:4px">actuel</span>':''}</td>
-      <td style="padding:9px 16px;text-align:right;border-bottom:1px solid var(--border)">
-        <span onclick="editObjective('month','${key}',this)" style="cursor:pointer;font-weight:500;color:var(--primary)">${obj>0?obj.toLocaleString('fr-FR')+' €':'+ Définir'}</span>
-      </td>
-      <td style="padding:9px 16px;text-align:right;border-bottom:1px solid var(--border);font-weight:600;color:var(--green-dark)">${fmtAmt(real)}</td>
-      <td style="padding:9px 16px;text-align:right;border-bottom:1px solid var(--border)">${ecartCell(real,obj)}</td>
-      <td style="padding:9px 16px;text-align:right;border-bottom:1px solid var(--border)">${pctBadge(real,obj)}</td>
-    </tr>`;
-    monthBars.push({lbl: d.toLocaleDateString('fr-FR',{month:'short'}), real, obj, cur:isCur});
-  }
-  document.getElementById('obj-month-table').innerHTML = monthRows;
-
-  // Monthly chart
-  const maxM = Math.max(1,...monthBars.flatMap(b=>[b.real,b.obj]));
-  document.getElementById('obj-month-chart').innerHTML = monthBars.map(b=>{
-    const hr = Math.max(3,Math.round(b.real/maxM*120)), ho = b.obj>0?Math.max(3,Math.round(b.obj/maxM*120)):0;
-    return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:3px">
-      <div style="font-size:9px;color:var(--green-dark);font-weight:600">${b.real>0?b.real.toLocaleString('fr-FR'):'—'}</div>
-      <div style="width:100%;display:flex;align-items:flex-end;gap:2px;height:120px">
-        <div style="flex:1;border-radius:3px 3px 0 0;background:var(--green);min-height:2px;height:${hr}px;${b.cur?'box-shadow:0 0 0 2px var(--primary-mid)':''}"></div>
-        ${ho?`<div style="flex:1;border-radius:3px 3px 0 0;background:var(--stat-light6);border:1px solid var(--stat-sales);min-height:2px;height:${ho}px"></div>`:'<div style="flex:1"></div>'}
-      </div>
-      <div style="font-size:9px;color:var(--text-tertiary);font-weight:${b.cur?700:400}">${b.lbl}</div>
-    </div>`;
-  }).join('');
-
-  // Quarterly table (4 quarters from current)
-  const curQ = Math.floor(now.getMonth()/3);
-  let qRows = '', qBars = [];
-  for(let i=0;i<4;i++) {
-    const qIdx = (curQ+i)%4;
-    const year = now.getFullYear() + Math.floor((curQ+i)/4);
-    const key  = `${year}-Q${qIdx+1}`;
-    const from = new Date(year, qIdx*3, 1).toISOString().slice(0,10);
-    const to   = new Date(year, qIdx*3+3, 0).toISOString().slice(0,10);
-    const real = salesData.filter(s=>s.date>=from&&s.date<=to).reduce((sum,s)=>sum+(parseFloat(s.amount)||0),0);
-    const obj  = getObjective('quarter', key);
-    const isCur = i===0;
-    qRows += `<tr style="${isCur?'background:var(--primary-light)':''}">
-      <td style="padding:9px 16px;border-bottom:1px solid var(--border);font-weight:${isCur?600:400}">T${qIdx+1} ${year}${isCur?' <span style="font-size:10px;background:var(--primary);color:#fff;padding:1px 6px;border-radius:10px;margin-left:4px">actuel</span>':''}</td>
-      <td style="padding:9px 16px;text-align:right;border-bottom:1px solid var(--border)">
-        <span onclick="editObjective('quarter','${key}',this)" style="cursor:pointer;font-weight:500;color:var(--primary)">${obj>0?obj.toLocaleString('fr-FR')+' €':'+ Définir'}</span>
-      </td>
-      <td style="padding:9px 16px;text-align:right;border-bottom:1px solid var(--border);font-weight:600;color:var(--green-dark)">${fmtAmt(real)}</td>
-      <td style="padding:9px 16px;text-align:right;border-bottom:1px solid var(--border)">${ecartCell(real,obj)}</td>
-      <td style="padding:9px 16px;text-align:right;border-bottom:1px solid var(--border)">${pctBadge(real,obj)}</td>
-    </tr>`;
-    qBars.push({lbl:`T${qIdx+1}`, real, obj, cur:isCur});
-  }
-  document.getElementById('obj-quarter-table').innerHTML = qRows;
-
-  const maxQ = Math.max(1,...qBars.flatMap(b=>[b.real,b.obj]));
-  document.getElementById('obj-quarter-chart').innerHTML = qBars.map(b=>{
-    const hr = Math.max(3,Math.round(b.real/maxQ*120)), ho = b.obj>0?Math.max(3,Math.round(b.obj/maxQ*120)):0;
-    return `<div style="flex:1;display:flex;flex-direction:column;align-items:center;gap:4px">
-      <div style="font-size:10px;color:var(--green-dark);font-weight:600">${b.real>0?b.real.toLocaleString('fr-FR')+'€':'—'}</div>
-      <div style="width:100%;display:flex;align-items:flex-end;gap:3px;height:120px">
-        <div style="flex:1;border-radius:4px 4px 0 0;background:var(--green);min-height:2px;height:${hr}px"></div>
-        ${ho?`<div style="flex:1;border-radius:4px 4px 0 0;background:var(--stat-light6);border:1px solid var(--stat-sales);min-height:2px;height:${ho}px"></div>`:'<div style="flex:1"></div>'}
-      </div>
-      <div style="font-size:11px;font-weight:${b.cur?700:400};color:var(--text-secondary)">${b.lbl}</div>
-    </div>`;
-  }).join('');
-}
-
-function editObjective(type, key, el) {
-  const cur = getObjective(type, key);
-  const label = type==='month' ? 'mensuel' : 'trimestriel';
-  const val = prompt(`Objectif CA ${label} (en €) :`, cur>0?cur:'');
-  if(val === null) return;
-  setObjective(type, key, val);
-  showToast('Objectif enregistré ✓');
-}
-
-// ════════════════════════════════════════
-// KANBAN
-// ════════════════════════════════════════
-// dragId declared above
-
-function renderKanban() {
-  const board = document.getElementById('kanban-board'); if(!board) return;
-  board.innerHTML = settings.statuses.map(s=>{
-    const cards = data.filter(d=>d.status===s.id);
-    return `<div class="kanban-col" data-status="${esc(s.id)}">
-      <div class="kanban-col-header">
-        <div class="kanban-col-dot" style="background:${esc(s.color)}"></div>
-        <div class="kanban-col-title">${esc(s.emoji||'')} ${esc(s.label)}</div>
-        <span class="kanban-col-count">${cards.length}</span>
-      </div>
-      <div class="kanban-cards" id="kc-${esc(s.id)}"
-        ondragover="event.preventDefault();this.closest('.kanban-col').querySelectorAll('.kanban-card').forEach(c=>c.classList.remove('drag-over'))"
-        ondrop="dropKanban(event,'${esc(s.id)}')">
-        ${cards.map(d=>{
-          const tp=getType(d.type);
-          const score=calcScore(d);
-          return `<div class="kanban-card" draggable="true"
-            style="border-left-color:${esc(s.color)}"
-            ondragstart="dragId='${d.id}';this.classList.add('dragging')"
-            ondragend="this.classList.remove('dragging')"
-            ondragover="event.preventDefault();this.classList.add('drag-over')"
-            ondragleave="this.classList.remove('drag-over')"
-            onclick="openDetail('${d.id}')">
-            <div class="kanban-card-name">${esc(d.name)}</div>
-            <div class="kanban-card-meta">
-              ${tp?`<span class="kanban-card-type">${esc(tp.emoji||'')} ${esc(tp.label)}</span>`:''}
-              ${d.city?`<span class="kanban-card-city">📍 ${esc(d.city)}</span>`:''}
-              ${(d.tags||[]).slice(0,2).map(t=>`<span class="kanban-card-tag">${esc(t)}</span>`).join('')}
-              <span class="score-badge ${scoreClass(score)}" style="width:22px;height:22px;font-size:10px;margin-left:auto">${score}</span>
-            </div>
-          </div>`;
-        }).join('')}
-      </div>
-      <button class="kanban-add-btn" onclick="openEntryWithStatus('${esc(s.id)}')">+ Ajouter</button>
-    </div>`;
-  }).join('');
-}
-
-function dropKanban(e, newStatus) {
+function handleCsvDrop(e) {
   e.preventDefault();
-  if(!dragId) return;
-  const d = data.find(p=>p.id===dragId);
-  if(d && d.status !== newStatus) {
-    d.status = newStatus;
-    addHistory(d, `Statut → ${getStatus(newStatus).label} (Kanban)`);
-    persist(); renderAll(); renderKanban();
-    showToast(`${d.name} → ${getStatus(newStatus).label}`);
-  }
-  dragId = null;
-  document.querySelectorAll('.kanban-card').forEach(c=>c.classList.remove('drag-over','dragging'));
+  document.getElementById('import-dropzone').classList.remove('drag-over');
+  const file = e.dataTransfer.files[0];
+  if (file) handleCsvFile(file);
 }
 
-function openEntryWithStatus(statusId) {
-  openEntry();
-  setTimeout(()=>{
-    const sel = document.getElementById('f-status');
-    if(sel) sel.value = statusId;
-  }, 160);
+function handleCsvFile(file) {
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => processCsvText(e.target.result);
+  reader.readAsText(file, 'UTF-8');
 }
 
-// ════════════════════════════════════════
-// ATTACHMENTS
-// ════════════════════════════════════════
-// ATTACH_KEY declared above
-// attachments declared above — { prospectId: [{ id, name, type, size, data, addedAt }] }
+function processCsvText(text) {
+  const { headers, rows } = parseCsv(text);
+  if (!rows.length) { showToast('❌ Fichier vide ou format invalide'); return; }
 
-// loadAttachments() defined in Supabase layer above
-// saveAttachments() defined in Supabase layer above
+  csvParsedRows = rows.map(csvRowToProspect).filter(p => p.name);
+  const skipped = rows.length - csvParsedRows.length;
+  const dupes = csvParsedRows.filter(p => data.some(d => d.name?.toLowerCase()===p.name?.toLowerCase())).length;
 
-function renderAttachments(prospectId) {
-  const list = attachments[prospectId] || [];
-  const icons = { pdf:'📄', doc:'📝', docx:'📝', xls:'📊', xlsx:'📊', jpg:'🖼', jpeg:'🖼', png:'🖼', gif:'🖼', mp4:'🎥', default:'📎' };
-  const getIcon = name => { const ext = (name.split('.').pop()||'').toLowerCase(); return icons[ext]||icons.default; };
-  const items = list.map(a=>`
-    <div class="attachment-item">
-      <div class="attachment-icon">${getIcon(a.name)}</div>
-      <div class="attachment-info">
-        <div class="attachment-name">${esc(a.name)}</div>
-        <div class="attachment-size">${a.size||'—'} · ${fmtDate(a.addedAt?.slice(0,10))}</div>
-      </div>
-      <a href="${esc(a.data)}" download="${esc(a.name)}" onclick="event.stopPropagation()" style="font-size:13px;text-decoration:none">⬇️</a>
-      <span class="attachment-del" onclick="event.stopPropagation();deleteAttachment('${prospectId}','${a.id}');openDetail('${prospectId}')">✕</span>
-    </div>`).join('');
-  return `<div class="detail-section">
-    <div class="detail-section-label" style="display:flex;align-items:center;justify-content:space-between">
-      📎 Pièces jointes
-      <label style="font-size:11px;color:var(--primary);cursor:pointer;background:var(--primary-light);padding:2px 9px;border-radius:4px;font-weight:500">
-        + Ajouter <input type="file" style="display:none" multiple onchange="addAttachments('${prospectId}',this)">
-      </label>
+  document.getElementById('import-preview-section').style.display = '';
+
+  document.getElementById('import-stats').innerHTML = `
+    <div class="import-stat-chip"><span class="val">${rows.length}</span><span class="lbl">Lignes</span></div>
+    <div class="import-stat-chip green"><span class="val">${csvParsedRows.length}</span><span class="lbl">Valides</span></div>
+    ${skipped>0?`<div class="import-stat-chip red"><span class="val">${skipped}</span><span class="lbl">Ignorées</span></div>`:''}
+    <div class="import-stat-chip amber"><span class="val">${dupes}</span><span class="lbl">Doublons</span></div>`;
+
+  const detectedCols = headers.filter(h => CSV_COL_MAP[h.toLowerCase()]);
+  const ignoredCols  = headers.filter(h => !CSV_COL_MAP[h.toLowerCase()]);
+  document.getElementById('import-mapping').innerHTML = `
+    <div style="font-size:11.5px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.06em;margin-bottom:8px">Colonnes détectées</div>
+    <div style="display:flex;flex-wrap:wrap;gap:5px">
+      ${detectedCols.map(h=>`<span style="padding:3px 10px;background:var(--sage-light);color:var(--sage-dark);border-radius:20px;font-size:12px;font-weight:500">✓ ${h}</span>`).join('')}
+      ${ignoredCols.map(h=>`<span style="padding:3px 10px;background:var(--bg);color:var(--text-tertiary);border-radius:20px;font-size:12px;border:1px solid var(--border)">— ${h}</span>`).join('')}
     </div>
-    ${items||'<div style="font-size:12px;color:var(--text-tertiary);margin-top:4px">Aucune pièce jointe</div>'}
-  </div>`;
+    ${skipped>0?`<p style="font-size:11.5px;color:var(--coral-dark);margin-top:8px">* Les lignes sans colonne "nom" sont ignorées.</p>`:''}`;
+
+  const cols = ['name','status','type','city','contactName','phone','tags'];
+  const labels = {name:'Nom',status:'Statut',type:'Type',city:'Ville',contactName:'Contact',phone:'Tél',tags:'Produits'};
+  const preview = csvParsedRows.slice(0,8);
+  document.getElementById('import-preview-table').innerHTML = `
+    <table class="import-preview-table">
+      <thead><tr>${cols.map(c=>`<th>${labels[c]}</th>`).join('')}</tr></thead>
+      <tbody>${preview.map(p=>`<tr>${cols.map(c=>{
+        const v = Array.isArray(p[c]) ? p[c].join(', ') : (p[c]||'');
+        if(c==='status'){const st=getStatus(p.status);return`<td><span style="display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600;background:${st.bg};color:${st.color}">${st.label}</span></td>`;}
+        return `<td title="${esc(v)}">${esc(v)||'<span style="color:var(--text-placeholder)">—</span>'}</td>`;
+      }).join('')}</tr>`).join('')}</tbody>
+    </table>
+    ${csvParsedRows.length>8?`<p style="font-size:12px;color:var(--text-tertiary);margin-top:8px;text-align:center">… et ${csvParsedRows.length-8} autre${csvParsedRows.length-8>1?'s':''} prospect${csvParsedRows.length-8>1?'s':''}</p>`:''}`;
+
+  document.getElementById('import-confirm-btn').textContent = `✅ Importer ${csvParsedRows.length} prospect${csvParsedRows.length>1?'s':''}`;
+  document.getElementById('import-result').textContent = '';
+  document.getElementById('import-preview-section').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-function addAttachments(prospectId, input) {
-  const files = [...input.files];
-  if(!attachments[prospectId]) attachments[prospectId]=[];
-  let loaded=0;
-  files.forEach(file=>{
-    const reader = new FileReader();
-    reader.onload = e=>{
-      attachments[prospectId].push({ id:uid(), name:file.name, type:file.type, size:formatFileSize(file.size), data:e.target.result, addedAt:new Date().toISOString() });
-      loaded++;
-      if(loaded===files.length) { saveAttachments(); openDetail(prospectId); showToast(`${loaded} fichier${loaded>1?'s':''} ajouté${loaded>1?'s':''} ✓`); }
-    };
-    reader.readAsDataURL(file);
-  });
-}
+async function confirmCsvImport() {
+  if (!csvParsedRows.length) return;
+  const btn = document.getElementById('import-confirm-btn');
+  const resultEl = document.getElementById('import-result');
+  btn.disabled = true; btn.textContent = '⏳ Import en cours…';
 
-function deleteAttachment(prospectId, attachId) {
-  if(!attachments[prospectId]) return;
-  attachments[prospectId]=attachments[prospectId].filter(a=>a.id!==attachId);
-  saveAttachments();
-}
-
-function formatFileSize(bytes) {
-  if(bytes<1024) return bytes+' o';
-  if(bytes<1048576) return Math.round(bytes/1024)+' Ko';
-  return (bytes/1048576).toFixed(1)+' Mo';
-}
-
-// ════════════════════════════════════════
-// EXPORT EXCEL (XLSX via SheetJS CDN)
-// ════════════════════════════════════════
-async function exportExcel() {
-  showToast('Préparation de l\'export Excel…');
-  // Load SheetJS if not already loaded
-  if(typeof XLSX === 'undefined') {
-    await new Promise((res,rej)=>{
-      const s=document.createElement('script');
-      s.src='https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js';
-      s.onload=res; s.onerror=rej; document.head.appendChild(s);
-    });
+  let added = 0, skipped = 0;
+  for (const p of csvParsedRows) {
+    if (data.some(d => d.name?.toLowerCase()===p.name?.toLowerCase())) { skipped++; continue; }
+    data.push(p); added++;
   }
-  const wb = XLSX.utils.book_new();
 
-  // Sheet 1: Prospects
-  const prospectRows = data.map(d=>({
-    'Nom':          d.name||'',
-    'Type':         getType(d.type)?.label||d.type||'',
-    'Statut':       getStatus(d.status)?.label||d.status||'',
-    'Ville':        d.city||'',
-    'Région':       d.region||'',
-    'Contact':      d.contactName||'',
-    'Téléphone':    d.phone||'',
-    'Email':        d.email||'',
-    'Site web':     d.website||'',
-    'Produits':     (d.tags||[]).join(', '),
-    'Dernier contact': d.lastContact||'',
-    'Priorité':     d.priority?'Oui':'Non',
-    'Notes':        (d.notes||'').replace(/\n/g,' '),
-    'Créé le':      d.createdAt?.slice(0,10)||'',
-  }));
-  const ws1 = XLSX.utils.json_to_sheet(prospectRows);
-  ws1['!cols'] = [{wch:30},{wch:16},{wch:18},{wch:16},{wch:18},{wch:20},{wch:15},{wch:28},{wch:30},{wch:30},{wch:14},{wch:8},{wch:50},{wch:12}];
-  XLSX.utils.book_append_sheet(wb, ws1, 'Prospects');
+  await persist(); renderAll();
+  btn.disabled = false; btn.textContent = '✅ Importé !';
+  resultEl.style.color = 'var(--sage-dark)';
+  resultEl.textContent = `${added} prospect${added>1?'s':''} ajouté${added>1?'s':''}${skipped>0?` · ${skipped} doublon${skipped>1?'s':''} ignoré${skipped>1?'s':''}` : ''}`;
+  showToast(`✅ ${added} prospect${added>1?'s':''} importé${added>1?'s':''} !`);
+  csvParsedRows = [];
+}
 
-  // Sheet 2: Ventes
-  const saleRows = salesData.map(s=>({
-    'Date':       s.date||'',
-    'Client':     s.prospectName||'',
-    'Produit(s)': s.product||'',
-    'Montant €':  parseFloat(s.amount)||0,
-    'Heure':      s.time||'',
-  }));
-  const ws2 = XLSX.utils.json_to_sheet(saleRows.length ? saleRows : [{'Aucune vente':'enregistrée'}]);
-  ws2['!cols'] = [{wch:12},{wch:28},{wch:30},{wch:12},{wch:8}];
-  XLSX.utils.book_append_sheet(wb, ws2, 'Ventes');
+function resetCsvImport() {
+  csvParsedRows = [];
+  document.getElementById('import-preview-section').style.display = 'none';
+  document.getElementById('csv-file-input').value = '';
+  document.getElementById('import-result').textContent = '';
+}
 
-  // Sheet 3: Appels
-  const callRows = Object.entries(statsData).flatMap(([date,logs])=>
-    logs.map(e=>({
-      'Date':      date,
-      'Heure':     e.time||'',
-      'Prospect':  e.prospectName||'',
-      'Résultat':  ({called:'Appelé',answered:'A répondu',vm:'Répondeur',nextcall:'Prochain appel',catalog:'Catalogue envoyé',sold:'Vente',refused:'Refus'}[e.outcome]||e.outcome),
-    }))
-  ).sort((a,b)=>a.Date<b.Date?1:-1);
-  const ws3 = XLSX.utils.json_to_sheet(callRows.length ? callRows : [{'Aucun appel':'enregistré'}]);
-  ws3['!cols'] = [{wch:12},{wch:8},{wch:30},{wch:18}];
-  XLSX.utils.book_append_sheet(wb, ws3, 'Journal appels');
-
-  // Sheet 4: Tâches
-  const taskRows = todos.map(t=>({
-    'Titre':     t.title||'',
-    'Statut':    t.status==='done'||t.done?'Terminée':t.status==='inprogress'?'En cours':'À faire',
-    'Priorité':  ({high:'Haute',medium:'Moyenne',low:'Basse'}[t.priority]||''),
-    'Client':    data.find(d=>d.id===t.prospectId)?.name||'',
-    'Catégorie': t.cat||'',
-    'Échéance':  t.due||'',
-    'Notes':     (t.notes||'').replace(/\n/g,' '),
-  }));
-  const ws4 = XLSX.utils.json_to_sheet(taskRows.length ? taskRows : [{'Aucune tâche':'enregistrée'}]);
-  ws4['!cols'] = [{wch:40},{wch:12},{wch:10},{wch:28},{wch:14},{wch:12},{wch:40}];
-  XLSX.utils.book_append_sheet(wb, ws4, 'Tâches');
-
-  XLSX.writeFile(wb, `SourcingPro_${todayStr()}.xlsx`);
-  showToast('Export Excel téléchargé ✓');
+function downloadCsvTemplate() {
+  const header = 'nom,statut,type,ville,region,contact,role,telephone,email,site,produits,notes,prioritaire,dernier_contact';
+  const ex = 'Metro Cash Lyon,à contacter,grossiste,Lyon,Auvergne-Rhône-Alpes,Jean Dupont,Directeur Achat,06 12 34 56 78,j.dupont@metro.fr,www.metro.fr,"épicerie,snacking",Premier contact à planifier,non,';
+  const blob = new Blob([header+'\n'+ex], {type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'SourcingPro_modele.csv';
+  a.click();
 }
 
 // ════════════════════════════════════════
-// Export & settings moved to sidebar — no topbar injection needed
+// MOBILE NAVIGATION
+// ════════════════════════════════════════
+// ════════════════════════════════════════
+// LAYOUT MODE — auto, desktop, mobile
+// ════════════════════════════════════════
+let layoutMode = localStorage.getItem('sp_layout') || 'auto'; // 'auto' | 'desktop' | 'mobile'
 
-// ════════════════════════════════════════
-// EXTRA CONTACTS (multi-contacts)
-// ════════════════════════════════════════
-function addExtraContact() {
-  const name  = document.getElementById('ec-name').value.trim();
-  const role  = document.getElementById('ec-role').value.trim();
-  const email = document.getElementById('ec-email').value.trim();
-  const phone = document.getElementById('ec-phone').value.trim();
-  if(!name) { document.getElementById('ec-name').focus(); return; }
-  curExtraContacts.push({ id:uid(), name, role, email, phone });
-  renderExtraContacts();
-  ['ec-name','ec-role','ec-email','ec-phone'].forEach(id=>{ const el=document.getElementById(id); if(el)el.value=''; });
+const isMobile = () => {
+  if (layoutMode === 'mobile') return true;
+  if (layoutMode === 'desktop') return false;
+  return window.innerWidth <= 768;
+};
+
+function setLayoutMode(mode) {
+  layoutMode = mode;
+  localStorage.setItem('sp_layout', mode);
+  applyLayout();
+  showToast(mode === 'auto' ? 'Mise en page automatique' : mode === 'mobile' ? '📱 Interface mobile' : '🖥 Interface bureau');
 }
-function removeExtraContact(id) {
-  curExtraContacts = curExtraContacts.filter(c=>c.id!==id);
-  renderExtraContacts();
+
+function applyLayout() {
+  const mobile = isMobile();
+  const body = document.body;
+  // Toggle a class that CSS media queries respect
+  if (mobile) {
+    body.classList.add('force-mobile');
+    body.classList.remove('force-desktop');
+  } else {
+    body.classList.add('force-desktop');
+    body.classList.remove('force-mobile');
+  }
+  initMobileNav();
+  renderAll();
+  // Re-init current tab
+  const activeTab = document.querySelector('.tab-content.active');
+  if (activeTab) {
+    const tabId = activeTab.id.replace('content-', '');
+    switchTab(tabId);
+  }
 }
-function renderExtraContacts() {
-  const list = document.getElementById('extra-contacts-list'); if(!list) return;
-  list.innerHTML = curExtraContacts.map(c=>`
-    <div class="contact-item">
-      <div class="contact-avatar">${(c.name||'?')[0].toUpperCase()}</div>
-      <div class="contact-info">
-        <div class="contact-name">${esc(c.name)}</div>
-        <div class="contact-role">${[c.role,c.email,c.phone].filter(Boolean).map(esc).join(' · ')}</div>
+
+function toggleLayoutPicker() {
+  const picker = document.getElementById('layout-picker');
+  if (!picker) return;
+  picker.style.display = picker.style.display === 'none' ? 'flex' : 'none';
+}
+
+
+function mobileNav(tab) {
+  closeMobileMore();
+  switchTab(tab);
+  // Update mobile nav highlights
+  document.querySelectorAll('.mobile-nav-item').forEach(el => el.classList.remove('active'));
+  const mapping = { dashboard:'mnav-dashboard', prospects:'mnav-prospects', stats:'mnav-stats', todo:'mnav-todo' };
+  if (mapping[tab]) document.getElementById(mapping[tab])?.classList.add('active');
+  else document.getElementById('mnav-more')?.classList.add('active');
+}
+
+function toggleMobileMore() {
+  const menu = document.getElementById('mobile-more-menu');
+  const overlay = document.getElementById('mobile-more-overlay');
+  const isOpen = menu.style.display === 'flex';
+  if (isOpen) {
+    closeMobileMore();
+  } else {
+    menu.style.display = 'flex';
+    overlay.style.display = 'block';
+  }
+}
+
+function closeMobileMore() {
+  const menu = document.getElementById('mobile-more-menu');
+  const overlay = document.getElementById('mobile-more-overlay');
+  if (menu) menu.style.display = 'none';
+  if (overlay) overlay.style.display = 'none';
+}
+
+// Update mobile nav badges
+// Mobile badges now handled directly in renderSidebar
+
+// Mobile todo detail overlay
+function openMobileTodoDetail(taskId) {
+  if (!isMobile()) return;
+  const task = todos.find(t => t.id === taskId);
+  if (!task) return;
+  const prospect = data.find(p => p.id === task.prospectId);
+  const isDone = task.done || task.status === 'done';
+
+  document.getElementById('todo-detail-mobile-body').innerHTML = `
+    <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:18px">
+      <div onclick="toggleTaskDone('${task.id}');openMobileTodoDetail('${task.id}')"
+        style="width:24px;height:24px;border-radius:50%;border:2px solid var(--lavender);background:${isDone?'var(--lavender)':'none'};display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;margin-top:4px;color:#fff;font-size:12px">
+        ${isDone ? '✓' : ''}
       </div>
-      <span class="contact-del" onclick="removeExtraContact('${c.id}')">✕</span>
-    </div>`).join('');
-}
-
-// ════════════════════════════════════════
-// DUPLICATE DETECTION
-// ════════════════════════════════════════
-// duplicatePendingCallback declared above
-
-function similarity(a, b) {
-  a = a.toLowerCase().replace(/\s+/g,''); b = b.toLowerCase().replace(/\s+/g,'');
-  if(a===b) return 1;
-  if(a.includes(b)||b.includes(a)) return 0.85;
-  let common = 0;
-  for(let i=0;i<Math.min(a.length,b.length);i++) if(a[i]===b[i]) common++;
-  return common / Math.max(a.length, b.length);
-}
-
-function findDuplicates(name) {
-  return data.filter(d => similarity(d.name, name) >= 0.7)
-             .map(d => ({ ...d, sim: Math.round(similarity(d.name, name)*100) }))
-             .sort((a,b)=>b.sim-a.sim);
-}
-
-function showDuplicateOverlay(dups, onForce) {
-  duplicatePendingCallback = onForce;
-  const list = document.getElementById('duplicate-list');
-  list.innerHTML = dups.map(d=>`
-    <div class="duplicate-item" onclick="openDetail('${d.id}');closeDuplicateOverlay()">
       <div style="flex:1">
-        <div style="font-size:13px;font-weight:600;color:var(--text)">${esc(d.name)}</div>
-        <div style="font-size:11.5px;color:var(--text-tertiary)">${getStatus(d.status)?.label||''} · ${d.city||'—'}</div>
+        <div style="font-size:19px;font-weight:700;color:var(--text);line-height:1.3;${isDone?'text-decoration:line-through;color:var(--text-tertiary)':''}">${esc(task.title||'Sans titre')}</div>
       </div>
-      <span class="duplicate-similarity">${d.sim}% similaire</span>
-    </div>`).join('');
-  document.getElementById('duplicate-force-btn').onclick = () => {
-    const cb = duplicatePendingCallback;
-    closeDuplicateOverlay();
-    cb?.();
-  };
-  document.getElementById('duplicate-overlay').classList.add('open');
-}
-function closeDuplicateOverlay() {
-  document.getElementById('duplicate-overlay').classList.remove('open');
-  duplicatePendingCallback = null;
-}
-
-// ════════════════════════════════════════
-// PDF EXPORT
-// ════════════════════════════════════════
-function openPDF(id) {
-  const d = data.find(e=>e.id===id); if(!d) return;
-  const st = getStatus(d.status), tp = getType(d.type);
-  const allCalls = Object.values(statsData).flat().filter(e=>e.prospectId===id);
-  const dSales = salesData.filter(s=>s.prospectId===id);
-  const dtasks = (typeof todos!=='undefined') ? todos.filter(t=>t.prospectId===id) : [];
-  document.getElementById('pdf-title').textContent = `Fiche — ${d.name}`;
-  document.getElementById('pdf-body').innerHTML = `
-    <div style="font-family:var(--font);color:var(--text)">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px;padding-bottom:16px;border-bottom:2px solid var(--border)">
-        <div style="width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--primary),var(--accent));color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800">${d.name[0].toUpperCase()}</div>
-        <div>
-          <div style="font-size:20px;font-weight:800;color:var(--text)">${esc(d.name)}</div>
-          <div style="font-size:13px;color:var(--text-secondary)">${tp?esc(tp.emoji+' '+tp.label):''}${d.city?' · '+esc(d.city):''}</div>
-        </div>
-        <div style="margin-left:auto"><span style="background:${st.bg};color:${st.color};padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700">${esc(st.emoji||'')} ${esc(st.label)}</span></div>
-      </div>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:18px;font-size:13px">
-        ${d.contactName?`<div><strong>Contact :</strong> ${esc(d.contactName)}${d.contactRole?' ('+esc(d.contactRole)+')':''}</div>`:''}
-        ${d.phone?`<div><strong>Tél :</strong> ${esc(d.phone)}</div>`:''}
-        ${d.email?`<div><strong>Email :</strong> ${esc(d.email)}</div>`:''}
-        ${d.website?`<div><strong>Site :</strong> ${esc(d.website)}</div>`:''}
-        ${d.deciderName?`<div><strong>Décideur :</strong> ${esc(d.deciderName)}${d.deciderRole?' ('+esc(d.deciderRole)+')':''}</div>`:''}
-        ${d.deciderEmail?`<div><strong>Email décideur :</strong> ${esc(d.deciderEmail)}</div>`:''}
-        ${d.lastContact?`<div><strong>Dernier contact :</strong> ${fmtDate(d.lastContact)}</div>`:''}
-      </div>
-      ${d.tags?.length?`<div style="margin-bottom:14px"><strong>Produits ciblés :</strong> ${d.tags.map(t=>`<span style="background:var(--green-light);color:var(--green-dark);padding:2px 8px;border-radius:4px;font-size:12px;margin-right:4px">${esc(t)}</span>`).join('')}</div>`:''}
-      ${d.notes?`<div style="margin-bottom:14px;padding:12px;background:var(--bg);border-radius:8px;font-size:13px;line-height:1.6"><strong>Notes :</strong><br>${esc(d.notes)}</div>`:''}
-      ${dtasks.length?`<div style="margin-bottom:14px"><strong>Tâches (${dtasks.length}) :</strong>${dtasks.map(t=>`<div style="font-size:12.5px;padding:4px 0;border-bottom:1px solid var(--border)">${t.done||t.status==='done'?'✅':'⬜'} ${esc(t.title)} ${t.due?'— '+fmtDate(t.due):''}</div>`).join('')}</div>`:''}
-      ${allCalls.length?`<div style="margin-bottom:14px"><strong>Historique d'appels (${allCalls.length}) :</strong>${allCalls.slice(0,8).map(c=>`<div style="font-size:12px;padding:3px 0;border-bottom:1px solid var(--border)">${c.time||''} ${c.nextCallDate?'':''} — ${{called:'Appelé',answered:'A répondu',vm:'Répondeur',nextcall:'Prochain appel',catalog:'Catalogue',sold:'Vente',refused:'Refus'}[c.outcome]||c.outcome}</div>`).join('')}</div>`:''}
-      ${dSales.length?`<div style="margin-bottom:14px"><strong>Ventes (${dSales.length}) :</strong>${dSales.map(s=>`<div style="font-size:12.5px;padding:4px 0;border-bottom:1px solid var(--border)">🏆 ${fmtDate(s.date)} — ${esc(s.product||'—')} ${s.amount?'· '+parseFloat(s.amount).toLocaleString('fr-FR')+' €':''}</div>`).join('')}</div>`:''}
-      <div style="margin-top:16px;font-size:11px;color:var(--text-tertiary);text-align:right">Généré par SourcingPro · ${new Date().toLocaleDateString('fr-FR',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}</div>
-    </div>`;
-  document.getElementById('pdf-overlay').classList.add('open');
-}
-function closePDFOverlay() { document.getElementById('pdf-overlay').classList.remove('open'); }
-function printPDF() {
-  const content = document.getElementById('pdf-body').innerHTML;
-  const printArea = document.getElementById('pdf-print-area');
-  printArea.innerHTML = content;
-  printArea.style.display = 'block';
-  window.print();
-  setTimeout(()=>{ printArea.innerHTML=''; printArea.style.display='none'; }, 1000);
-}
-
-// ════════════════════════════════════════
-// FUNNEL DE CONVERSION
-// ════════════════════════════════════════
-function renderFunnel() {
-  const el = document.getElementById('stats-funnel'); if(!el) return;
-  const total = data.length;
-  const steps = settings.statuses.map(s=>({
-    label:s.label, emoji:s.emoji||'', color:s.color, bg:s.bg,
-    count: data.filter(d=>d.status===s.id).length
-  })).filter(s=>s.count>0);
-
-  if(!total) { el.innerHTML='<div class="stats-empty">Aucun prospect</div>'; return; }
-
-  el.innerHTML = steps.map((s,i)=>{
-    const w = Math.max(8, Math.round(s.count/total*100));
-    const pct = i===0 ? 100 : Math.round(s.count/steps[0].count*100);
-    return `${i>0?`<div class="funnel-arrow">↓ ${pct}% de conversion</div>`:''}
-    <div class="funnel-step">
-      <div class="funnel-label">${esc(s.emoji)} ${esc(s.label)}</div>
-      <div class="funnel-bar-wrap">
-        <div class="funnel-bar-bg">
-          <div class="funnel-bar-fill" style="width:${w}%;background:${s.color}">
-            <span class="funnel-bar-text">${s.count}</span>
-          </div>
-        </div>
-      </div>
-      <div class="funnel-pct">${Math.round(s.count/total*100)}%</div>
-    </div>`;
-  }).join('');
-}
-
-// ════════════════════════════════════════
-// CALL GOALS
-// ════════════════════════════════════════
-// CALL_GOALS_KEY declared above
-// callGoals declared above
-
-// loadCallGoals() defined in Supabase layer above
-// saveCallGoals() defined in Supabase layer above
-
-function editCallGoals() {
-  const d = parseInt(prompt('Objectif d\'appels par jour :', callGoals.daily));
-  if(!d||isNaN(d)) return;
-  const w = parseInt(prompt('Objectif d\'appels par semaine :', callGoals.weekly));
-  if(!w||isNaN(w)) return;
-  callGoals = { daily: d, weekly: w };
-  saveCallGoals(); renderCallGoals();
-}
-
-function renderCallGoals() {
-  const el = document.getElementById('stats-call-goals'); if(!el) return;
-  const today = todayStr();
-  const [wFrom,wTo] = getWeekRange(today);
-  const wDates = getDatesInRange(wFrom, wTo);
-
-  const todayCount = getDayLog(today).length;
-  const weekCount  = wDates.reduce((sum,d)=>sum+getDayLog(d).length,0);
-  const pctD = Math.min(100, Math.round(todayCount/callGoals.daily*100));
-  const pctW = Math.min(100, Math.round(weekCount/callGoals.weekly*100));
-
-  const ring = (pct, color) => {
-    const r=32, c=2*Math.PI*r, dash=c*(pct/100), gap=c-dash;
-    return `<svg width="80" height="80" viewBox="0 0 80 80">
-      <circle class="goal-ring-bg" cx="40" cy="40" r="${r}"/>
-      <circle class="goal-ring-fill" cx="40" cy="40" r="${r}" stroke="${color}"
-        stroke-dasharray="${dash} ${gap}" stroke-dashoffset="0"/>
-    </svg>`;
-  };
-
-  el.innerHTML = `<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px">
-    <div style="text-align:center">
-      <div style="font-size:11px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">Aujourd'hui</div>
-      <div class="goal-ring" style="margin:0 auto 8px">
-        ${ring(pctD, pctD>=100?'var(--green)':'var(--stat-calls)')}
-        <div class="goal-ring-label">
-          <div class="goal-ring-pct" style="color:${pctD>=100?'var(--green-dark)':'var(--stat-calls)'}">${pctD}%</div>
-          <div class="goal-ring-sub">appels</div>
-        </div>
-      </div>
-      <div style="font-size:12px;color:var(--text-secondary)">${todayCount} / ${callGoals.daily}</div>
     </div>
-    <div style="text-align:center">
-      <div style="font-size:11px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:0.05em;margin-bottom:8px">Cette semaine</div>
-      <div class="goal-ring" style="margin:0 auto 8px">
-        ${ring(pctW, pctW>=100?'var(--green)':'var(--todo-purple)')}
-        <div class="goal-ring-label">
-          <div class="goal-ring-pct" style="color:${pctW>=100?'var(--green-dark)':'var(--todo-purple)'}">${pctW}%</div>
-          <div class="goal-ring-sub">appels</div>
-        </div>
-      </div>
-      <div style="font-size:12px;color:var(--text-secondary)">${weekCount} / ${callGoals.weekly}</div>
+    <div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-xl);overflow:hidden;margin-bottom:14px;">
+      ${task.due ? `<div style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid var(--border)"><span style="font-size:11px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.04em;width:80px">Échéance</span><span style="font-size:13.5px;color:var(--text)">${fmtDate(task.due)}</span></div>` : ''}
+      ${task.priority ? `<div style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid var(--border)"><span style="font-size:11px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.04em;width:80px">Priorité</span><span class="task-prio ${task.priority}">${{high:'🔴 Haute',medium:'🟡 Moyenne',low:'🟢 Basse'}[task.priority]||''}</span></div>` : ''}
+      ${task.cat ? `<div style="display:flex;align-items:center;gap:12px;padding:11px 14px;border-bottom:1px solid var(--border)"><span style="font-size:11px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.04em;width:80px">Catégorie</span><span style="font-size:13.5px">${({appel:'📞 Appel',email:'✉️ Email',rdv:'📅 RDV',catalog:'📦 Catalogue',relance:'🔔 Relance',suivi:'👁 Suivi',admin:'📋 Admin',other:'⚙ Autre'})[task.cat]||task.cat}</span></div>` : ''}
+      ${prospect ? `<div style="display:flex;align-items:center;gap:12px;padding:11px 14px"><span style="font-size:11px;font-weight:700;color:var(--text-tertiary);text-transform:uppercase;letter-spacing:.04em;width:80px">Client</span><span style="font-size:13.5px;color:var(--primary);font-weight:500">${esc(prospect.name)}</span></div>` : ''}
     </div>
-  </div>`;
-}
-
-// ════════════════════════════════════════
-// CALL TIMING — meilleur moment
-// ════════════════════════════════════════
-function renderCallTiming() {
-  const el = document.getElementById('stats-timing'); if(!el) return;
-  const days = ['Lun','Mar','Mer','Jeu','Ven','Sam','Dim'];
-  const hours = [8,9,10,11,12,13,14,15,16,17,18];
-  // Build grid: day x hour → answer count
-  const grid = {};
-  Object.entries(statsData).forEach(([date, logs]) => {
-    const d = new Date(date+'T12:00:00');
-    const dow = d.getDay()===0?6:d.getDay()-1;
-    logs.filter(l=>l.outcome==='answered'||l.outcome==='sold').forEach(l => {
-      const h = parseInt((l.time||'00:00').split(':')[0]);
-      const key = `${dow}_${h}`;
-      grid[key] = (grid[key]||0)+1;
-    });
-  });
-  const maxVal = Math.max(1,...Object.values(grid));
-  const color = v => {
-    const p = v/maxVal;
-    if(!v) return 'var(--border)';
-    if(p<0.25) return 'rgba(90,158,114,0.2)';
-    if(p<0.5)  return 'rgba(90,158,114,0.5)';
-    if(p<0.75) return 'rgba(90,158,114,0.75)';
-    return 'var(--green)';
-  };
-
-  el.innerHTML = `
-    <div style="overflow-x:auto">
-      <table style="border-collapse:collapse;font-size:10.5px;width:100%">
-        <thead><tr>
-          <th style="color:var(--text-tertiary);padding:3px 6px;font-weight:600;text-align:left">H</th>
-          ${days.map(d=>`<th style="color:var(--text-tertiary);padding:3px 4px;font-weight:600;text-align:center;min-width:28px">${d}</th>`).join('')}
-        </tr></thead>
-        <tbody>${hours.map(h=>`<tr>
-          <td style="color:var(--text-tertiary);padding:3px 6px;font-weight:600">${h}h</td>
-          ${[0,1,2,3,4,5,6].map(dow=>{
-            const v=grid[`${dow}_${h}`]||0;
-            return `<td style="padding:2px 3px;text-align:center">
-              <div style="width:24px;height:20px;border-radius:4px;background:${color(v)};margin:0 auto;display:flex;align-items:center;justify-content:center;font-size:9px;font-weight:700;color:${v?'#fff':'transparent'}" title="${v} réponse${v!==1?'s':''}">${v||''}</div>
-            </td>`;
-          }).join('')}
-        </tr>`).join('')}</tbody>
-      </table>
-      <div style="display:flex;gap:12px;margin-top:8px;font-size:11px;color:var(--text-tertiary)">
-        <span>⬜ Aucune réponse</span>
-        <span style="display:flex;align-items:center;gap:4px"><span style="width:12px;height:12px;border-radius:3px;background:var(--green);display:inline-block"></span>Meilleur créneau</span>
-      </div>
+    ${task.notes ? `<div style="background:var(--surface);border:1.5px solid var(--border);border-radius:var(--radius-xl);padding:14px;margin-bottom:14px;font-size:13.5px;color:var(--text-secondary);line-height:1.65;">${esc(task.notes)}</div>` : ''}
+    <div style="display:flex;gap:8px;">
+      <button onclick="toggleTaskDone('${task.id}');closeMobileTodoDetail()" style="flex:1;padding:12px;background:${isDone?'var(--bg)':'var(--lavender)'};color:${isDone?'var(--text-secondary)':'#fff'};border:1.5px solid ${isDone?'var(--border)':'var(--lavender)'};border-radius:var(--radius-xl);font-size:14px;font-weight:600;cursor:pointer;font-family:var(--font)">
+        ${isDone ? '↩ Réouvrir' : '✓ Terminer'}
+      </button>
+      <button onclick="deleteTodo('${task.id}');closeMobileTodoDetail()" style="padding:12px 16px;background:var(--coral-light);color:var(--coral-dark);border:1.5px solid var(--coral-mid);border-radius:var(--radius-xl);font-size:14px;cursor:pointer;font-family:var(--font)">🗑</button>
     </div>`;
+
+  document.getElementById('todo-detail-mobile').classList.add('open');
 }
 
-// ════════════════════════════════════════
-// PRODUCTS RANKING — produits gagnants
-// ════════════════════════════════════════
-function renderProductsRanking() {
-  const el = document.getElementById('stats-products'); if(!el) return;
-  // Count tags on won clients (clients + interested)
-  const winning = data.filter(d=>d.status==='client'||d.status==='interested');
-  const tagCount = {};
-  winning.forEach(d=>(d.tags||[]).forEach(t=>{ tagCount[t]=(tagCount[t]||0)+1; }));
-  // Also count from sales
-  salesData.forEach(s=>{
-    const d=data.find(e=>e.id===s.prospectId);
-    (d?.tags||[]).forEach(t=>{ tagCount[t]=(tagCount[t]||1)+1; });
-  });
-
-  const sorted = Object.entries(tagCount).sort((a,b)=>b[1]-a[1]).slice(0,8);
-  if(!sorted.length) { el.innerHTML='<div class="stats-empty">Ajoutez des produits sur vos fiches clients pour voir le classement.</div>'; return; }
-
-  const maxV = sorted[0][1];
-  el.innerHTML = sorted.map(([tag,count],i)=>`
-    <div class="product-rank-item">
-      <div class="product-rank-num">${i+1}</div>
-      <div class="product-rank-tag">${esc(tag)}</div>
-      <div class="product-rank-bar"><div class="product-rank-fill" style="width:${Math.round(count/maxV*100)}%"></div></div>
-      <div class="product-rank-count">${count}</div>
-    </div>`).join('');
+function closeMobileTodoDetail() {
+  document.getElementById('todo-detail-mobile')?.classList.remove('open');
 }
 
-// Hook renderStats to also render new analytics
-// renderStats now calls analytics directly - no wrapper needed
-
-// ════════════════════════════════════════
-// DORMANT OPPORTUNITIES (point 23)
-// ════════════════════════════════════════
-function getDormantProspects() {
-  const today = new Date();
-  return data.filter(d => {
-    if(d.status==='client'||d.status==='refused') return false;
-    if(!d.lastContact && !d.updatedAt) return false;
-    const last = new Date(d.lastContact||d.updatedAt);
-    const days = Math.round((today-last)/86400000);
-    return days >= 15;
-  }).map(d=>{
-    const last = new Date(d.lastContact||d.updatedAt);
-    const days = Math.round((today-last)/86400000);
-    return {...d, daysSilent: days};
-  }).sort((a,b)=>b.daysSilent-a.daysSilent);
-}
-
-// ════════════════════════════════════════
-// AI WEEKLY SUMMARY
-// ════════════════════════════════════════
-// WEEKLY_SUMMARY_KEY declared above
-
-async function checkAndGenerateWeeklySummary() {
-  const now = new Date();
-  const isFriday = now.getDay() === 5;
-  if(!isFriday) return;
-
-  // Check if already generated today
-  const existing = JSON.parse(localStorage.getItem(WEEKLY_SUMMARY_KEY)||'{}');
-  if(existing.date === todayStr()) {
-    // Show existing summary
-    showWeeklySummary(existing.content);
+// Override selectTask on mobile to show overlay
+const _origSelectTask = typeof selectTask === 'function' ? selectTask : null;
+function selectTask(id) {
+  if (isMobile()) {
+    openMobileTodoDetail(id);
     return;
   }
-
-  const key = localStorage.getItem('sourcingpro_ai_key')||'';
-  if(!key.startsWith('AIza')) return; // Silently skip if no key
-
-  const today = todayStr();
-  const [wFrom] = getWeekRange(today);
-  const wDates = getDatesInRange(wFrom, today);
-  const wLogs  = wDates.flatMap(d=>getDayLog(d));
-  const wSales = salesData.filter(s=>s.date>=wFrom&&s.date<=today);
-  const wAmt   = wSales.reduce((sum,s)=>sum+(parseFloat(s.amount)||0),0);
-  const newClients = data.filter(d=>d.status==='client'&&d.updatedAt?.slice(0,10)>=wFrom).length;
-  const dormant = getDormantProspects().slice(0,3);
-
-  const prompt = `Tu es un assistant commercial B2B. Génère un résumé hebdomadaire court (vendredi soir) pour un commercial.
-
-Données de la semaine :
-- Appels passés : ${wLogs.length}
-- Réponses obtenues : ${wLogs.filter(e=>e.outcome==='answered').length}
-- Catalogues envoyés : ${wLogs.filter(e=>e.outcome==='catalog').length}
-- Ventes : ${wSales.length}${wAmt>0?' ('+wAmt.toLocaleString('fr-FR')+' €)':''}
-- Nouveaux clients : ${newClients}
-- Prospects silencieux +15j : ${dormant.map(d=>d.name).join(', ')||'aucun'}
-
-Écris 3 phrases maximum, en français, ton positif et motivant, avec les points clés de la semaine et 1 priorité pour lundi. Maximum 80 mots.`;
-
-  try {
-    const model = localStorage.getItem('sourcingpro_gemini_model')||'gemini-2.0-flash-lite';
-    const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${model}:generateContent?key=${encodeURIComponent(key)}`,{
-      method:'POST', headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({contents:[{role:'user',parts:[{text:prompt}]}],generationConfig:{temperature:0.7,maxOutputTokens:200}})
-    });
-    if(!res.ok) return;
-    const result = await res.json();
-    const text = result?.candidates?.[0]?.content?.parts?.[0]?.text||'';
-    if(text) {
-      localStorage.setItem(WEEKLY_SUMMARY_KEY, JSON.stringify({date:todayStr(),content:text}));
-      showWeeklySummary(text);
-    }
-  } catch(e) {}
+  if (_origSelectTask) _origSelectTask(id);
 }
 
-function showWeeklySummary(text) {
-  const el = document.getElementById('dash-ai-summary'); if(!el) return;
-  el.style.display = 'block';
-  el.innerHTML = `<div class="ai-summary-banner">
-    <div class="ai-summary-title">✨ Résumé de ta semaine — Gemini IA</div>
-    <div class="ai-summary-body">${esc(text)}</div>
-  </div>`;
+// Mobile badges updated directly in renderSidebar below
+
+// Init mobile nav visibility
+function initMobileNav() {
+  const nav = document.getElementById('mobile-nav');
+  if (!nav) return;
+  const mobile = isMobile();
+  nav.style.display = mobile ? 'flex' : 'none';
+  // Update layout picker button state
+  const btns = document.querySelectorAll('.layout-btn');
+  btns.forEach(b => {
+    b.style.fontWeight = b.dataset.mode === layoutMode ? '700' : '400';
+    b.style.background = b.dataset.mode === layoutMode ? 'var(--primary-light)' : 'var(--bg)';
+    b.style.color = b.dataset.mode === layoutMode ? 'var(--primary)' : 'var(--text-secondary)';
+    b.style.borderColor = b.dataset.mode === layoutMode ? 'var(--primary-mid)' : 'var(--border)';
+  });
 }
 
-// ════════════════════════════════════════
-// INIT NEW FEATURES
-// ════════════════════════════════════════
-// ════════════════════════════════════════
-// MAIN INIT — runs after ALL functions defined
-// ════════════════════════════════════════
-(async function init() {
-  // 1. Load all persisted data (async - Supabase first, localStorage fallback)
-  await loadAll();
-  await Promise.all([loadStats(), loadTodos(), loadAttachments(), loadObjectives(), loadCallGoals()]);
-  recentIds = spGet(RECENT_KEY) || [];
+window.addEventListener('resize', () => {
+  if (layoutMode === 'auto') initMobileNav();
+});
 
-  // 2. Load API key for AI tab
-  loadApiKey();
 
-  // 3. Set stats date
-  const sdEl = document.getElementById('stats-date');
-  if(sdEl) sdEl.value = todayStr();
-
-  // 4. Init nav collapse state
-  initNavCollapse();
-
-  // 5. Render everything
-  renderAll();
-  renderRecent();
-
-  // 6. Pre-load news so they're ready when tab is opened
-  loadNews();
-
-  // 7. Start on dashboard
-  switchTab('dashboard');
-
-  // 8. Auto-save every 30s
-  setInterval(() => { if(data.length > 0) persist(); }, 30000);
-
-  // 9. Weekly AI summary (async, silent if no key)
-  setTimeout(checkAndGenerateWeeklySummary, 2000);
-})();
 </script>
 </body>
 </html>
