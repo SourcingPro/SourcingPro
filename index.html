@@ -244,6 +244,7 @@ a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
     <div class="ni" data-sec="kanban"><span class="ni-ic">📋</span><span class="ni-lb">Pipeline</span></div>
     <div class="sb-section">OUTILS</div>
     <div class="ni" data-sec="todo"><span class="ni-ic">✅</span><span class="ni-lb">Todo & Agenda</span><span class="ni-bd" id="bdg-t"></span></div>
+    <div class="ni" data-sec="calls"><span class="ni-ic">📞</span><span class="ni-lb">Mes appels</span><span class="ni-bd" id="bdg-calls"></span></div>
     <div class="ni" data-sec="scrapper"><span class="ni-ic">🔍</span><span class="ni-lb">Scrapping</span></div>
     <div class="sb-section">DONNÉES</div>
     <div class="ni" data-sec="io"><span class="ni-ic">📁</span><span class="ni-lb">Import / Export</span></div>
@@ -279,17 +280,26 @@ a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
     <div class="sg" id="dash-stats"></div>
     <div style="display:grid;grid-template-columns:2fr 1fr;gap:14px">
       <div class="card">
-        <div class="ch"><div class="ct">Activité récente</div><span style="font-size:11px;color:var(--text2)" id="sync-lbl">—</span></div>
-        <div id="dash-act"></div>
+        <div class="ch">
+          <div class="ct">📅 Tâches du jour</div>
+          <div style="display:flex;gap:6px;align-items:center">
+            <span style="font-size:11px;color:var(--text2)" id="sync-lbl">—</span>
+            <button class="btn btn-g btn-s" onclick="goSec('todo')">Voir tout →</button>
+          </div>
+        </div>
+        <div id="dash-tasks"></div>
+        <div id="dash-overdue" style="margin-top:10px"></div>
       </div>
-      <div class="card">
-        <div class="ch"><div class="ct">Pipeline par statut</div></div>
-        <div id="dash-chart"></div>
+      <div>
+        <div class="card" style="margin-bottom:12px">
+          <div class="ch"><div class="ct">Pipeline par statut</div></div>
+          <div id="dash-chart"></div>
+        </div>
+        <div class="card">
+          <div class="ch"><div class="ct">📞 Appels du jour</div><button class="btn btn-g btn-s" onclick="goSec('calls')">Voir tout →</button></div>
+          <div id="dash-calls-today"></div>
+        </div>
       </div>
-    </div>
-    <div style="margin-top:14px" class="card">
-      <div class="ch"><div class="ct">Tâches du jour</div><button class="btn btn-g btn-s" onclick="goSec('todo')">Voir tout →</button></div>
-      <div id="dash-tasks"></div>
     </div>
   </div>
 
@@ -310,6 +320,13 @@ a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
         <option value="">Tous produits</option>
       </select>
       <div style="margin-left:auto;display:flex;gap:7px;align-items:center">
+        <select class="fs" id="f-sort" onchange="renderProspects()" style="width:auto">
+          <option value="name">Trier : Nom A→Z</option>
+          <option value="lastContact_desc">Trier : Dernier contact ↓</option>
+          <option value="lastContact_asc">Trier : Dernier contact ↑</option>
+          <option value="created_desc">Trier : Plus récents</option>
+          <option value="created_asc">Trier : Plus anciens</option>
+        </select>
         <div class="vs">
           <button class="vb on" onclick="setView('table',this)">☰ Tableau</button>
           <button class="vb" onclick="setView('grid',this)">⊞ Grille</button>
@@ -345,6 +362,7 @@ a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
             <select class="fs" id="td-prio"><option value="low">🟢 Faible</option><option value="med" selected>🟡 Moyen</option><option value="high">🔴 Urgent</option></select>
             <select class="fs" id="td-pros"><option value="">Aucun prospect lié</option></select>
           </div>
+          <textarea class="fi" id="td-note" placeholder="Notes (optionnel)…" style="min-height:52px;resize:vertical;margin-bottom:8px;line-height:1.5"></textarea>
           <button class="btn btn-p" style="width:100%" onclick="addTodo()">+ Ajouter</button>
         </div>
         <div class="frow">
@@ -371,6 +389,42 @@ a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
         <div class="card" style="margin-top:10px">
           <div class="ct" style="margin-bottom:8px">Tâches du jour sélectionné</div>
           <div id="cal-tasks"><div style="color:var(--text2);font-size:12px;text-align:center;padding:10px">Cliquez sur une date</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ APPELS ══ -->
+  <div class="section" id="sec-calls">
+    <div class="frow" style="margin-bottom:14px">
+      <div class="vs">
+        <button class="vb on" onclick="setCallsPeriod('today',this)">Aujourd'hui</button>
+        <button class="vb" onclick="setCallsPeriod('week',this)">Cette semaine</button>
+        <button class="vb" onclick="setCallsPeriod('month',this)">Ce mois</button>
+        <button class="vb" onclick="setCallsPeriod('all',this)">Tous</button>
+      </div>
+      <select class="fs" id="calls-filter-res" onchange="renderCallsSection()" style="width:auto;margin-left:8px">
+        <option value="">Tous résultats</option>
+        <option value="positif">✅ Positif</option>
+        <option value="neutre">⏸️ Neutre</option>
+        <option value="a_relancer">🔄 À relancer</option>
+        <option value="absent">📵 Absent</option>
+        <option value="negatif">❌ Négatif</option>
+      </select>
+      <div style="margin-left:auto;display:flex;gap:8px">
+        <div id="calls-summary" style="display:flex;gap:8px;align-items:center"></div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 280px;gap:14px">
+      <div id="calls-list-section"></div>
+      <div>
+        <div class="card" style="margin-bottom:12px">
+          <div class="ch"><div class="ct">📊 Résumé</div></div>
+          <div id="calls-stats"></div>
+        </div>
+        <div class="card">
+          <div class="ch"><div class="ct">🏆 Derniers contactés</div></div>
+          <div id="calls-recent-pros"></div>
         </div>
       </div>
     </div>
@@ -476,8 +530,8 @@ a{color:var(--accent2);text-decoration:none}a:hover{text-decoration:underline}
     <div class="card">
       <div class="ct" style="margin-bottom:10px">📋 Format CSV SourcingPro compatible</div>
       <pre style="background:var(--bg3);border:1px solid var(--border);border-radius:var(--rs);padding:11px;font-size:11px;color:var(--text2);overflow-x:auto;line-height:1.9">name,company,email,phone,status,category,products,notes
-Dupont Grossiste,SARL Dupont,contact@dupont.fr,+33312345678,a_contacter,grossiste,"Biscuiterie, Épicerie sèche","Intéressé par les produits allemands"
-Martin Destockage,SAS Martin Déstockage,martin@destockage.fr,,contacte,destockeur,"Boissons","Cherche lots en déstockage"</pre>
+Dupont Grossiste,SARL Dupont,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="f89b97968c999b8cb89c8d8897968cd69e8a">[email&#160;protected]</a>,+33312345678,a_contacter,grossiste,"Biscuiterie, Épicerie sèche","Intéressé par les produits allemands"
+Martin Destockage,SAS Martin Déstockage,<a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="573a3625233e39173332242338343c363032793125">[email&#160;protected]</a>,,contacte,destockeur,"Boissons","Cherche lots en déstockage"</pre>
     </div>
   </div>
 
@@ -695,7 +749,7 @@ Martin Destockage,SAS Martin Déstockage,martin@destockage.fr,,contacte,destocke
 
 <div id="tc"></div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ════════════════════════════════════════════
 // DATA
 // ════════════════════════════════════════════
@@ -753,7 +807,7 @@ function log(txt,type=''){db.activity.unshift({id:uid(),txt,type,d:new Date().to
 // ════════════════════════════════════════════
 // NAVIGATION
 // ════════════════════════════════════════════
-const SEC_TITLES={dashboard:'Dashboard',prospects:'Prospects',kanban:'Pipeline Kanban',todo:'Todo & Agenda',scrapper:'Scrapping',io:'Import / Export',settings:'Paramètres'};
+const SEC_TITLES={dashboard:'Dashboard',prospects:'Prospects',kanban:'Pipeline Kanban',todo:'Todo & Agenda',calls:'Mes appels',scrapper:'Scrapping',io:'Import / Export',settings:'Paramètres'};
 let curSec='dashboard';
 
 function goSec(id){
@@ -769,6 +823,7 @@ function goSec(id){
   if(id==='prospects'){populateFilters();renderProspects()}
   if(id==='kanban'){populateKbFilters();renderKanban()}
   if(id==='todo'){renderTodos();renderCal();fillTdPros()}
+  if(id==='calls'){renderCallsSection()}
   if(id==='settings'){renderStatuses();renderProducts()}
   closeMob();
 }
@@ -819,39 +874,96 @@ function populateKbFilters(){populateFilters()}
 function fillTdPros(){const el=document.getElementById('td-pros');if(!el)return;el.innerHTML='<option value="">Aucun prospect lié</option>';db.prospects.forEach(p=>el.innerHTML+=`<option value="${p.id}">${p.name}${p.city?' ('+p.city+')':''}</option>`)}
 
 // ════════════════════════════════════════════
+// DATE HELPERS
+// ════════════════════════════════════════════
+function daysSince(dateStr){
+  if(!dateStr)return Infinity;
+  const d=new Date(dateStr);const now=new Date();
+  return Math.floor((now-d)/(1000*60*60*24));
+}
+function formatRelativeDate(dateStr){
+  if(!dateStr)return '—';
+  const d=daysSince(dateStr);
+  if(d===0)return 'Aujourd\'hui';
+  if(d===1)return 'Hier';
+  if(d<7)return `Il y a ${d}j`;
+  if(d<30)return `Il y a ${Math.floor(d/7)}sem`;
+  if(d<365)return `Il y a ${Math.floor(d/30)}mois`;
+  return new Date(dateStr).toLocaleDateString('fr-FR',{day:'numeric',month:'short'});
+}
+
+// ════════════════════════════════════════════
 // DASHBOARD
 // ════════════════════════════════════════════
 function renderDash(){
   const tot=db.prospects.length;
   const clients=db.prospects.filter(p=>p.status==='s7').length;
   const negoc=db.prospects.filter(p=>p.status==='s6').length;
-  const val=db.prospects.reduce((a,p)=>a+(+p.val||0),0);
   const tdOpen=db.todos.filter(t=>!t.done).length;
+  const today=new Date().toISOString().slice(0,10);
+  const callsToday=getAllCalls().filter(c=>c.date===today);
   document.getElementById('dash-stats').innerHTML=[
     {l:'Prospects',v:tot,s:'dans la base',g:'rgba(91,138,245,.18)'},
     {l:'Clients actifs',v:clients,s:'convertis',g:'rgba(40,201,122,.18)'},
     {l:'En négociation',v:negoc,s:'deals ouverts',g:'rgba(245,166,35,.18)'},
-    {l:'Valeur pipeline',v:'€'+val.toLocaleString('fr-FR'),s:'estimée',g:'rgba(32,208,184,.18)'},
+    {l:'Appels aujourd\'hui',v:callsToday.length,s:'enregistrés',g:'rgba(32,208,184,.18)'},
     {l:'Tâches ouvertes',v:tdOpen,s:'à traiter',g:'rgba(240,80,95,.18)'},
   ].map(s=>`<div class="sc" style="--gc:${s.g}"><div class="sl">${s.l}</div><div class="sv">${s.v}</div><div class="ss">${s.s}</div></div>`).join('');
 
-  const act=db.activity.slice(0,8);
-  document.getElementById('dash-act').innerHTML=act.length?act.map(a=>`<div style="display:flex;gap:9px;padding:7px 0;border-bottom:1px solid var(--border)"><div style="width:5px;height:5px;border-radius:50%;background:var(--accent);margin-top:7px;flex-shrink:0"></div><div><div style="font-size:12px">${a.txt}</div><div style="font-size:10px;color:var(--text2)">${new Date(a.d).toLocaleString('fr-FR')}</div></div></div>`).join('')
-    :'<div class="es"><div class="ei">📭</div><div class="etit">Aucune activité</div></div>';
-
-  // chart
+  // Chart
   document.getElementById('dash-chart').innerHTML=db.statuses.map(s=>{
     const n=db.prospects.filter(p=>p.status===s.id).length;
     const pct=tot>0?(n/tot*100):0;
     return `<div style="margin-bottom:8px"><div style="display:flex;justify-content:space-between;margin-bottom:3px"><span class="badge" style="background:${s.color}22;color:${s.color}">${s.icon?s.icon+' ':''}${s.label}</span><span style="font-size:11px;color:var(--text2)">${n}</span></div><div class="pb"><div class="pf" style="width:${pct}%;background:${s.color}"></div></div></div>`;
   }).join('');
 
-  const today=new Date().toISOString().slice(0,10);
+  // Today tasks — full list with notes
   const todayT=db.todos.filter(t=>t.date===today&&!t.done);
-  document.getElementById('dash-tasks').innerHTML=todayT.length?todayT.map(t=>miniTodo(t)).join(''):'<div style="color:var(--text2);font-size:12px;padding:10px;text-align:center">Aucune tâche aujourd\'hui 🎉</div>';
+  const overdue=db.todos.filter(t=>t.date&&t.date<today&&!t.done);
+  document.getElementById('dash-tasks').innerHTML=todayT.length
+    ? todayT.map(t=>dashTodoItem(t)).join('')
+    : '<div style="color:var(--text2);font-size:12px;padding:10px;text-align:center">Aucune tâche aujourd\'hui 🎉</div>';
+  const overdueEl=document.getElementById('dash-overdue');
+  if(overdueEl) overdueEl.innerHTML=overdue.length
+    ? `<div style="border-top:1px solid var(--border);margin-top:10px;padding-top:10px"><div style="font-size:11px;font-weight:700;color:var(--red);text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px">⚠️ En retard (${overdue.length})</div>${overdue.map(t=>dashTodoItem(t)).join('')}</div>`
+    : '';
+
+  // Calls today
+  const ctEl=document.getElementById('dash-calls-today');
+  if(ctEl) ctEl.innerHTML=callsToday.length
+    ? callsToday.slice(0,5).map(c=>{
+        const p=db.prospects.find(x=>x.id===c.prospectId);
+        return `<div style="display:flex;align-items:center;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)">
+          <span style="font-size:15px">${CALL_RES[c.result]?.ic||'📞'}</span>
+          <div style="flex:1;min-width:0">
+            <div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p?.name||'—'}</div>
+            <div style="font-size:11px;color:var(--text2)">${c.note?.slice(0,50)||''}${(c.note?.length||0)>50?'…':''}</div>
+          </div>
+          <span class="badge" style="background:${CALL_RES[c.result]?.c}22;color:${CALL_RES[c.result]?.c};font-size:10px">${CALL_RES[c.result]?.l||c.result}</span>
+        </div>`;
+      }).join('')+(callsToday.length>5?`<button class="btn btn-g btn-s" style="width:100%;margin-top:6px" onclick="goSec('calls')">Voir les ${callsToday.length} appels →</button>`:'')
+    : '<div style="color:var(--text2);font-size:12px;padding:10px;text-align:center">Aucun appel aujourd\'hui</div>';
 
   document.getElementById('bdg-p').textContent=tot;
   document.getElementById('bdg-t').textContent=tdOpen||'';
+  const bdgCalls=document.getElementById('bdg-calls');
+  if(bdgCalls) bdgCalls.textContent=callsToday.length||'';
+}
+
+function dashTodoItem(t){
+  const p=t.prospectId?db.prospects.find(x=>x.id===t.prospectId):null;
+  return `<div class="ti ${t.done?'done':''}" style="margin-bottom:5px">
+    <div class="tck ${t.done?'on':''}" onclick="toggleTodo('${t.id}')">${t.done?'✓':''}</div>
+    <div style="flex:1;min-width:0">
+      <div class="tt">${t.text}</div>
+      ${t.note?`<div style="font-size:11px;color:var(--text2);margin-top:2px;line-height:1.4">${t.note}</div>`:''}
+      <div style="display:flex;gap:5px;margin-top:3px;flex-wrap:wrap">
+        ${t.date?`<span style="font-size:10px;color:var(--text2)">📅 ${t.date}</span>`:''}
+        ${p?`<span style="font-size:10px;background:var(--accent-glow);color:var(--accent2);padding:1px 5px;border-radius:4px">${p.name}</span>`:''}
+      </div>
+    </div>
+    <div class="pr" style="background:${PCOL[t.priority]||'var(--text2)'}"></div>
+  </div>`;
 }
 
 // ════════════════════════════════════════════
@@ -859,6 +971,16 @@ function renderDash(){
 // ════════════════════════════════════════════
 let pView='table';
 function setView(v,btn){pView=v;document.querySelectorAll('.vb').forEach(b=>b.classList.remove('on'));btn.classList.add('on');renderProspects()}
+
+function cycleSortLastContact(){
+  const el=document.getElementById('f-sort');if(!el)return;
+  const cur=el.value;
+  if(cur==='lastContact_desc') el.value='lastContact_asc';
+  else el.value='lastContact_desc';
+  renderProspects();
+  const icon=document.getElementById('th-lc-icon');
+  if(icon) icon.textContent=el.value==='lastContact_desc'?'↓':'↑';
+}
 function getAC(str){const cs=['#5b8af5','#28c97a','#4db8ff','#f0505f','#f5a623','#e060d8','#20d0b8'];let h=0;for(let i=0;i<str.length;i++)h=str.charCodeAt(i)+((h<<5)-h);return cs[Math.abs(h)%cs.length]}
 function ini(n){return(n||'').split(' ').slice(0,2).map(w=>w[0]||'').join('').toUpperCase()||'?'}
 
@@ -867,13 +989,23 @@ function filteredProspects(){
   const fs=document.getElementById('f-status')?.value||'';
   const fc=document.getElementById('f-cat')?.value||'';
   const fp=document.getElementById('f-product')?.value||'';
-  return db.prospects.filter(p=>{
+  const sort=document.getElementById('f-sort')?.value||'name';
+  let list=db.prospects.filter(p=>{
     if(q&&!`${p.name} ${p.email} ${p.city}`.toLowerCase().includes(q))return false;
     if(fs&&p.status!==fs)return false;
     if(fc&&p.category!==fc)return false;
     if(fp&&!(p.products||[]).includes(fp))return false;
     return true;
   });
+  list=list.slice().sort((a,b)=>{
+    if(sort==='name') return(a.name||'').localeCompare(b.name||'');
+    if(sort==='lastContact_desc'){const la=getLastContact(a)||'';const lb=getLastContact(b)||'';return lb.localeCompare(la);}
+    if(sort==='lastContact_asc'){const la=getLastContact(a)||'';const lb=getLastContact(b)||'';return la.localeCompare(lb);}
+    if(sort==='created_desc') return(b.createdAt||'').localeCompare(a.createdAt||'');
+    if(sort==='created_asc')  return(a.createdAt||'').localeCompare(b.createdAt||'');
+    return 0;
+  });
+  return list;
 }
 
 function renderProspects(){
@@ -883,11 +1015,14 @@ function renderProspects(){
   if(!list.length){wrap.innerHTML=`<div class="es"><div class="ei">👥</div><div class="etit">Aucun prospect</div><p>Ajoutez votre premier prospect ou modifiez vos filtres</p><br><button class="btn btn-p" onclick="openProspectModal()">+ Ajouter un prospect</button></div>`;return}
   if(pView==='table'){
     wrap.innerHTML=`<div class="tw"><table class="dt"><thead><tr>
-      <th>Entreprise</th><th>Statut</th><th>Catégorie</th><th>Produits recherchés</th><th>Ville</th><th>Valeur</th><th>Appels</th><th></th>
+      <th>Entreprise</th><th>Statut</th><th>Catégorie</th><th>Produits recherchés</th><th>Ville</th><th onclick="cycleSortLastContact()" style="cursor:pointer;user-select:none" id="th-lc">Dernier contact <span id="th-lc-icon">↕</span></th><th>Appels</th><th></th>
     </tr></thead><tbody>${list.map(p=>{
       const cat=getCat(p.category);
       const prods=(p.products||[]).map(pid=>{const pr=db.products.find(x=>x.id===pid);return pr?`<span class="ptag" style="margin:1px">${pr.name}</span>`:''}).filter(Boolean).join('');
       const callCount=(p.calls||[]).length;
+      const lastC=getLastContact(p);
+      const lastCLabel=lastC?formatRelativeDate(lastC):'<span style="color:var(--text3)">Jamais</span>';
+      const lastCStyle=lastC&&daysSince(lastC)>14?'color:var(--red);font-size:12px':'color:var(--text2);font-size:12px';
       return `<tr onclick="openProspect('${p.id}')" style="cursor:pointer">
         <td><div style="display:flex;align-items:center;gap:8px">
           <div class="av" style="width:28px;height:28px;font-size:10px;background:${getAC(p.name)};color:#fff">${ini(p.name)}</div>
@@ -897,7 +1032,7 @@ function renderProspects(){
         <td>${catBadge(p.category)}</td>
         <td><div style="display:flex;flex-wrap:wrap;gap:2px;max-width:200px">${prods||'<span style="color:var(--text3);font-size:11px">—</span>'}</div></td>
         <td style="color:var(--text2);font-size:12px">${p.city||'—'}</td>
-        <td style="font-weight:600">${p.val?'€'+parseInt(p.val).toLocaleString('fr-FR'):'—'}</td>
+        <td style="${lastCStyle}">${lastCLabel}</td>
         <td><span style="font-size:11px;color:var(--text2)">${callCount?callCount+' appel'+(callCount>1?'s':''):'—'}</span></td>
         <td onclick="event.stopPropagation()"><div style="display:flex;gap:3px">
           <button class="btn btn-g btn-ic btn-s" onclick="openProspect('${p.id}')" title="Voir">👁️</button>
@@ -916,7 +1051,7 @@ function renderProspects(){
         </div>
         <div style="display:flex;flex-wrap:wrap;gap:4px;margin-bottom:8px">${statusBadge(p.status)}${catBadge(p.category)}</div>
         ${prods?`<div style="margin-bottom:6px">${prods}</div>`:''}
-        ${p.val?`<div style="font-weight:700;color:var(--text)">€${parseInt(p.val).toLocaleString('fr-FR')}</div>`:''}
+        ${(()=>{const lc=getLastContact(p);return lc?`<div style="font-size:11px;${daysSince(lc)>14?'color:var(--red)':'color:var(--text2)'}">📞 ${formatRelativeDate(lc)}</div>`:''})()}
       </div>`;
     }).join('')}</div>`;
   }
@@ -1129,7 +1264,21 @@ function renderProdChecklist(p){
 // ════════════════════════════════════════════
 // CALLS
 // ════════════════════════════════════════════
-const CALL_RES={contacte:{l:'Contacté / RDV',c:'var(--green)'},absent:{l:'Absent / Rappeler',c:'var(--orange)'},interesse:{l:'Très intéressé',c:'var(--teal)'},envoye:{l:'Catalogue envoyé',c:'var(--blue)'},negatif:{l:'Pas intéressé',c:'var(--red)'},relance:{l:'À relancer',c:'var(--yellow)'}};
+const CALL_RES={contacte:{l:'Contacté / RDV',c:'var(--green)',ic:'✅'},absent:{l:'Absent / Rappeler',c:'var(--orange)',ic:'📵'},interesse:{l:'Très intéressé',c:'var(--teal)',ic:'⭐'},envoye:{l:'Catalogue envoyé',c:'var(--blue)',ic:'📧'},negatif:{l:'Pas intéressé',c:'var(--red)',ic:'❌'},relance:{l:'À relancer',c:'var(--yellow)',ic:'🔄'}};
+
+// Helper: get all calls across all prospects
+function getAllCalls(){
+  const res=[];
+  db.prospects.forEach(p=>(p.calls||[]).forEach(c=>res.push({...c,prospectId:p.id,prospectName:p.name})));
+  return res.sort((a,b)=>(b.date||'').localeCompare(a.date||''));
+}
+
+// Helper: get last call date for a prospect
+function getLastContact(p){
+  const calls=(p.calls||[]);
+  if(!calls.length)return null;
+  return calls.slice().sort((a,b)=>(b.date||'').localeCompare(a.date||''))[0].date;
+}
 
 function renderCallsList(p){
   const el=document.getElementById('calls-list');if(!el)return;
@@ -1183,12 +1332,119 @@ function saveCall(){
 function delCall(pid,cid){
   const p=db.prospects.find(x=>x.id===pid);if(!p)return;
   p.calls=(p.calls||[]).filter(c=>c.id!==cid);
-  save();renderCallsList(p);toast('🗑️ Appel supprimé');
+  save();renderCallsList(p);renderDash();toast('🗑️ Appel supprimé');
 }
 
 // ════════════════════════════════════════════
-// KANBAN
+// CALLS SECTION (onglet dédié)
 // ════════════════════════════════════════════
+let callsPeriod='today';
+function setCallsPeriod(p,btn){
+  callsPeriod=p;
+  document.querySelectorAll('#sec-calls .vb').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+  renderCallsSection();
+}
+
+function renderCallsSection(){
+  const all=getAllCalls();
+  const resFilter=document.getElementById('calls-filter-res')?.value||'';
+  const today=new Date().toISOString().slice(0,10);
+  const weekAgo=new Date(Date.now()-7*86400000).toISOString().slice(0,10);
+  const monthAgo=new Date(Date.now()-30*86400000).toISOString().slice(0,10);
+
+  let filtered=all;
+  if(callsPeriod==='today')   filtered=all.filter(c=>c.date===today);
+  else if(callsPeriod==='week')  filtered=all.filter(c=>c.date>=weekAgo);
+  else if(callsPeriod==='month') filtered=all.filter(c=>c.date>=monthAgo);
+  if(resFilter) filtered=filtered.filter(c=>c.result===resFilter);
+
+  // Summary badges
+  const sumEl=document.getElementById('calls-summary');
+  if(sumEl){
+    const byRes={};
+    filtered.forEach(c=>{byRes[c.result]=(byRes[c.result]||0)+1;});
+    sumEl.innerHTML=`<span style="font-size:12px;color:var(--text2);margin-right:4px">${filtered.length} appel(s)</span>`
+      +Object.entries(byRes).map(([k,v])=>`<span class="badge" style="background:${CALL_RES[k]?.c||'var(--text2)'}22;color:${CALL_RES[k]?.c||'var(--text2)'};">${CALL_RES[k]?.ic||'📞'} ${v}</span>`).join('');
+  }
+
+  // Main list
+  const listEl=document.getElementById('calls-list-section');
+  if(listEl){
+    if(!filtered.length){
+      listEl.innerHTML=`<div class="es"><div class="ei">📞</div><div class="etit">Aucun appel sur cette période</div><p style="font-size:12px;color:var(--text2)">Enregistrez des appels depuis la fiche d'un prospect</p></div>`;
+    } else {
+      // Group by date
+      const groups={};
+      filtered.forEach(c=>{if(!groups[c.date])groups[c.date]=[];groups[c.date].push(c);});
+      listEl.innerHTML=Object.entries(groups).sort((a,b)=>b[0].localeCompare(a[0])).map(([date,calls])=>{
+        const dateLabel=date===today?'Aujourd\'hui':new Date(date+'T12:00:00').toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long'});
+        return `<div style="margin-bottom:16px">
+          <div style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--text2);margin-bottom:8px;padding-bottom:4px;border-bottom:1px solid var(--border)">${dateLabel} <span style="font-weight:400;margin-left:4px">(${calls.length})</span></div>
+          ${calls.map(c=>{
+            const p=db.prospects.find(x=>x.id===c.prospectId);
+            return `<div style="display:flex;gap:10px;padding:10px 12px;background:var(--bg2);border:1px solid var(--border);border-radius:var(--rs);margin-bottom:6px;transition:all .18s" onmouseenter="this.style.borderColor='var(--border2)'" onmouseleave="this.style.borderColor='var(--border)'">
+              <div style="font-size:18px;padding-top:2px">${CALL_RES[c.result]?.ic||'📞'}</div>
+              <div style="flex:1;min-width:0">
+                <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;flex-wrap:wrap">
+                  <span style="font-weight:700;font-size:13px;cursor:pointer;color:var(--accent2)" onclick="openProspect('${p?.id||''}')">${p?.name||'—'}</span>
+                  <span class="badge" style="background:${CALL_RES[c.result]?.c||'var(--text2)'}22;color:${CALL_RES[c.result]?.c||'var(--text2)'}">${CALL_RES[c.result]?.l||c.result}</span>
+                  ${c.duration?`<span style="font-size:11px;color:var(--text2)">⏱️ ${c.duration}</span>`:''}
+                  ${c.dir?`<span style="font-size:11px;color:var(--text2)">${c.dir==='in'?'📥 Entrant':'📤 Sortant'}</span>`:''}
+                </div>
+                ${c.note?`<div style="font-size:12px;color:var(--text);line-height:1.5">${c.note}</div>`:''}
+                ${c.nextContact?`<div style="margin-top:5px;font-size:11px;background:var(--bg4);border-radius:5px;padding:3px 8px;display:inline-block">📅 Prochain contact : ${c.nextContact}</div>`:''}
+              </div>
+              <button class="btn btn-d btn-ic btn-s" onclick="delCall('${p?.id||''}','${c.id}')" style="flex-shrink:0;align-self:flex-start">✕</button>
+            </div>`;
+          }).join('')}
+        </div>`;
+      }).join('');
+    }
+  }
+
+  // Stats panel
+  const statsEl=document.getElementById('calls-stats');
+  if(statsEl){
+    const total=filtered.length;
+    const byRes2={};filtered.forEach(c=>{byRes2[c.result]=(byRes2[c.result]||0)+1;});
+    statsEl.innerHTML=`
+      <div style="margin-bottom:10px"><div style="font-size:11px;color:var(--text2);margin-bottom:4px">Total appels</div><div style="font-family:'Syne',sans-serif;font-weight:800;font-size:28px">${total}</div></div>
+      ${Object.entries(CALL_RES).map(([k,v])=>{
+        const n=byRes2[k]||0;
+        const pct=total>0?Math.round(n/total*100):0;
+        return `<div style="margin-bottom:8px">
+          <div style="display:flex;justify-content:space-between;margin-bottom:3px">
+            <span style="font-size:11px">${v.ic} ${v.l}</span>
+            <span style="font-size:11px;color:var(--text2)">${n} (${pct}%)</span>
+          </div>
+          <div class="pb"><div class="pf" style="width:${pct}%;background:${v.c}"></div></div>
+        </div>`;
+      }).join('')}`;
+  }
+
+  // Recent prospects panel
+  const rpEl=document.getElementById('calls-recent-pros');
+  if(rpEl){
+    const prosWithCalls=db.prospects
+      .filter(p=>(p.calls||[]).length>0)
+      .map(p=>{const lc=getLastContact(p);return{p,lc};})
+      .sort((a,b)=>(b.lc||'').localeCompare(a.lc||''))
+      .slice(0,8);
+    rpEl.innerHTML=prosWithCalls.length?prosWithCalls.map(({p,lc})=>`
+      <div style="display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);cursor:pointer" onclick="openProspect('${p.id}')">
+        <div class="av" style="width:26px;height:26px;font-size:10px;background:${getAC(p.name)};color:#fff">${ini(p.name)}</div>
+        <div style="flex:1;min-width:0">
+          <div style="font-size:12px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${p.name}</div>
+          <div style="font-size:10px;color:var(--text2)">${formatRelativeDate(lc)}</div>
+        </div>
+        <span style="font-size:10px;color:var(--text2)">${(p.calls||[]).length} 📞</span>
+      </div>`).join('')
+    :'<div style="color:var(--text2);font-size:12px;text-align:center;padding:10px">Aucun appel enregistré</div>';
+  }
+}
+
+
 function renderKanban(){
   const q=(document.getElementById('kb-search')?.value||'').toLowerCase();
   const cat=document.getElementById('kb-cat')?.value||'';
@@ -1239,8 +1495,10 @@ const PCOL={low:'var(--green)',med:'var(--yellow)',high:'var(--red)'};
 function addTodo(){
   const txt=document.getElementById('td-txt').value.trim();
   if(!txt){toast('⚠️ Entrez une tâche','orange');return}
-  db.todos.unshift({id:uid(),text:txt,date:document.getElementById('td-date').value,priority:document.getElementById('td-prio').value,prospectId:document.getElementById('td-pros').value,done:false,createdAt:new Date().toISOString()});
+  const note=document.getElementById('td-note')?.value.trim()||'';
+  db.todos.unshift({id:uid(),text:txt,note,date:document.getElementById('td-date').value,priority:document.getElementById('td-prio').value,prospectId:document.getElementById('td-pros').value,done:false,createdAt:new Date().toISOString()});
   document.getElementById('td-txt').value='';
+  if(document.getElementById('td-note'))document.getElementById('td-note').value='';
   save();renderTodos();renderCal();renderDash();toast('✅ Tâche ajoutée');
 }
 
@@ -1270,6 +1528,7 @@ function renderTodos(){
       <div class="tck ${t.done?'on':''}" onclick="toggleTodo('${t.id}')">${t.done?'✓':''}</div>
       <div style="flex:1;min-width:0">
         <div class="tt">${t.text}</div>
+        ${t.note?`<div style="font-size:11px;color:var(--text2);margin-top:2px;line-height:1.45;background:var(--bg3);border-radius:5px;padding:4px 7px">${t.note}</div>`:''}
         <div style="display:flex;gap:6px;margin-top:3px;flex-wrap:wrap">
           ${t.date?`<span style="font-size:11px;color:var(--text2)">📅 ${t.date}</span>`:''}
           ${p?`<span style="font-size:11px;background:var(--accent-glow);color:var(--accent2);padding:1px 6px;border-radius:4px;cursor:pointer" onclick="openProspect('${p.id}')">👤 ${p.name}</span>`:''}
@@ -1600,16 +1859,10 @@ document.getElementById('st-name').value=db.settings.name||'Hugo';
 document.getElementById('st-email').value=db.settings.email||'';
 document.getElementById('st-co').value=db.settings.company||'Export Alimentaire Allemagne → France';
 updateSbAv();
-document.getElementById('td-date').valueAsDate=new Date();
+document.getElementById('td-date').valueAsDate = new Date();
 populateFilters();
 checkMob();
-renderDash();
 goSec('dashboard');
-
-// CSS extra
-const st=document.createElement('style');
-st.textContent=`.on-f{background:var(--bg2)!important;color:var(--text)!important;border-color:var(--border2)!important}`;
-document.head.appendChild(st);
 </script>
 </body>
 </html>
